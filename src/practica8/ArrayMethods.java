@@ -8,11 +8,16 @@ package practica8;
 import java.util.Scanner;
 
 /**
- *
- * @author AlbertoMarun
+ * @version 1.0
+ * @author Alberto J. Marun I.
+ * @date December 09, 2020.
  */
 public class ArrayMethods {
-
+    
+    /**
+     * 
+     * @param array 
+     */
     public static void show(int[] array){
         for (int i = 0; i < array.length; i++){
             if ( i == 0){
@@ -26,7 +31,11 @@ public class ArrayMethods {
             }
         }
     }
-
+    
+    /**
+     * 
+     * @param array 
+     */
     public static void fill(int[] array){
         Scanner scanner = new Scanner(System.in);
 
@@ -35,7 +44,12 @@ public class ArrayMethods {
             array[i] = scanner.nextInt();
         }
     }
-
+    
+    /**
+     * 
+     * @param array
+     * @return 
+     */
     public static double average(int[] array){
         double average = 0;
 
@@ -47,7 +61,12 @@ public class ArrayMethods {
 
         return average;
     }
-
+    
+    /**
+     * 
+     * @param array
+     * @return 
+     */
     public static int countEvenNumbers(int[] array){
         int even_numbers = 0;
 
@@ -59,7 +78,12 @@ public class ArrayMethods {
 
         return even_numbers;
     }
-
+    
+    /**
+     * 
+     * @param array
+     * @return 
+     */
     public static int countOddNumbers(int[] array){
         int odd_numbers = 0;
 
@@ -67,7 +91,13 @@ public class ArrayMethods {
 
         return odd_numbers;
     }
-
+    
+    /**
+     * 
+     * @param array
+     * @param number
+     * @return 
+     */
     public static boolean hasInteger(int[] array, int number){
         boolean haveIt = false;
 
@@ -79,7 +109,11 @@ public class ArrayMethods {
 
         return haveIt;
     }
-
+    
+    /**
+     * 
+     * @param array 
+     */
     public static void reverse(int[] array){
         int[] temporal_array = new int[array.length];
 
@@ -91,7 +125,11 @@ public class ArrayMethods {
             array[i] = temporal_array[i];
         }
     }
-
+    
+    /**
+     * 
+     * @param args 
+     */
     public static void main(String[] args){
         int[] array = new int[4];
 
