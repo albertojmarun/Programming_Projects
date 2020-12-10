@@ -126,9 +126,6 @@ public class ArrayMethods {
         }
     }
     
-    public static int sum(){
-    
-    }
     /**
      * 
      * @param args 
