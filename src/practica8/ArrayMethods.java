@@ -204,11 +204,126 @@ public class ArrayMethods {
         return maximum;
     }
     
+    // REVISA AQUI IDIOTA
+    /**
+     * 
+     * @param matrix 
+     */
+    public static void show(int[][] matrix){
+        System.out.println("{");
+        
+        for(int i = 0; i < matrix.length; i++){
+            System.out.print("\t{");
+            
+            for(int j = 0; j < matrix[i].length; j++){
+                if(j + 1 == matrix[i].length){
+                    System.out.printf("%d}\n", matrix[i][j]);
+                } else {
+                    System.out.printf("%d, ", matrix[i][j]);
+                }
+            }
+        }
+        
+        System.out.println("}");
+    }
+    
+    /**
+     * 
+     * @param matrix 
+     */
+    public static void fill(int[][] matrix){
+        Scanner scanner = new Scanner(System.in);
+        
+        for(int i = 0; i < matrix.length; i++){
+            
+            System.out.printf("En la fila %d:\n", i);
+            
+            for(int j = 0; j < matrix[i].length; j++){
+                System.out.printf("Introduzca el elemento %d: ", j);
+                matrix[i][j] = scanner.nextInt();
+            }
+            
+            System.out.println();
+        }
+    }
+    
+    /**
+     * 
+     * @param matrix
+     * @return 
+     */
+    public static int[] diagonal(int[][] matrix){
+        int[] array;
+        
+        if(matrix.length == matrix[0].length){
+            array = new int[matrix.length];
+            
+            for(int i = 0; i < matrix.length; i++){
+                for(int j = 0; j < matrix[i].length; j++){
+                    if (i == j){
+                        array[i] = matrix[i][j];
+                    }
+                }
+            }
+            
+        } else{
+            System.out.println("The matrix is not an Square Matrix");
+            array = new int[0];
+        }
+        
+        return array;
+    }
+    
+    /**
+     * 
+     * @param matrix
+     * @return 
+     */
+    public static int[] summatoryPerRow(int[][] matrix){
+        int[] array = new int[matrix.length];
+        
+        for(int i = 0; i < matrix.length; i++){
+           
+            for(int j = 0; j < matrix[i].length; j++){
+                array[i] += matrix[i][j];
+            }
+            
+        }
+        
+        return array;
+    }
+    
+    /**
+     * SEE HERE
+     * @param matrix
+     * @return 
+     */
+    public static int[] summatoryPerColumn(int[][] matrix){
+        int[] array = new int[matrix.length];
+        int i = 0;
+        
+        for (int j = 0; j < matrix[i].length; j++){
+            for(i = 0; i < matrix.length; i++){
+                array[j] = matrix[i][j];
+            }
+        }
+        return array;
+    }
+    
+    /**
+     * 
+     * @param input
+     * @return 
+     */
+    public static String firstCharToMayus(String input){
+        String output;
+        
+        output = input.toUpperCase().charAt(0) + input.substring(1).toLowerCase();
+        
+        return output;
+    }
+    
     public static void main(String[] args){
-        int[] array = {1, 2, 3};
-        int[] array2 = {1, 4};
         
-        
-        ArrayMethods.show(array);
     }
 }
