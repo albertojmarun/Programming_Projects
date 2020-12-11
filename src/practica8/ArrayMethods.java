@@ -129,20 +129,86 @@ public class ArrayMethods {
     
     /**
      * 
-     * @param args 
+     * @param first
+     * @param second
+     * @return 
      */
-    public static void main(String[] args){
-        int[] array = new int[4];
-
-        /*
-        ArrayMethods.show(array);
-        System.out.println("\n" + ArrayMethods.average(array));
-        System.out.println("\n" + ArrayMethods.countOddNumbers(array));
-        ArrayMethods.reverse(array);
-        */
+    public static int[] sum(int[] first, int[] second){
+        int[] array;
         
-        ArrayMethods.fill(array);
-        ArrayMethods.reverse(array);
+        if(first.length >= second.length){
+            array = new int[first.length];
+            
+            for(int i = 0; i < first.length; i++){
+                
+                if(i <= second.length - 1){
+                    array[i] = first[i] + second[i];
+                    
+                } else {
+                    array[i] = first[i];
+                }
+            }
+            
+        } else {
+            array = new int[second.length];
+            
+            for(int i = 0; i < second.length; i++){
+                
+                if(i <= first.length - 1){
+                    array[i] = first[i] + second[i];
+                    
+                } else {
+                    array[i] = second[i];
+                }
+            }
+        }
+        
+        return array;
+    }
+    
+    /**
+     * 
+     * @param array
+     * @return 
+     */
+    public static int min(int[] array){
+        int minimum;
+        
+        minimum = array[0];
+        
+        for(int i = 0; i < array.length; i++){
+            if(array[i] < minimum){
+                minimum = array[i];
+            }
+        }
+        
+        return minimum;
+    }
+    
+    /**
+     * 
+     * @param array
+     * @return 
+     */
+    public static int max(int[] array){
+        int maximum;
+        
+        maximum = array[0];
+        
+        for(int i = 0; i < array.length; i++){
+            if(array[i] > maximum){
+                maximum = array[i];
+            }
+        }
+        
+        return maximum;
+    }
+    
+    public static void main(String[] args){
+        int[] array = {1, 2, 3};
+        int[] array2 = {1, 4};
+        
+        
         ArrayMethods.show(array);
     }
 }
