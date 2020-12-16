@@ -5,7 +5,6 @@
  */
 package practica8;
 
-// EDITADO EN WINDOWS
 import java.util.Scanner;
 
 /**
@@ -16,26 +15,24 @@ import java.util.Scanner;
 public class ArrayMethods {
     
     /**
-     * 
-     * @param array 
+     * Show the values on Terminal of an array of integers.
+     * @param array It is an array of integers 
      */
     public static void show(int[] array){
-        for (int i = 0; i < array.length; i++){
-            if ( i == 0){
-                System.out.printf("{%d, ", array[i]);
-            }
-            else if(i + 1 == array.length){
-                System.out.printf("%d}", array[i]);
-            }
-            else {
-                System.out.printf("%d, ", array[i]);
-            }
+        int i;
+        
+        System.out.print("{");
+        
+        for (i = 0; i < array.length - 1; i++){            
+            System.out.printf("%d, ", array[i]);
         }
+        
+        System.out.printf("%d}\n", array[i]);
     }
     
     /**
-     * 
-     * @param array 
+     * Asign the values of every element of the array of int.
+     * @param array It is an array of integers.
      */
     public static void fill(int[] array){
         Scanner scanner = new Scanner(System.in);
@@ -47,9 +44,9 @@ public class ArrayMethods {
     }
     
     /**
-     * 
-     * @param array
-     * @return 
+     * Return the average of the elements on the array.
+     * @param array It is an array of integers.
+     * @return The average all the elements inside the array.
      */
     public static double average(int[] array){
         double average = 0;
@@ -64,9 +61,9 @@ public class ArrayMethods {
     }
     
     /**
-     * 
-     * @param array
-     * @return 
+     * Count how many Even numbers appears in the Array.
+     * @param array An array of int.
+     * @return The number of time that appears an Even Number.
      */
     public static int countEvenNumbers(int[] array){
         int even_numbers = 0;
@@ -81,12 +78,12 @@ public class ArrayMethods {
     }
     
     /**
-     * 
-     * @param array
-     * @return 
+     * Count how many Odd numbers appears in the Array.
+     * @param array An array of int.
+     * @return The number of time that appears an Odd Number.
      */
     public static int countOddNumbers(int[] array){
-        int odd_numbers = 0;
+        int odd_numbers;
 
         odd_numbers = array.length - countEvenNumbers(array);
 
@@ -94,10 +91,10 @@ public class ArrayMethods {
     }
     
     /**
-     * 
-     * @param array
-     * @param number
-     * @return 
+     * Check if an exact number appears on the array.
+     * @param array An array of int, to check if it has an exact number or not.
+     * @param number The number to check if it is on the array.
+     * @return A boolean value that is true if the number appears on the array or false in the contrary case.
      */
     public static boolean hasInteger(int[] array, int number){
         boolean haveIt = false;
@@ -112,26 +109,27 @@ public class ArrayMethods {
     }
     
     /**
-     * 
-     * @param array 
+     * Reverse the order of the values of the Elements.
+     * @param array An array of int, to reverse the order of the values.
      */
     public static void reverse(int[] array){
         int[] temporal_array = new int[array.length];
-
-        for (int i = 0; i < array.length; i++){
+        int i;
+        
+        for (i = 0; i < array.length; i++){
             temporal_array[i] = array[array.length - i - 1];
         }
 
-        for (int i = 0; i < array.length; i++){
+        for (i = 0; i < array.length; i++){
             array[i] = temporal_array[i];
         }
     }
     
     /**
-     * 
-     * @param first
-     * @param second
-     * @return 
+     * Sum the elements of two Arrays.
+     * @param first Array to Sum.
+     * @param second Array to Sum.
+     * @return The Adittion of First and Second array.
      */
     public static int[] sum(int[] first, int[] second){
         int[] array;
@@ -167,14 +165,14 @@ public class ArrayMethods {
     }
     
     /**
-     * 
-     * @param array
-     * @return 
+     * See which is the Element with less value and return it, in an Array of Int.
+     * @param array An Array of int to analyze.
+     * @return The minimun value 
      */
     public static int min(int[] array){
         int minimum;
         
-        minimum = array[0];
+        minimum = 0;
         
         for(int i = 0; i < array.length; i++){
             if(array[i] < minimum){
@@ -186,14 +184,14 @@ public class ArrayMethods {
     }
     
     /**
-     * 
-     * @param array
-     * @return 
+     * Find the value of the Maximum Element inside an Array
+     * @param array The array of int to Analyze and find the maximum value.
+     * @return The value of the Element with highest value.
      */
     public static int max(int[] array){
         int maximum;
         
-        maximum = array[0];
+        maximum = 0;
         
         for(int i = 0; i < array.length; i++){
             if(array[i] > maximum){
@@ -204,32 +202,24 @@ public class ArrayMethods {
         return maximum;
     }
     
-    // REVISA AQUI IDIOTA
-    /**
-     * 
-     * @param matrix 
+    /** 
+     * Show the Rows and Columns of a Matrix.
+     * @param matrix Matrix to Show each elements.
      */
     public static void show(int[][] matrix){
         System.out.println("{");
         
         for(int i = 0; i < matrix.length; i++){
-            System.out.print("\t{");
-            
-            for(int j = 0; j < matrix[i].length; j++){
-                if(j + 1 == matrix[i].length){
-                    System.out.printf("%d}\n", matrix[i][j]);
-                } else {
-                    System.out.printf("%d, ", matrix[i][j]);
-                }
-            }
+            System.out.print("\t");
+            show(matrix[i]);
         }
         
         System.out.println("}");
     }
     
     /**
-     * 
-     * @param matrix 
+     * Fill An Matrix with already values for column and rows.
+     * @param matrix Is the Matrix to fill all the elements.
      */
     public static void fill(int[][] matrix){
         Scanner scanner = new Scanner(System.in);
@@ -237,20 +227,15 @@ public class ArrayMethods {
         for(int i = 0; i < matrix.length; i++){
             
             System.out.printf("En la fila %d:\n", i);
-            
-            for(int j = 0; j < matrix[i].length; j++){
-                System.out.printf("Introduzca el elemento %d: ", j);
-                matrix[i][j] = scanner.nextInt();
-            }
-            
+            fill(matrix[i]);
             System.out.println();
         }
     }
     
     /**
-     * 
-     * @param matrix
-     * @return 
+     * Find the Diagonal of a Matrix and return in an Array its Diagonal.
+     * @param matrix The Matrix to find its Diagonal.
+     * @return An array with the value of the Diagonal of the Original Matrix.
      */
     public static int[] diagonal(int[][] matrix){
         int[] array;
@@ -275,9 +260,9 @@ public class ArrayMethods {
     }
     
     /**
-     * 
-     * @param matrix
-     * @return 
+     * Sum the values of elements inside each Row and return an Array with the corresponding Adittion.
+     * @param matrix To sum each element per row.
+     * @return An array with the values of each row.
      */
     public static int[] summatoryPerRow(int[][] matrix){
         int[] array = new int[matrix.length];
@@ -294,26 +279,28 @@ public class ArrayMethods {
     }
     
     /**
-     * SEE HERE
-     * @param matrix
-     * @return 
+     * Sum the value of each element in a column on the Matrix.
+     * @param matrix Matrix to sum each column.
+     * @return an Array with the value of each column.
      */
     public static int[] summatoryPerColumn(int[][] matrix){
         int[] array = new int[matrix.length];
-        int i = 0;
         
-        for (int j = 0; j < matrix[i].length; j++){
-            for(i = 0; i < matrix.length; i++){
-                array[j] = matrix[i][j];
+        for(int i = 0; i < matrix.length; i++){
+            
+            for(int j = 0; j < matrix[i].length; j++){
+                array[i] += matrix[j][i];
             }
+            
         }
+        
         return array;
     }
     
     /**
-     * 
-     * @param input
-     * @return 
+     * Capitalize the First letter of any String and make lowercase the rest.
+     * @param input String to convert.
+     * @return String converted wit the format of Capitalize first letter and the rest lowercase.
      */
     public static String firstCharToMayus(String input){
         String output;
@@ -324,6 +311,8 @@ public class ArrayMethods {
     }
     
     public static void main(String[] args){
+        int[][] matrix = new int[2][2];
         
+        fill(matrix);
     }
 }
