@@ -218,7 +218,7 @@ public class ArrayMethods {
     }
     
     /**
-     * Fill An Matrix with already values for column and rows.
+     * Fill a Matrix with already values for column and rows.
      * @param matrix Is the Matrix to fill all the elements.
      */
     public static void fill(int[][] matrix){
@@ -310,9 +310,4 @@ public class ArrayMethods {
         return output;
     }
     
-    public static void main(String[] args){
-        int[][] matrix = new int[2][2];
-        
-        fill(matrix);
-    }
 }
