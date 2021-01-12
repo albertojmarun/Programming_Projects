@@ -8,24 +8,24 @@ package practica9;
 import java.util.ArrayList;
 
 /**
- *
- * @author AlbertoMarun
+ * @version 1.0
+ * @author Alberto J. Marun I.
+ * @date January 08, 2021.
  */
 public class Menu {
-    //
     private ArrayList<String> dishes;
     
     /**
-     * 
+     * Initialize the List of dishes
      */
     public Menu(){
         dishes = new ArrayList<>();
     }
     
     /**
-     * 
-     * @param dish
-     * @param index 
+     * Add new dishes to the list.
+     * @param dish (String) Name of the new Item.
+     * @param index (int) Position of the new Item.
      */
     public void addDish(String dish, int index){
         
@@ -35,9 +35,9 @@ public class Menu {
     }
     
     /**
-     * 
-     * @param dish
-     * @param index 
+     * Change the name of a Dish.
+     * @param dish (String) New name of the Dish.
+     * @param index (Index) Position on the List to change the name of the Dish.
      */
     public void setDish(String dish, int index){
         
