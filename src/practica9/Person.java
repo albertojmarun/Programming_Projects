@@ -162,51 +162,60 @@ public class Person {
     }
     
     /**
-     * 
-     * @param file_name 
+     * Make a XML File with the Attributes and Values of the Class Person
+     * @param file_name (String) that will be the Name of the file, includes the extension of the file.
      */
-    public static void saveXML(String file_name){
-        String RUTA_XML = file_name;
+    public void saveXML(String file_name){
+        final String[] labels = {"person", "name", "surname1", "surname2", "age", "gender", "marital_status"};
+        final String[] values = {getName(), getSurname1(), getSurname2(), String.valueOf(getAge()), getGender(), getMaritalStatus()};
+        String name = getName();
         
         try{
+            // BEGIN CREATING THE DOCUMENT
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.newDocument();
             
-            Element ePerson = doc.createElement("person");
+            // CREATE THE MASTER ELEMENT (PERSON)
+            Element ePerson = doc.createElement(labels[0]);
             doc.appendChild(ePerson);
             
-            Element eName = doc.createElement("name");
-            eName.appendChild(doc.createTextNode("Alberto"));
+            // CREATE THE FIRST CHILD (NAME)
+            Element eName = doc.createElement(labels[1]);
+            eName.appendChild(doc.createTextNode(values[0]));
             ePerson.appendChild(eName);
             
-            Element eSurname1 = doc.createElement("surname1");
-            eSurname1.appendChild(doc.createTextNode("Marun"));
+            // CREATE THE SECOND CHILD (SURNAME_1)
+            Element eSurname1 = doc.createElement(labels[2]);
+            eSurname1.appendChild(doc.createTextNode(values[1]));
             ePerson.appendChild(eSurname1);
             
-            Element eSurname2 = doc.createElement("surname2");
-            eSurname2.appendChild(doc.createTextNode("Indriago"));
+            // CREATE THE SECOND CHILD (SURNAME_2)
+            Element eSurname2 = doc.createElement(labels[3]);
+            eSurname2.appendChild(doc.createTextNode(values[2]));
             ePerson.appendChild(eSurname2);
             
-            Element eAge = doc.createElement("age");
-            eAge.appendChild(doc.createTextNode(String.valueOf(19)));
+            // CREATE THE THIRD CHILD (AGE)
+            Element eAge = doc.createElement(labels[4]);
+            eAge.appendChild(doc.createTextNode(values[3]));
             ePerson.appendChild(eAge);
             
-            Element eGender = doc.createElement("gender");
-            eGender.appendChild(doc.createTextNode("Male"));
+            // CREATE THE FOURTH CHILD (GENDER)
+            Element eGender = doc.createElement(labels[5]);
+            eGender.appendChild(doc.createTextNode(values[4]));
             ePerson.appendChild(eGender);
             
-            Element eMaritalStatus = doc.createElement("marital_status");
-            eMaritalStatus.appendChild(doc.createTextNode("Married"));
+            // CREATE THE FIFTH CHILD (MARITAL_STATUS)
+            Element eMaritalStatus = doc.createElement(labels[6]);
+            eMaritalStatus.appendChild(doc.createTextNode(values[5]));
             ePerson.appendChild(eMaritalStatus);
-            
-            // String.valueOf(****);
             
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File(RUTA_XML));
+            StreamResult result = new StreamResult(new File(file_name));
             
+            // CREATE THE FILE INSIDE THE COMPUTER
             transformer.transform(source, result);
             
         } catch(Exception e){
@@ -214,8 +223,10 @@ public class Person {
         }
     }
     
+    // BORRAR CUANDO TOMAS LO REVISE
     public static void main(String[] args){
+        Person marun = new Person("Alberto", "Marun", "Indriago", 19, "Male", "Single");
         
-        saveXML("ajmi.xml");
+        marun.saveXML("prueba.xml");
     }
 }

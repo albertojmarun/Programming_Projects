@@ -67,21 +67,4 @@ public class Shop {
         
         return cheaper_product;
     }
-    
-    public static void main(String[] args){
-        Shop shop = new Shop();
-        
-        shop.setPrice("Gorras", 1512);
-        shop.setPrice("Pantalones", 1);
-        shop.setPrice("Zapatos", 155);
-        shop.setPrice("Cartera", 18);
-        shop.setPrice("Bolso", 1);
-        shop.setPrice("Balones", 1);
-        
-        System.out.println(shop.getPrice("Gorras"));
-        System.out.println(shop.getPrice("Chanclas"));
-        
-        System.out.println(shop.getCheaper());
-        shop.showProducts();
-    }
 }

@@ -16,7 +16,7 @@ public class Menu {
     private ArrayList<String> dishes;
     
     /**
-     * Initialize the List of dishes
+     * Initialize the List of dishes.
      */
     public Menu(){
         dishes = new ArrayList<>();
@@ -47,8 +47,8 @@ public class Menu {
     }
     
     /**
-     * 
-     * @param index 
+     * Remove any dish from the Menu if the index exists.
+     * @param index (int) to find and remove the dish.
      */
     public void removeDish(int index){
         
@@ -57,7 +57,7 @@ public class Menu {
         }
     }
     /**
-     * 
+     * Print on Terminal all the dishes from the Menu.
      */
     public void showDishes(){
         
