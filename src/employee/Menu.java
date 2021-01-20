@@ -24,7 +24,9 @@ public class Menu {
     private final Scanner scanner_string;
 
     /**
-     * This is the Constructor of the Class Menu
+     * This is the Constructor of the Class Menu.
+     * Initialize the list employees and add the First Teacher,
+     * Initialize the Scanner and a Scanner for Strings.
      */
     public Menu(){
         employees = new ArrayList<>();
@@ -33,9 +35,14 @@ public class Menu {
         scanner_string = new Scanner(System.in);
     }
     
+    /**
+     * Select the actual Teacher.
+     * @return (Teacher) The teacher selected
+     */
     private Teacher getSelectedEmployee(){
         return employees.get(selected_teacher_index);
     }
+    
     /**
      * This will be the execution of the whole Menu.
      */
@@ -93,14 +100,16 @@ public class Menu {
                     break;
                     
                 case 9: // [9] SELECT ANOTHER EMPLOYEE.
-                    
+                    selectTeacher();
+                    pause();
                     break;
                     
                 case 10: // [10] DELETE SELECTED EMPLOYEE.
-                    
+                    clearTeacher();
+                    pause();
                     break;
                 case 11: // [11] FINISH THE MENU.
-                    System.out.println("¡Hasta Luego! Muchas Gracias.\n");
+                    System.out.println("\n¡Hasta Luego! Muchas Gracias.\n");
                     System.out.println("===========================\n");
                     break;
 
@@ -130,12 +139,12 @@ public class Menu {
         System.out.println("[5] Modificar el género.");
         System.out.println("[6] Modificar el estado civil.");
         System.out.println("[7] Modificar la materia que imparte el Profesor.");
-        System.out.println("[8] Crear un Nuevo Empleado");
-        System.out.println("[9] Seleccionar a otro Empleado");
-        System.out.println("[10] Eliminar al Empleado Seleccionado");
+        System.out.println("[8] Crear un Nuevo Empleado.");
+        System.out.println("[9] Seleccionar a otro Empleado.");
+        System.out.println("[10] Eliminar al Empleado Seleccionado.");
         System.out.println("[11] Salir.");
 
-        System.out.print("Selecciona una opción: ");
+        System.out.print("\tSelecciona una opción: ");
     }
 
     /**
@@ -275,7 +284,7 @@ public class Menu {
             salary = scanner.nextInt();
             
             if(salary < 950){
-                System.out.println("\n\tEl Salario mínimo de España es 950€, porfavor Introduce un Salario acorde\n");
+                System.out.println("\n\tEl Salario mínimo de España es 950€, porfavor Introduce un Salario acorde.");
             }
         } while(salary < 950);
         
@@ -414,7 +423,7 @@ public class Menu {
                 break;
 
             case 1:
-                teacher.setSubject("Development Environment");
+                teacher.setSubject("Development Enviroment");
                 break;
 
             case 2:
@@ -453,6 +462,54 @@ public class Menu {
         modifySubject(getSelectedEmployee());
     }
     
+    private void menuTeachers(){
+        System.out.println();
+        for(int i = 0; i < employees.size(); i++){
+            System.out.printf("[%d] %s\n", i, employees.get(i).getFullName());
+        }
+        System.out.print("Seleccione a un Profesor: ");
+    }
+    
+    private void selectTeacher(){
+        do{
+            menuTeachers();
+            selected_teacher_index = scanner.nextInt();
+            
+            if(selected_teacher_index < 0 || selected_teacher_index >= employees.size()){
+                System.out.printf("\tPorfavor seleccione un valor entre 0 y %d\n", employees.size());
+            } else{
+                System.out.printf("\n\tEl empleado seleccionado es: %s\n", getSelectedEmployee().getFullName());
+            }
+        } while(selected_teacher_index < 0 || selected_teacher_index >= employees.size());
+    }
+    
+    private void menuClear(){
+        System.out.printf("\n[0] No deseo borrar al Profesor %s.\n", getSelectedEmployee().getFullName());
+        System.out.printf("[1] Sí deseo borrar al Profesor %s.\n", getSelectedEmployee().getFullName());
+        System.out.print("¿Estas Seguro? ");
+    }
+    private void clearTeacher(){
+        int decision;
+        
+        if(employees.size() > 1){
+            do{
+                menuClear();
+                decision = scanner.nextInt();
+
+                if(decision == 1){
+                    System.out.printf("\n\tEl profesor %s ha sido Eliminado.\n", getSelectedEmployee().getFullName());
+                    employees.remove(getSelectedEmployee());
+                    selected_teacher_index--;
+                } else if(decision == 0){
+                    System.out.printf("\n\tEl profesor %s no ha sido Eliminado.\n", getSelectedEmployee().getFullName());
+                } else{
+                    System.out.println("\n\t Porfavor seleccione una opcion entre 0 y 1");
+                }
+            } while(decision != 1 && decision != 0);   
+        } else {
+            System.out.println("\nNo puede dejar a MEDAC sin Profesores.");
+        }
+    }
     /**
      * This function will make a pause in every function executed.
      */

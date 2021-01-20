@@ -40,7 +40,7 @@ public class Teacher extends Employee{
      * @param subject The subject that Teacher is teaching.
      */
     public void setSubject(String subject){
-        if(subject.equals("Programming") || subject.equals("Marked Languages") || subject.equals("Computer Systems") || subject.equals("FOL") || subject.equals("Development Environment") || subject.equals("Data Bases")){
+        if(subject.equals("Programming") || subject.equals("Marked Languages") || subject.equals("Computer Systems") || subject.equals("FOL") || subject.equals("Development Enviroment") || subject.equals("Data Bases")){
             this.subject = subject;
         }
     }
@@ -93,7 +93,7 @@ public class Teacher extends Employee{
                 es_subject = "Programación";
                 break;
 
-            case "Marked Language":
+            case "Marked Languages":
                 es_subject = "Lenguaje de Marcas";
                 break;
 
@@ -115,7 +115,7 @@ public class Teacher extends Employee{
 
         }
 
-        message =   "Nombre Completo: " + super.getSurname1() + " " + super.getSurname2() + ", " + super.getName() + "\n" +
+        message =   "\nNombre Completo: " + super.getSurname1() + " " + super.getSurname2() + ", " + super.getName() + "\n" +
                     "Edad: " + super.getAge() + "\n" +
                     "Sueldo: " + super.getSalary() + "€\n" +
                     "Género: " + es_gender + "\n" +
