@@ -105,7 +105,7 @@ public class Menu {
                     break;
                     
                 case 10: // [10] DELETE SELECTED EMPLOYEE.
-                    clearTeacher();
+                    deleteTeacher();
                     pause();
                     break;
                 case 11: // [11] FINISH THE MENU.
@@ -274,8 +274,8 @@ public class Menu {
     }
     
     /**
-     * 
-     * @param teacher 
+     * Add the New Salary to the new Teacher. 
+     * @param teacher (Teacher) That will have a new salary.
      */
     private void modifySalary(Teacher teacher){
         int salary;
@@ -447,8 +447,7 @@ public class Menu {
     }
     
     /**
-     * 
-     * @param teachers 
+     * Add a New Teacher to the List of Employees.
      */
     private void newTeacher(){
         selected_teacher_index++;
@@ -462,6 +461,9 @@ public class Menu {
         modifySubject(getSelectedEmployee());
     }
     
+    /**
+     * Menu for the Teachers that exist.
+     */
     private void menuTeachers(){
         System.out.println();
         for(int i = 0; i < employees.size(); i++){
@@ -470,30 +472,45 @@ public class Menu {
         System.out.print("Seleccione a un Profesor: ");
     }
     
+    /**
+     * Select the Teacher to see his information.
+     */
     private void selectTeacher(){
-        do{
-            menuTeachers();
-            selected_teacher_index = scanner.nextInt();
+        if(employees.size() == 1){
+            System.out.println("\nTiene seleccionado el unico empleado, debe tener +1 Empleado para poder seleccionarlo.");
             
-            if(selected_teacher_index < 0 || selected_teacher_index >= employees.size()){
-                System.out.printf("\tPorfavor seleccione un valor entre 0 y %d\n", employees.size());
-            } else{
-                System.out.printf("\n\tEl empleado seleccionado es: %s\n", getSelectedEmployee().getFullName());
-            }
-        } while(selected_teacher_index < 0 || selected_teacher_index >= employees.size());
+        } else{
+            do{
+                menuTeachers();
+                selected_teacher_index = scanner.nextInt();
+            
+                if(selected_teacher_index < 0 || selected_teacher_index >= employees.size()){
+                    System.out.printf("\tPorfavor seleccione un valor entre 0 y %d\n", employees.size() - 1);
+                } else{
+                    System.out.printf("\n\tEl empleado seleccionado es: %s\n", getSelectedEmployee().getFullName());
+                }
+            } while(selected_teacher_index < 0 || selected_teacher_index >= employees.size());
+        }
     }
     
-    private void menuClear(){
+    /**
+     * Menu to delete a Teacher or not.
+     */
+    private void deleteMenu(){
         System.out.printf("\n[0] No deseo borrar al Profesor %s.\n", getSelectedEmployee().getFullName());
         System.out.printf("[1] Sí deseo borrar al Profesor %s.\n", getSelectedEmployee().getFullName());
         System.out.print("¿Estas Seguro? ");
     }
-    private void clearTeacher(){
+    
+    /**
+     * Option to Delete a the actual Teacher.
+     */
+    private void deleteTeacher(){
         int decision;
         
         if(employees.size() > 1){
             do{
-                menuClear();
+                deleteMenu();
                 decision = scanner.nextInt();
 
                 if(decision == 1){
@@ -510,16 +527,11 @@ public class Menu {
             System.out.println("\nNo puede dejar a MEDAC sin Profesores.");
         }
     }
+    
     /**
      * This function will make a pause in every function executed.
      */
     private void pause(){
         scanner_string.nextLine();
-    }
-    
-    public static void main(String[] args){
-        Menu menu = new Menu();
-        
-        menu.execute();
     }
 }
