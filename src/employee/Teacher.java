@@ -12,9 +12,17 @@ package employee;
  */
 public class Teacher extends Employee{
     private String subject;
-
+    
     /**
-     * Constructor of Teacher Class
+     * Constructor of the teacher, without parameters.
+     */
+    public Teacher(){
+        super();
+        setSubject("Programming");
+    }
+    
+    /**
+     * Constructor with Parameters of Teacher Class
      * @param name (String) Name of the Teacher.
      * @param surname1 (String) 1st Surname of the Teacher.
      * @param surname2 (String) 2nd Surname of the Teacher.
@@ -24,12 +32,6 @@ public class Teacher extends Employee{
      * @param marital_status (String) Marital Status of the Teacher.
      * @param subject (String) Subject of the Teacher.
      */
-    
-    public Teacher(){
-        super();
-        setSubject("Programming");
-    }
-    
     public Teacher(String name, String surname1, String surname2, int age, int salary, String gender, String marital_status, String subject){
         super(name, surname1, surname2, age, salary, gender, marital_status);
         setSubject(subject);

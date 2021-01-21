@@ -6,7 +6,7 @@
 package employee;
 
 /**
- *  This class is about the information of a Person
+ * This class is about the information of a Person
  * @version 1.0
  * @author Alberto Marun
  */
@@ -25,6 +25,9 @@ public class Person {
     private String gender;
     private String marital_status;
     
+    /**
+     * Constructor of the Class Person without Parameters.
+     */
     public Person(){
         setName("Alberto");
         setSurname1("Marun");
@@ -34,6 +37,16 @@ public class Person {
         setMaritalStatus("Single");
     }
     
+    /**
+     * Constructor of the Class Person with Parameters.
+     * @param name (String) Name of the Teacher.
+     * @param surname1 (String) 1st Surname of the Teacher.
+     * @param surname2 (String) 2nd Surname of the Teacher.
+     * @param age (int) Age of the Teacher.
+     * @param salary (int) Salary of the Teacher.
+     * @param gender (String) Gender of the Teacher.
+     * @param marital_status (String) Marital Status of the Teacher.
+     */
     public Person(String name, String surname1, String surname2, int age, String gender, String marital_status) {
         setName(name);
         setSurname1(surname1);

@@ -16,7 +16,15 @@ public class Employee extends Person{
 
     // ATTRIBUTES OF THE CLASS
     private int salary;
-
+    
+    /**
+     * Constructor of the Class Employee without Parameters.
+     */
+    public Employee(){
+        super();
+        setSalary(1500);
+    }
+    
     /**
      * This is the constructor of the Class Employee.
      * @param name The Name of the Employee.
@@ -27,12 +35,6 @@ public class Employee extends Person{
      * @param gender The Gender of the Employee.
      * @param marital_status The Marital Status of the Employee
      */
-    
-    public Employee(){
-        super();
-        setSalary(1500);
-    }
-    
     public Employee(String name, String surname1, String surname2, int age, int salary, String gender, String marital_status){
         super(name, surname1, surname2, age, gender, marital_status);
         setSalary(salary);
