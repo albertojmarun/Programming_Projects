@@ -6,8 +6,9 @@
 package game_engine;
 
 /**
- *
- * @author DAW_16_AlbertoMarun
+ * @version 1.0
+ * @date January 26, 2021.
+ * @author Alberto J. Marun I.
  */
 public abstract class Shape2D {
     private String name;

@@ -222,11 +222,4 @@ public class Person {
             System.out.printf("Error -> %s\n", e.toString());
         }
     }
-    
-    // BORRAR CUANDO TOMAS LO REVISE
-    public static void main(String[] args){
-        Person marun = new Person("Alberto", "Marun", "Indriago", 19, "Male", "Single");
-        
-        marun.saveXML("prueba.xml");
-    }
 }

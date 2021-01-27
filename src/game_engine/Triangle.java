@@ -14,25 +14,42 @@ import java.util.Scanner;
  */
 public class Triangle extends Shape2D{
     private double base, height;
-    // PONER EN CADA FUNCION
-    Scanner scanner = new Scanner(System.in);
     
+    /**
+     * 
+     */
     public Triangle(){
         super("triangulo");
     }
     
+    /**
+     * 
+     * @param new_value 
+     */
     public void setBase(double new_value){
         this.base = new_value;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public double getBase(){
         return this.base;
     }
     
+    /**
+     * 
+     * @param new_value 
+     */
     public void setHeight(double new_value){
         this.height = new_value;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public double getHeight(){
         return this.height;
     }
@@ -42,6 +59,7 @@ public class Triangle extends Shape2D{
      */
     @Override
     public void getShapeData(){
+        Scanner scanner = new Scanner(System.in);
         double[] new_value = new double[2];
         
         do{
@@ -55,8 +73,10 @@ public class Triangle extends Shape2D{
         
         do{
             System.out.print("¿Cuál es la longitud de la altura del Triangulo? ");
-            new_value[0] = scanner.nextDouble();
-
+            new_value[1] = scanner.nextDouble();
+            
+            System.out.println();
+            
             if(new_value[1] < 0){
                 System.out.println("Debe introducir un valor mayor o igual a 0.\n");
             }

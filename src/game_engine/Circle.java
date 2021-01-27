@@ -8,21 +8,24 @@ package game_engine;
 import java.util.Scanner;
 
 /**
- *
- * @author DAW_16_AlbertoMarun
+ * @version 1.0
+ * @date January 26, 2021.
+ * @author Alberto J. Marun I.
  */
 public class Circle extends Shape2D{
     final double PI = 3.141592;
     private double radius;
-    Scanner scanner = new Scanner(System.in);
     
+    /**
+     * This is the constructor of the class Circle.
+     */
     public Circle(){
         super("circulo");
     }
     
     /**
-     * 
-     * @param new_radius 
+     * This functions set the radius of the circle.
+     * @param new_radius (double) Needs to be greater or equal to 0.
      */
     public void setRadius(double new_radius){
         if(new_radius >= 0){
@@ -31,8 +34,8 @@ public class Circle extends Shape2D{
     }
     
     /**
-     * 
-     * @return 
+     * This functions returns the actual radius of the Circle.
+     * @return (double) Actual radius of the Circle.
      */
     public double getRadius(){
         return this.radius;
@@ -43,11 +46,14 @@ public class Circle extends Shape2D{
      */
     @Override
     public void getShapeData() {
+        Scanner scanner = new Scanner(System.in);
         double new_radius;
         
         do{
             System.out.print("¿Cuál es la longitud del radio del Circulo? ");
             new_radius = scanner.nextDouble();
+            
+            System.out.println();
             
             if(new_radius < 0){
                 System.out.println("Debe introducir un valor mayor o igual a 0.\n");

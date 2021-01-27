@@ -450,7 +450,7 @@ public class Menu {
      * Add a New Teacher to the List of Employees.
      */
     private void newTeacher(){
-        selected_teacher_index++;
+        selected_teacher_index = employees.size();
         
         employees.add(selected_teacher_index, new Teacher());
         modifyWholeName(getSelectedEmployee());
@@ -477,7 +477,7 @@ public class Menu {
      */
     private void selectTeacher(){
         if(employees.size() == 1){
-            System.out.println("\nTiene seleccionado el unico empleado, debe tener +1 Empleado para poder seleccionarlo.");
+            System.out.println("\nTiene seleccionado el unico empleado, debe tener +1 Empleado para poder seleccionar otro.");
             
         } else{
             do{
@@ -533,5 +533,13 @@ public class Menu {
      */
     private void pause(){
         scanner_string.nextLine();
+    }
+    
+    public static void main(String[] args){
+        Menu menu = new Menu();
+        
+        menu.execute();
+                
+                
     }
 }
