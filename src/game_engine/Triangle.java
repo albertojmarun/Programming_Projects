@@ -16,14 +16,14 @@ public class Triangle extends Shape2D{
     private double base, height;
     
     /**
-     * 
+     * This is the constructor of the Triangle Class.
      */
     public Triangle(){
         super("triangulo");
     }
     
     /**
-     * 
+     * This function set the new value for the 
      * @param new_value 
      */
     public void setBase(double new_value){

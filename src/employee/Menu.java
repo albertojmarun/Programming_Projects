@@ -19,7 +19,7 @@ public class Menu {
     final static private int max_age = 67;
     
     private ArrayList<Teacher> employees;
-    private int selected_teacher_index = 0;
+    private int selected_teacher_index;
     private final Scanner scanner;
     private final Scanner scanner_string;
 
@@ -29,8 +29,9 @@ public class Menu {
      * Initialize the Scanner and a Scanner for Strings.
      */
     public Menu(){
+        selected_teacher_index = 0;
         employees = new ArrayList<>();
-        employees.add(0, new Teacher());
+        employees.add(selected_teacher_index, new Teacher());
         scanner = new Scanner(System.in);
         scanner_string = new Scanner(System.in);
     }
@@ -267,6 +268,7 @@ public class Menu {
             if (decrease <= 0 || decrease >= 1){
                 System.out.println("\n\tError en el Porcentaje Introducido, debe ser mayor a 0 y menor a 1 (Ejemplo 0.1)");
             }
+            
         } while(decrease <= 0 || decrease >= 1);
         teacher.reduceSalary(decrease);
 
@@ -469,6 +471,7 @@ public class Menu {
         for(int i = 0; i < employees.size(); i++){
             System.out.printf("[%d] %s\n", i, employees.get(i).getFullName());
         }
+        
         System.out.print("Seleccione a un Profesor: ");
     }
     
@@ -485,7 +488,7 @@ public class Menu {
                 selected_teacher_index = scanner.nextInt();
             
                 if(selected_teacher_index < 0 || selected_teacher_index >= employees.size()){
-                    System.out.printf("\tPorfavor seleccione un valor entre 0 y %d\n", employees.size() - 1);
+                    System.out.printf("\tPorfavor seleccione un valor entre 0 y %d (inclusive).\n", employees.size() - 1);
                 } else{
                     System.out.printf("\n\tEl empleado seleccionado es: %s\n", getSelectedEmployee().getFullName());
                 }
@@ -512,17 +515,30 @@ public class Menu {
             do{
                 deleteMenu();
                 decision = scanner.nextInt();
-
-                if(decision == 1){
-                    System.out.printf("\n\tEl profesor %s ha sido Eliminado.\n", getSelectedEmployee().getFullName());
-                    employees.remove(getSelectedEmployee());
-                    selected_teacher_index--;
-                } else if(decision == 0){
-                    System.out.printf("\n\tEl profesor %s no ha sido Eliminado.\n", getSelectedEmployee().getFullName());
-                } else{
-                    System.out.println("\n\t Porfavor seleccione una opcion entre 0 y 1");
+                
+                switch(decision){
+                    
+                    case 0:
+                        System.out.printf("\n\tEl profesor %s no ha sido Eliminado.\n", getSelectedEmployee().getFullName());
+                        break;
+                        
+                    case 1:
+                        System.out.printf("\n\tEl profesor %s ha sido Eliminado.\n", getSelectedEmployee().getFullName());
+                        employees.remove(getSelectedEmployee());
+                        selected_teacher_index--;
+                    
+                        if(selected_teacher_index < 0){
+                            selected_teacher_index = 0;
+                        }
+                        
+                        break;
+                        
+                    default:
+                        System.out.println("\n\t Porfavor seleccione una opcion entre 0 y 1");
+                        break;
                 }
-            } while(decision != 1 && decision != 0);   
+            } while(decision != 1 && decision != 0);
+            
         } else {
             System.out.println("\nNo puede dejar a MEDAC sin Profesores.");
         }
@@ -533,13 +549,5 @@ public class Menu {
      */
     private void pause(){
         scanner_string.nextLine();
-    }
-    
-    public static void main(String[] args){
-        Menu menu = new Menu();
-        
-        menu.execute();
-                
-                
     }
 }

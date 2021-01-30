@@ -42,7 +42,7 @@ public class Circle extends Shape2D{
     }
     
     /**
-     * 
+     * This functions ask the user to introduce the radius of the circle, needs to be equal or greater than 0.
      */
     @Override
     public void getShapeData() {
@@ -65,8 +65,8 @@ public class Circle extends Shape2D{
     }
     
     /**
-     * 
-     * @return 
+     * This functions returns the Area of a Circle with the formula (radius^2 * PI).
+     * @return (double) Area of the Circle.
      */
     @Override
     public double getArea(){
