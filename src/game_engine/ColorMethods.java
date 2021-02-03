@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 /**
  * @version 1.0
- * @param <C>
+ * @param <C> Class that implements the Interface Colorful.
  * @date January 26, 2021.
  * @author Alberto J. Marun I.
  */

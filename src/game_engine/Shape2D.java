@@ -23,13 +23,13 @@ public abstract class Shape2D implements Colorful {
      */
     public Shape2D(String new_name){
        setName(new_name);
-        red = 0;
-        green = 0;
-        blue = 0;
+        red = MINIMUM_VALUE_OF_COLOR;
+        green = MINIMUM_VALUE_OF_COLOR;
+        blue = MINIMUM_VALUE_OF_COLOR;
     }
     
     /**
-     * Stablish the Name 
+     * Stablish the Name of the Shape.
      * @param new_name (String) Name of the new Shape.
      */
     private void setName(String new_name){
@@ -59,7 +59,7 @@ public abstract class Shape2D implements Colorful {
     /**
      * Function that check if the value entered is between the Minimum and Maximum.
      * @param new_value (int) Value to check if it is between the min and max (inclusive).
-     * @return (int) value entered 
+     * @return (int) value entered by y
      */
     private int setValue(int new_value){
         if(new_value < MINIMUM_VALUE_OF_COLOR){

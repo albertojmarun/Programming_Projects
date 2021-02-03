@@ -23,39 +23,43 @@ public class Triangle extends Shape2D{
     }
     
     /**
-     * This function set the new value for the 
-     * @param new_value 
+     * This function set the new value for the base of the Triangle.
+     * @param new_value (double) new value to assign to the base of the triangle (greater or equal to zero).
      */
     public void setBase(double new_value){
-        this.base = new_value;
+        if(new_value >= 0){
+            this.base = new_value;   
+        }
     }
     
     /**
-     * 
-     * @return 
+     * This function return the actual value of the base of the triangle.
+     * @return (double) Actual value of the base of the Triangle.
      */
     public double getBase(){
         return this.base;
     }
     
     /**
-     * 
-     * @param new_value 
+     * This function set the new value to the height of the triangle.
+     * @param new_value (double) new value to assign to the height of the triangle (greater or equal to zero).
      */
     public void setHeight(double new_value){
-        this.height = new_value;
+        if(new_value >= 0){
+            this.height = new_value;   
+        }
     }
     
     /**
-     * 
-     * @return 
+     * This function return the actual value of the height of the triangle.
+     * @return (double) Actual value of the height of the Triangle.
      */
     public double getHeight(){
         return this.height;
     }
     
     /**
-     * 
+     * Set the base and height of the Triangle.
      */
     @Override
     public void getShapeData(){
@@ -87,8 +91,8 @@ public class Triangle extends Shape2D{
     }
     
     /**
-     * 
-     * @return 
+     * This function returns the Area of the Triangle with the equation ((Height * Base) / 2)
+     * @return (double) Area of the Triangle following the formula.
      */
     @Override
     public double getArea(){
