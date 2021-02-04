@@ -29,12 +29,17 @@ public class Person {
      * Constructor of the Class Person without Parameters.
      */
     public Person(){
-        setName("Alberto");
-        setSurname1("Marun");
-        setSurname2("Indriago");
-        setAge(19);
-        setGender("Male");
-        setMaritalStatus("Single");
+        try{
+            setName("Alberto");
+            setSurname1("Marun");
+            setSurname2("Indriago");
+            setAge(19);
+            setGender("Male");
+            setMaritalStatus("Single");
+            
+        } catch(Exception error){
+            System.out.println(error);
+        }
     }
     
     /**
@@ -47,13 +52,17 @@ public class Person {
      * @param gender (String) Gender of the Teacher.
      * @param marital_status (String) Marital Status of the Teacher.
      */
-    public Person(String name, String surname1, String surname2, int age, String gender, String marital_status) {
-        setName(name);
-        setSurname1(surname1);
-        setSurname2(surname2);
-        setAge(age);
-        setGender(gender);
-        setMaritalStatus(marital_status);
+    public Person(String name, String surname1, String surname2, int age, String gender, String marital_status){
+        try{
+            setName(name);
+            setSurname1(surname1);
+            setSurname2(surname2);
+            setAge(age);
+            setGender(gender);
+            setMaritalStatus(marital_status);
+        } catch (Exception error){
+            System.out.println(error);
+        }
     }
 
     // GETTERS
@@ -116,31 +125,49 @@ public class Person {
     // SETTERS
     /**
      * Establishes the name of the Person if it is between 0 and 50 characters.
-     * @param input_name The Name of the Person entered by the user.
+     * @param new_value The Name of the Person entered by the user.
+     * @throws java.lang.Exception
      */
-    public void setName(String input_name){
-        if(input_name.length() > min_characters && input_name.length() < max_characters){
-            this.name = input_name;
+    public void setName(String new_value) throws Exception {
+        if(new_value.length() > min_characters && new_value.length() < max_characters){
+            this.name = new_value;
+        } else if (new_value.length() >= max_characters){
+            throw new Exception("El nombre es demasiado largo");
+            
+        } else if (new_value.length() <= min_characters){
+            throw new Exception("El nombre es demasiado corto");
         }
     }
 
     /**
      * Establishes the 1st Surname of the Person if it is between 0 and 50 characters.
-     * @param input_surname The 1st surname of the Person entered by the user.
+     * @param new_value The 1st surname of the Person entered by the user.
+     * @throws java.lang.Exception
      */
-    public void setSurname1(String input_surname){
-        if(input_surname.length() > min_characters && input_surname.length() < max_characters){
-            this.surname_1 = input_surname;
+    public void setSurname1(String new_value) throws Exception{
+        if(new_value.length() > min_characters && new_value.length() < max_characters){
+            this.surname_1 = new_value;
+        } else if (new_value.length() >= max_characters){
+            throw new Exception("El 1er Apellido es demasiado largo");
+            
+        } else if (new_value.length() <= min_characters){
+            throw new Exception("El 1er Apellido es demasiado corto");
         }
     }
 
     /**
      * Establishes the 2nd Surname of the Person if it is between 0 and 50 characters.
-     * @param input_surname The 2nd Surname of the Person entered by the user.
+     * @param new_value The 2nd Surname of the Person entered by the user.
+     * @throws java.lang.Exception
      */
-    public void setSurname2(String input_surname){
-        if(input_surname.length() > min_characters && input_surname.length() < max_characters){
-            this.surname_2 = input_surname;
+    public void setSurname2(String new_value) throws Exception {
+            if(new_value.length() > min_characters && new_value.length() < max_characters){
+            this.surname_2 = new_value;
+        } else if (new_value.length() >= max_characters){
+            throw new Exception("El nombre es demasiado largo");
+            
+        } else if (new_value.length() <= min_characters){
+            throw new Exception("El nombre es demasiado corto");
         }
     }
 

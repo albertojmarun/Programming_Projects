@@ -18,8 +18,8 @@ public class UserInput {
     private final static Scanner USER_INPUT_STRING = new Scanner(System.in);
     
     /**
-     * 
-     * @return 
+     * This function get an Integer and if there is an Exception will repeat until is true.
+     * @return (int) the number introduced by the user.
      */
     public static int getInt(){
         boolean condition;
@@ -41,8 +41,8 @@ public class UserInput {
     }
     
     /**
-     * 
-     * @return 
+     * This function get a Double entered by the user inside the function without crashing if it is not a double.
+     * @return (double) the number introduced by the user.
      */
     public static double getDouble(){
         boolean condition;
@@ -63,6 +63,10 @@ public class UserInput {
         return variable;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public static boolean getBoolean(){
         boolean condition;
         boolean variable = false;
@@ -82,6 +86,10 @@ public class UserInput {
         return variable;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public static char getChar(){
         boolean condition;
         char variable = ' ';
@@ -101,6 +109,10 @@ public class UserInput {
         return variable;
     }
     
+    /**
+     * 
+     * @return 
+     */
     public static String getString(){
         boolean condition;
         String variable = " ";
@@ -118,23 +130,5 @@ public class UserInput {
         } while(!condition);
         
         return variable;
-    }
-    
-    public static void main(String[] args){
-        
-        System.out.println("INT");
-        getInt();
-        
-        System.out.println("DOUBLE");
-        getDouble();
-        
-        System.out.println("BOOLEAN");
-        getBoolean();
-        
-        System.out.println("CHAR");
-        getChar();
-        
-        System.out.println("STRING");
-        getString();
     }
 }
