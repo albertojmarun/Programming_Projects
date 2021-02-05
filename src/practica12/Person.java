@@ -126,7 +126,7 @@ public class Person {
     /**
      * Establishes the name of the Person if it is between 0 and 50 characters.
      * @param new_value The Name of the Person entered by the user.
-     * @throws java.lang.Exception
+     * @throws java.lang.Exception in the case that the String is empty or have more than 50 characters (inclusive).
      */
     public void setName(String new_value) throws Exception {
         if(new_value.length() > min_characters && new_value.length() < max_characters){
@@ -142,7 +142,7 @@ public class Person {
     /**
      * Establishes the 1st Surname of the Person if it is between 0 and 50 characters.
      * @param new_value The 1st surname of the Person entered by the user.
-     * @throws java.lang.Exception
+     * @throws java.lang.Exception in the case that the String is empty or have more than 50 characters (inclusive).
      */
     public void setSurname1(String new_value) throws Exception{
         if(new_value.length() > min_characters && new_value.length() < max_characters){
@@ -158,46 +158,58 @@ public class Person {
     /**
      * Establishes the 2nd Surname of the Person if it is between 0 and 50 characters.
      * @param new_value The 2nd Surname of the Person entered by the user.
-     * @throws java.lang.Exception
+     * @throws java.lang.Exception in the case that the String is empty or have more than 50 characters (inclusive).
      */
     public void setSurname2(String new_value) throws Exception {
             if(new_value.length() > min_characters && new_value.length() < max_characters){
             this.surname_2 = new_value;
         } else if (new_value.length() >= max_characters){
-            throw new Exception("El nombre es demasiado largo");
+            throw new Exception("El Segundo Apellido es demasiado largo");
             
         } else if (new_value.length() <= min_characters){
-            throw new Exception("El nombre es demasiado corto");
+            throw new Exception("El Segundo apellido es demasiado corto");
         }
     }
 
     /**
      * Establishes the Age of the Person (Always need to be between 18 and 67, inclusive).
-     * @param input_age The Age of the Person entered by the user.
+     * @param new_value The Age of the Person entered by the user.
+     * @throws java.lang.Exception in the case that the age is less than the minimun or greater than the maximum.
      */
-    public void setAge(int input_age){
-        if(input_age >= min_age && input_age <= max_age){
-            this.age = input_age;
+    public void setAge(int new_value) throws Exception{
+        if(new_value >= min_age && new_value <= max_age){
+            this.age = new_value;
+        } else if (new_value < min_age){
+            throw new Exception("La edad debe ser mayor o igual a los " + min_age +" años de edad");
+            
+        } else if (new_value > max_age){
+            throw new Exception("La edad debe ser menor o igual a los " + max_age +" años de edad");
         }
     }
 
     /**
      * Establishes the gender of the Person (It needs to be Male, Female or Non-Binary)
-     * @param input_gender The Gender of the Person selected by the user between Male, Female or Non-Binary.
+     * @param new_value The Gender of the Person selected by the user between Male, Female or Non-Binary.
+     * @throws java.lang.Exception in the case that the gender doesnt match any of the valid genders.
      */
-    public void setGender(String input_gender){
-        if( input_gender.equals("Male") || input_gender.equals("Female") || input_gender.equals("Non-Binary") ){
-            this.gender = input_gender;
+    public void setGender(String new_value) throws Exception{
+        if( new_value.equals("Male") || new_value.equals("Female") || new_value.equals("Non-Binary") ){
+            this.gender = new_value;
+        } else {
+            throw new Exception("Genero Incorrecto (Debe ser Ingles).");
         }
     }
 
     /**
-     * Establishes the Marital Status of the Person
-     * @param input_marital_status Is the Marital Status of the Person selected by the user between Married, Widowed, Divorced or Single
+     * Establishes the Marital Status of the Person.
+     * @param new_value Is the Marital Status of the Person selected by the user between Married, Widowed, Divorced or Single.
+     * @throws java.lang.Exception in the case that the gender doesnt match any of the valid genders.
      */
-    public void setMaritalStatus(String input_marital_status){
-        if( input_marital_status.equals("Married") || input_marital_status.equals("Widowed") || input_marital_status.equals("Divorced") || input_marital_status.equals("Single")){
-            this.marital_status = input_marital_status;
+    public void setMaritalStatus(String new_value) throws Exception{
+        if( new_value.equals("Married") || new_value.equals("Widowed") || new_value.equals("Divorced") || new_value.equals("Single")){
+            this.marital_status = new_value;
+        } else {
+            throw new Exception("Estado Civil Incorrecto (Debe ser Ingles).");
         }
     }
 }

@@ -18,7 +18,12 @@ public class Teacher extends Employee{
      */
     public Teacher(){
         super();
-        setSubject("Programming");
+        
+        try{
+            setSubject("Programming");
+        } catch (Exception e){
+            System.out.println(e);
+        }
     }
     
     /**
@@ -34,19 +39,35 @@ public class Teacher extends Employee{
      */
     public Teacher(String name, String surname1, String surname2, int age, int salary, String gender, String marital_status, String subject){
         super(name, surname1, surname2, age, salary, gender, marital_status);
-        setSubject(subject);
+        
+        try{
+            setSubject(subject);
+        } catch (Exception e){
+            System.out.println(e);
+        }
     }
 
     /**
      * This function assign the value fo the Subject of the Teacher.
      * @param subject The subject that Teacher is teaching.
+     * @throws java.lang.Exception if the Subject doesn't match with any option, have an error.
      */
-    public void setSubject(String subject){
+    public void setSubject(String subject) throws Exception{
         if(subject.equals("Programming") || subject.equals("Marked Languages") || subject.equals("Computer Systems") || subject.equals("FOL") || subject.equals("Development Enviroment") || subject.equals("Data Bases")){
             this.subject = subject;
+        } else{
+            throw new Exception("Asginatura no disponible (Tiene que ser en Ingles)");
         }
     }
-
+    
+    /**
+     * This function give the access to the subject of the Teacher.
+     * @return the value of the subject that the Teacher is teaching.
+     */
+    public String getSubject(){
+        return this.subject;
+    }
+    
     /**
      * Return a Message with all the information about the Employee.
      * @return the whole information about Employee with type String.
@@ -126,13 +147,4 @@ public class Teacher extends Employee{
 
         return message;
     }
-
-    /**
-     * This function give the access to the subject of the Teacher.
-     * @return the value of the subject that the Teacher is teaching.
-     */
-    public String getSubject(){
-        return this.subject;
-    }
-
 }

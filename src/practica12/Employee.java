@@ -22,7 +22,12 @@ public class Employee extends Person{
      */
     public Employee(){
         super();
-        setSalary(1500);
+        
+        try{
+            setSalary(1500);   
+        } catch(Exception e){
+            System.out.println(e);
+        }
     }
     
     /**
@@ -37,10 +42,14 @@ public class Employee extends Person{
      */
     public Employee(String name, String surname1, String surname2, int age, int salary, String gender, String marital_status){
         super(name, surname1, surname2, age, gender, marital_status);
-        setSalary(salary);
+        
+        try{
+            setSalary(salary);   
+        } catch(Exception e){
+            System.out.println(e);
+        }
     }
 
-    // GETTERS:
     /**
      * Return the salary of the Employee.
      * @return The value of the (int) salary.
@@ -48,15 +57,17 @@ public class Employee extends Person{
     public int getSalary(){
         return salary;
     }
-
-    // SETTERS
+    
     /**
      * Establishes the salary of the Employee (It needs to be equal or greater than Minimum Salary)
-     * @param input_salary The Salary of the Employee entered by the user.
+     * @param new_value The Salary of the Employee entered by the user.
+     * @throws java.lang.Exception
      */
-    public void setSalary(int input_salary){
-        if(input_salary >= min_salary){
-            this.salary = input_salary;
+    public void setSalary(int new_value) throws Exception{
+        if(new_value >= min_salary){
+            this.salary = new_value;
+        } else{
+            throw new Exception("El salario debe ser mayor o igual salario mínimo: " + min_salary + "€.");
         }
     }
 
@@ -73,25 +84,37 @@ public class Employee extends Person{
             final_salary = (int) (getSalary() + (getSalary() * increase));
         }
 
-        setSalary(final_salary);
+        try{
+            setSalary(final_salary);
+        } catch(Exception e){
+            System.out.println(e);
+        }
     }
 
     /**
      * Reduce the Salary of the Employee, by a decreasing % entered by the user.
      * @param decrease The % of the decrease to apply to the salary, entered by the user.
+     * @throws java.lang.Exception if the decrease % is to low (less than 0) or to high (higher than 1).
      */
-    public void reduceSalary(double decrease){
-        int final_salary;
-
-        final_salary = getSalary();
+    public void reduceSalary(double decrease) throws Exception{
+        int final_salary = getSalary();
+        
         if ( decrease > 0 && decrease < 1) {
             final_salary = (int) (getSalary() - (getSalary() * decrease));
+        } else if(decrease < 0){
+            throw new Exception("The decrease % is to low (format follows next example 0.80 is equal to 80%)");
+        } else if(decrease > 1){
+            throw new Exception("The decrease % is to high (format follows next example 0.80 is equal to 80%)");
         }
 
         if (final_salary < min_salary){
             final_salary = min_salary;
         }
 
-        setSalary(final_salary);
+        try{
+            setSalary(final_salary);
+        } catch(Exception e){
+            System.out.println(e);
+        }
     }
 }
