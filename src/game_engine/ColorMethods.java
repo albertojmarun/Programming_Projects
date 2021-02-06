@@ -18,7 +18,7 @@ public class ColorMethods<C extends Colorful>{
     /**
      * This function sets the value for colors Red, Green and Blue in the RGB System.
      * @param <C> Class that implements the Interface Colorful.
-     * @param colors 
+     * @param colors (Shape) to Modify its values for the colors in the RGB System.
      */
     static public <C extends Colorful> void setColor(C colors){
         Scanner scanner = new Scanner(System.in);
@@ -44,7 +44,7 @@ public class ColorMethods<C extends Colorful>{
     /**
      * This function shows the value for the Red, Green and Blue at the RGB System.
      * @param <C> Class that implements the Interface Colorful.
-     * @param colors 
+     * @param colors (Shape) to show its values for the colors in the RGB System.
      */
     static public <C extends Colorful> void showColor(C colors){
         System.out.printf("Color: [R: %d, G: %d, B: %d]\n\n", colors.getRed(), colors.getGreen(), colors.getBlue());
