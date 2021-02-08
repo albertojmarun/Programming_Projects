@@ -5,6 +5,8 @@
  */
 package practica12;
 
+// HAY QUE HACER TODA LA PRACTICA CON LA CLASE USER INPUT
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -49,7 +51,6 @@ public class Menu {
      */
     public void execute(){
         int option = 0;
-        boolean condition;
         
         do {
             try{
@@ -58,42 +59,42 @@ public class Menu {
 
                 switch (option){
                     case 0: // [0] SHOW INFORMATION OF EMPLOYEE.
-                        showInformationOfTeacher(getSelectedEmployee());
+                        showInformationOfTeacher();
                         pause();
                         break;
 
                     case 1: // [1] MODIFY THE WHOLE NAME OF THE EMPLOYEE.
-                        modifyWholeName(getSelectedEmployee());
+                        modifyWholeName();
                         pause();
                         break;
 
                     case 2: // [2] MODIFY THE AGE OF THE EMPLOYEE.
-                        modifyAge(getSelectedEmployee());
+                        modifyAge();
                         pause();
                         break;
 
                     case 3: // [3] INCREASE THE SALARY OF THE EMPLOYEE.
-                        increaseSalary(getSelectedEmployee());
+                        increaseSalary();
                         pause();
                         break;
 
                     case 4: // [4] DECREASE THE SALARY OF THE EMPLOYEE.
-                        decreaseSalary(getSelectedEmployee());
+                        decreaseSalary();
                         pause();
                         break;
 
                     case 5: // [5] MODIFY THE GENDER OF THE EMPLOYEE.
-                        modifyGender(getSelectedEmployee());
+                        modifyGender();
                         pause();
                         break;
 
                     case 6: // [6] MODIFY THE CIVIL STATUS OF THE EMPLOYEE.
-                        modifyCivilStatus(getSelectedEmployee());
+                        modifyCivilStatus();
                         pause();
                         break;
 
                     case 7: // [7] MODIFY THE SUBJECT OF THE TEACHER.
-                        modifySubject(getSelectedEmployee());
+                        modifySubject();
                         pause();
                         break;
 
@@ -103,7 +104,6 @@ public class Menu {
                         break;
 
                     case 9: // [9] SELECT ANOTHER EMPLOYEE.
-                        condition = false;
                         selectTeacher();
                         pause();
                         break;
@@ -114,8 +114,7 @@ public class Menu {
                         break;
                     
                     case 11: // [11] FINISH THE MENU.
-                        System.out.println("\n¡Hasta Luego! Muchas Gracias.\n");
-                        System.out.println("===========================\n");
+                        goodBye();
                         break;   
                 }
             } catch(Exception e){
@@ -147,7 +146,7 @@ public class Menu {
         System.out.println("[10] Eliminar al Empleado Seleccionado.");
         System.out.println("[11] Salir.");
 
-        System.out.print("\tSelecciona una opción: ");
+        System.out.print("\nSelecciona una opción: ");
     }
 
     /**
@@ -156,13 +155,13 @@ public class Menu {
      * @throws 
      */
     private int selectOption() throws Exception{
-        int option;
-
+        int option = 0;
+        
         printMenu();
-        option = scanner.nextInt();
+        option = UserInput.getInt();
         
         if(option < 0 || option > 11){
-            throw new Exception("\nDebe seleccionar una opcion entre 0 y 11");
+            throw new Exception("\n\tDebe seleccionar una opcion entre 0 y 11");
         }
         
         return option;
@@ -170,44 +169,42 @@ public class Menu {
 
     /**
      * This function will show the Information of the Teacher (Option 0).
-     * @param teacher All the information of the Teacher.
      */
-    private void showInformationOfTeacher(Teacher teacher){
-        String information;
-
-        information = teacher.toString();
-
-        System.out.println(information);
+    private void showInformationOfTeacher(){
+        
+        System.out.println(getSelectedEmployee().toString());
+    
     }
 
     /**
      * This function will Modify the whole name of the Teacher (Option 1).
-     * @param teacher All the information of the Teacher.
      */
-    private void modifyWholeName(Teacher teacher){
+    private void modifyWholeName(){
         String new_value;
         boolean condition = false;
         
         do{
             System.out.print("\nIntroduce el nuevo nombre del Empleado: ");
-            new_value = scanner_string.nextLine();
+            new_value = UserInput.getString();
             
             try {
-                teacher.setName(new_value);
+                getSelectedEmployee().setName(new_value);
                 condition = true;
+                
             } catch (Exception e){
                 System.out.println(e.getMessage());
             }
+            
         } while(!condition);
 
         condition = false;
         
         do{
             System.out.print("\nIntroduce el nuevo Primer Apellido del Empleado: ");
-            new_value = scanner_string.nextLine();
+            new_value = UserInput.getString();
 
             try {
-                teacher.setSurname1(new_value);
+                getSelectedEmployee().setSurname1(new_value);
                 condition = true;
             } catch (Exception e){
                 System.out.println(e.getMessage());
@@ -219,10 +216,10 @@ public class Menu {
         
         do{
             System.out.print("\nIntroduce el nuevo Segundo Apellido del Empleado: ");
-            new_value = scanner_string.nextLine();
+            new_value = UserInput.getString();
 
             try {
-                teacher.setSurname2(new_value);
+                getSelectedEmployee().setSurname2(new_value);
                 condition = true;
                 
             } catch (Exception e){
@@ -231,23 +228,22 @@ public class Menu {
             
         } while(!condition);
 
-        System.out.printf("\n\tEl Nuevo nombre del Empleado: %s.\n", teacher.getFullName());
+        System.out.printf("\n\tEl Nuevo nombre del Empleado: %s.\n", getSelectedEmployee().getFullName());
     }
 
     /**
      * This function will Modify the age of the Teacher (Option 2).
-     * @param teacher All the information of the Teacher.
      */
-    private void modifyAge(Teacher teacher){
+    private void modifyAge(){
         int age;
         boolean condition = false;
         
         do{
             try{
                 System.out.print("\nIntroduce la nueva edad del Empleado: ");
-                age = scanner.nextInt();
+                age = UserInput.getInt();
                 
-                teacher.setAge(age);
+                getSelectedEmployee().setAge(age);
                 condition = true;
                 
             } catch (Exception e){
@@ -256,14 +252,13 @@ public class Menu {
 
         } while(!condition);
         
-        System.out.printf("\n\tLa nueva edad de %s, es %d.\n", teacher.getFullName(), teacher.getAge());
+        System.out.printf("\n\tLa nueva edad de %s, es %d.\n", getSelectedEmployee().getFullName(), getSelectedEmployee().getAge());
     }
 
     /**
      * This function will increase the Salary of the Teacher (Option 3).
-     * @param teacher All the information of the Teacher.
      */
-    private void increaseSalary(Teacher teacher){
+    private void increaseSalary(){
         double increase;
         boolean condition = false;
         
@@ -272,7 +267,7 @@ public class Menu {
                 System.out.print("\nIntroduce el % de aumento de salario: ");
                 increase = scanner.nextDouble();
                 
-                teacher.increaseSalary(increase);
+                getSelectedEmployee().increaseSalary(increase);
                 condition = true;
                 
             } catch(Exception e){
@@ -280,7 +275,7 @@ public class Menu {
             }
         } while(!condition);
 
-        System.out.printf("\n\tEl nuevo salario de %s es %d luego de aplicar el aumento.\n", teacher.getFullName(), teacher.getSalary());
+        System.out.printf("\n\tEl nuevo salario de %s es %d luego de aplicar el aumento.\n", getSelectedEmployee().getFullName(), getSelectedEmployee().getSalary());
 
     }
 
@@ -288,7 +283,7 @@ public class Menu {
      * This function will decrease the Salary of the Teacher (Option 4).
      * @param teacher All the information of the Teacher.
      */
-    private void decreaseSalary(Teacher teacher) {
+    private void decreaseSalary() {
         double decrease;
         boolean condition = false;
         
@@ -297,22 +292,23 @@ public class Menu {
                 System.out.print("\nIntroduce el % de baja en el salario: ");
                 decrease = scanner.nextDouble(); 
                 
-                teacher.reduceSalary(decrease);
+                getSelectedEmployee().reduceSalary(decrease);
                 condition = true;
+                
             } catch(Exception e){
                 System.out.println(e.getMessage());
             }
             
         } while(!condition);
 
-        System.out.printf("\n\tEl nuevo salario de %s es %d luego de aplicarle la baja salarial.\n", teacher.getFullName(), teacher.getSalary());
+        System.out.printf("\n\tEl nuevo salario de %s es %d luego de aplicarle la baja salarial.\n", getSelectedEmployee().getFullName(), getSelectedEmployee().getSalary());
     }
     
     /**
      * Add the New Salary to the new Teacher. 
      * @param teacher (Teacher) That will have a new salary.
      */
-    private void modifySalary(Teacher teacher){
+    private void modifySalary(){
         int salary;
         boolean condition = false;
         
@@ -321,7 +317,7 @@ public class Menu {
                 System.out.print("\nIntroduce el Nuevo Salario del Empleado: ");
                 salary = scanner.nextInt();
                 
-                teacher.setSalary(salary);
+                getSelectedEmployee().setSalary(salary);
                 condition = true;
                 
             } catch(Exception e){
@@ -330,7 +326,7 @@ public class Menu {
             
         } while(!condition);
 
-        System.out.printf("\n\tEl nuevo salario de %s es %d€.\n", teacher.getFullName(), teacher.getSalary());
+        System.out.printf("\n\tEl nuevo salario de %s es %d€.\n", getSelectedEmployee().getFullName(), getSelectedEmployee().getSalary());
     }
     
     /**
@@ -345,36 +341,52 @@ public class Menu {
     }
 
     /**
-     * This function will modify the Gender of the Teacher (Option 5).
-     * @param teacher All the information of the Teacher.
+     * This functions selects the String that correspond to an option by number for the gender.
+     * @param option (int) Gender selected by number.
+     * @return (String) Gender selected in String format.
      */
-    private void modifyGender(Teacher teacher){
-        int gender_option;
-
-        do{
-            genderMenu();
-            gender_option = scanner.nextInt();
-
-            if(gender_option < 0 || gender_option > 2){
-                System.out.println("\n\tSeleccionaste una opción incorrecta.\n");
-            }
-        }while(gender_option < 0 || gender_option > 2);
-
-        switch (gender_option){
+    private String selectGender(int option){
+        String selected_option = "";
+        
+        switch (option){
             case 0:
-                teacher.setGender("Male");
+                selected_option = "Male";
                 break;
 
             case 1:
-                teacher.setGender("Female");
+                selected_option = "Female";
                 break;
 
             case 2:
-                teacher.setGender("Non-Binary");
+                selected_option = "Non-Binary";
                 break;
         }
-
-        System.out.printf("\n\tEl nuevo género del Empleado %s es %s.\n", teacher.getFullName(), teacher.getGender());
+        
+        return selected_option;
+    }
+    
+    /**
+     * This function will modify the Gender of the Teacher (Option 5).
+     */
+    private void modifyGender(){
+        int gender_option;
+        boolean condition = false;
+        
+        do{
+            try{
+                genderMenu();
+                gender_option = scanner.nextInt();
+            
+                getSelectedEmployee().setGender(selectGender(gender_option));
+                condition = true;
+                
+            } catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+            
+        }while(!condition);
+        
+        System.out.printf("\n\tEl nuevo género del Empleado %s es %s.\n", getSelectedEmployee().getFullName(), getSelectedEmployee().getGender());
     }
 
     /**
@@ -391,64 +403,56 @@ public class Menu {
 
     /**
      * This function will modify the Civil Status of the Teacher (Option 6).
-     * @param teacher All the information of the Teacher.
      */
-    private void modifyCivilStatus(Teacher teacher){
+    private void modifyCivilStatus(){
         int civil_status_option;
-        
+        boolean condition = false;
+
         do{
-            civilStatusMenu();
-            civil_status_option = scanner.nextInt();
+            try{
+               civilStatusMenu();
+               civil_status_option = scanner.nextInt();
 
-            if(civil_status_option < 0 || civil_status_option > 3){
-                System.out.println("\n\tSeleccionaste una opción incorrecta.\n");
-            }
-        } while(civil_status_option < 0 || civil_status_option > 3);
-
-        switch (civil_status_option){
-            case 0:
-                teacher.setMaritalStatus("Married");
-                break;
-
-            case 1:
-                teacher.setMaritalStatus("Widowed");
-                break;
-
-            case 2:
-                teacher.setMaritalStatus("Divorced");
-                break;
-
-            case 3:
-                teacher.setMaritalStatus("Single");
-                break;
-        }
-
-        if(civil_status_option >= 0 && civil_status_option <= 3){
-            System.out.printf("\n\tEl nuevo Estado Civil del Empleado %s es %s.\n", teacher.getFullName(), teacher.getMaritalStatus());
-        }
+               getSelectedEmployee().setMaritalStatus(selectMaritalStatus(civil_status_option));
+               condition = true;
+               
+            } catch(Exception e){
+               System.out.println(e.getMessage());   
+            }   
+        } while(!condition);
+        
+        System.out.printf("\n\tEl nuevo Estado Civil del Empleado %s es %s.\n", getSelectedEmployee().getFullName(), getSelectedEmployee().getMaritalStatus());
     }
     
+    /**
+     * This function pass from a int to a String gived by a list of option.
+     * @param option (int) Marital Status selected.
+     * @return (String) With the Marital Status selected in String format.
+     */
     private String selectMaritalStatus(int option){
         String selected_option = "";
         
-        switch (civil_status_option){
+        switch (option){
             case 0:
-                teacher.setMaritalStatus("Married");
+                selected_option = "Married";
                 break;
 
             case 1:
-                teacher.setMaritalStatus("Widowed");
+                selected_option = "Widowed";
                 break;
 
             case 2:
-                teacher.setMaritalStatus("Divorced");
+                selected_option = "Divorced";
                 break;
 
             case 3:
-                teacher.setMaritalStatus("Single");
+                selected_option = "Single";
                 break;
         }
+        
+        return selected_option;
     }
+    
     /**
      * This is the Menu of the modifySubject function.
      */
@@ -464,9 +468,9 @@ public class Menu {
     }
     
     /**
-     * 
-     * @param option
-     * @return 
+     * This function pass from a int to a String gived by a list of option.
+     * @param option (int) Subject selected.
+     * @return (String) With the Subject selected in String format.
      */
     private String selectSubject(int option){
         String selected_subject = "";
@@ -501,9 +505,8 @@ public class Menu {
     }
     /**
      * This function will modify the Subject of the Teacher (Option 7).
-     * @param teacher All the information of the Teacher.
      */
-    private void modifySubject(Teacher teacher){
+    private void modifySubject(){
         int subject_option;
         boolean condition = false;
         
@@ -512,14 +515,14 @@ public class Menu {
                 subjectMenu();
                 subject_option = scanner.nextInt();
                 
-                teacher.setSubject(selectSubject(subject_option));
+                getSelectedEmployee().setSubject(selectSubject(subject_option));
                 condition = true;
             } catch(Exception e){
                 System.out.println(e.getMessage());
             }
         } while(!condition);
 
-        System.out.printf("\n\tLa nueva materia del maestro %s es %s.\n", teacher.getFullName(), teacher.getSubject());
+        System.out.printf("\n\tLa nueva materia del maestro %s es %s.\n", getSelectedEmployee().getFullName(), getSelectedEmployee().getSubject());
     }
     
     /**
@@ -529,12 +532,12 @@ public class Menu {
         selected_teacher_index = employees.size();
         
         employees.add(selected_teacher_index, new Teacher());
-        modifyWholeName(getSelectedEmployee());
-        modifyAge(getSelectedEmployee());
-        modifySalary(getSelectedEmployee());
-        modifyGender(getSelectedEmployee());
-        modifyCivilStatus(getSelectedEmployee());
-        modifySubject(getSelectedEmployee());
+        modifyWholeName();
+        modifyAge();
+        modifySalary();
+        modifyGender();
+        modifyCivilStatus();
+        modifySubject();
     }
     
     /**
@@ -582,7 +585,7 @@ public class Menu {
     
     /**
      * Option to Delete a the actual Teacher.
-     * @throws java.lang.Exception 
+     * @throws java.lang.Exception if the decision is not between 1 and 0 (inclusive) make an advice.
      */
     private void deleteTeacher() throws Exception{
         int decision;
@@ -609,13 +612,20 @@ public class Menu {
                 
                 default:
                     throw new Exception("Debe seleccionar una opcion entre Eliminar(1) o No Eliminar (0) al empleado");
-//                break;
+                // break;
             }
         } else {
             System.out.println("\nNo puede dejar a MEDAC sin Profesores.");
         }
     }
     
+    /**
+     * Function to say Good Bye to the User.
+     */
+    private void goodBye(){
+        System.out.println("\n¡Hasta Luego! Muchas Gracias.\n");
+        System.out.println("===========================\n");
+    }
     /**
      * This function will make a pause in every function executed.
      */

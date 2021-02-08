@@ -133,10 +133,10 @@ public class Person {
             this.name = new_value;
             
         } else if (new_value.length() >= max_characters){
-            throw new Exception("El nombre es demasiado largo");
+            throw new Exception("\n\tEl nombre es demasiado largo");
             
         } else if (new_value.length() <= min_characters){
-            throw new Exception("El nombre es demasiado corto");
+            throw new Exception("\n\tEl nombre es demasiado corto");
         }
     }
 
@@ -149,10 +149,10 @@ public class Person {
         if(new_value.length() > min_characters && new_value.length() < max_characters){
             this.surname_1 = new_value;
         } else if (new_value.length() >= max_characters){
-            throw new Exception("El 1er Apellido es demasiado largo");
+            throw new Exception("\n\tEl 1er Apellido es demasiado largo");
             
         } else if (new_value.length() <= min_characters){
-            throw new Exception("El 1er Apellido es demasiado corto");
+            throw new Exception("\n\tEl 1er Apellido es demasiado corto");
         }
     }
 
@@ -165,10 +165,10 @@ public class Person {
             if(new_value.length() > min_characters && new_value.length() < max_characters){
             this.surname_2 = new_value;
         } else if (new_value.length() >= max_characters){
-            throw new Exception("El Segundo Apellido es demasiado largo");
+            throw new Exception("\n\tEl Segundo Apellido es demasiado largo");
             
         } else if (new_value.length() <= min_characters){
-            throw new Exception("El Segundo apellido es demasiado corto");
+            throw new Exception("\n\tEl Segundo apellido es demasiado corto");
         }
     }
 
@@ -181,10 +181,10 @@ public class Person {
         if(new_value >= min_age && new_value <= max_age){
             this.age = new_value;
         } else if (new_value < min_age){
-            throw new Exception("La edad debe ser mayor o igual a los " + min_age +" años de edad");
+            throw new Exception("\n\tLa edad debe ser mayor o igual a los " + min_age +" años de edad");
             
         } else if (new_value > max_age){
-            throw new Exception("La edad debe ser menor o igual a los " + max_age +" años de edad");
+            throw new Exception("\n\tLa edad debe ser menor o igual a los " + max_age +" años de edad");
         }
     }
 
@@ -197,7 +197,7 @@ public class Person {
         if( new_value.equals("Male") || new_value.equals("Female") || new_value.equals("Non-Binary") ){
             this.gender = new_value;
         } else {
-            throw new Exception("Genero Incorrecto (Debe ser Ingles).");
+            throw new Exception("\n\tGenero Incorrecto (Debe ser Ingles).");
         }
     }
 
@@ -210,7 +210,7 @@ public class Person {
         if( new_value.equals("Married") || new_value.equals("Widowed") || new_value.equals("Divorced") || new_value.equals("Single")){
             this.marital_status = new_value;
         } else {
-            throw new Exception("Estado Civil Incorrecto (Debe ser Ingles).");
+            throw new Exception("\n\tEstado Civil Incorrecto (Debe ser Ingles).");
         }
     }
 }

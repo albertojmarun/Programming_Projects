@@ -67,7 +67,7 @@ public class Employee extends Person{
         if(new_value >= min_salary){
             this.salary = new_value;
         } else{
-            throw new Exception("El salario debe ser mayor o igual salario mínimo: " + min_salary + "€.");
+            throw new Exception("\n\tEl salario debe ser mayor o igual salario mínimo: " + min_salary + "€.");
         }
     }
 
@@ -83,7 +83,7 @@ public class Employee extends Person{
         if(increase > 0){
             final_salary = (int) (getSalary() + (getSalary() * increase));
         } else{
-            throw new Exception("El % de incremento debe ser superior o igual 0");
+            throw new Exception("\n\tEl % de incremento debe ser superior o igual 0");
         }
 
         try{
@@ -104,15 +104,15 @@ public class Employee extends Person{
         if ( decrease > 0 && decrease < 1) {
             final_salary = (int) (getSalary() - (getSalary() * decrease));
         } else if(decrease <= 0){
-            throw new Exception("El % de descuento debe ser por encima de 0 (Con el siguiente formato 0.80 == 80%.)");
+            throw new Exception("\n\tEl % de descuento debe ser por encima de 0 (Con el siguiente formato 0.80 == 80%.)");
         } else if(decrease > 1){
-            throw new Exception("El % de descuento debe ser menor a 1 (Con el siguiente formato 0.80 = 80%.))");
+            throw new Exception("\n\tEl % de descuento debe ser menor a 1 (Con el siguiente formato 0.80 = 80%.)");
         }
 
         if (final_salary < min_salary){
             final_salary = min_salary;
         } else{
-            throw new Exception("Con el descuento, el salario queda por debajo del salario mínimo.");
+            throw new Exception("\n\tCon el descuento, el salario queda por debajo del salario mínimo.");
         }
 
         try{
