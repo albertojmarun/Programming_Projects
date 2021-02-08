@@ -5,8 +5,6 @@
  */
 package practica12;
 
-// HAY QUE HACER TODA LA PRACTICA CON LA CLASE USER INPUT
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -22,8 +20,6 @@ public class Menu {
     
     private ArrayList<Teacher> employees;
     private int selected_teacher_index;
-    private final Scanner scanner;
-    private final Scanner scanner_string;
 
     /**
      * This is the Constructor of the Class Menu.
@@ -34,8 +30,6 @@ public class Menu {
         selected_teacher_index = 0;
         employees = new ArrayList<>();
         employees.add(selected_teacher_index, new Teacher());
-        scanner = new Scanner(System.in);
-        scanner_string = new Scanner(System.in);
     }
     
     /**
@@ -265,7 +259,7 @@ public class Menu {
         do{
             try{
                 System.out.print("\nIntroduce el % de aumento de salario: ");
-                increase = scanner.nextDouble();
+                increase = UserInput.getDouble();
                 
                 getSelectedEmployee().increaseSalary(increase);
                 condition = true;
@@ -290,7 +284,7 @@ public class Menu {
         do{
             try{
                 System.out.print("\nIntroduce el % de baja en el salario: ");
-                decrease = scanner.nextDouble(); 
+                decrease = UserInput.getDouble();
                 
                 getSelectedEmployee().reduceSalary(decrease);
                 condition = true;
@@ -315,7 +309,7 @@ public class Menu {
         do{
             try{
                 System.out.print("\nIntroduce el Nuevo Salario del Empleado: ");
-                salary = scanner.nextInt();
+                salary = UserInput.getInt();
                 
                 getSelectedEmployee().setSalary(salary);
                 condition = true;
@@ -375,7 +369,7 @@ public class Menu {
         do{
             try{
                 genderMenu();
-                gender_option = scanner.nextInt();
+                gender_option = UserInput.getInt();
             
                 getSelectedEmployee().setGender(selectGender(gender_option));
                 condition = true;
@@ -411,7 +405,7 @@ public class Menu {
         do{
             try{
                civilStatusMenu();
-               civil_status_option = scanner.nextInt();
+               civil_status_option = UserInput.getInt();
 
                getSelectedEmployee().setMaritalStatus(selectMaritalStatus(civil_status_option));
                condition = true;
@@ -513,7 +507,7 @@ public class Menu {
         do{
             try{
                 subjectMenu();
-                subject_option = scanner.nextInt();
+                subject_option = UserInput.getInt();
                 
                 getSelectedEmployee().setSubject(selectSubject(subject_option));
                 condition = true;
@@ -562,7 +556,7 @@ public class Menu {
             System.out.println("\nTiene seleccionado el unico empleado, debe tener +1 Empleado para poder seleccionar otro.");
         } else{
             menuTeachers();
-            selected_teacher_index = scanner.nextInt();
+            selected_teacher_index = UserInput.getInt();
                 
             if(selected_teacher_index >= 0 && selected_teacher_index < employees.size()){
                 System.out.printf("\n\tEl empleado seleccionado es: %s\n", getSelectedEmployee().getFullName());
@@ -592,7 +586,7 @@ public class Menu {
         
         if(employees.size() > 1){
             deleteTeacherMenu();
-            decision = scanner.nextInt();
+            decision = UserInput.getInt();
                 
             switch(decision){
                 case 0:
@@ -626,11 +620,12 @@ public class Menu {
         System.out.println("\n¡Hasta Luego! Muchas Gracias.\n");
         System.out.println("===========================\n");
     }
+    
     /**
      * This function will make a pause in every function executed.
      */
     private void pause(){
-        scanner_string.nextLine();
+        UserInput.getString();
     }
     
     public static void main(String[] args){
