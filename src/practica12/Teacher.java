@@ -56,7 +56,7 @@ public class Teacher extends Employee{
         if(subject.equals("Programming") || subject.equals("Marked Languages") || subject.equals("Computer Systems") || subject.equals("FOL") || subject.equals("Development Enviroment") || subject.equals("Data Bases")){
             this.subject = subject;
         } else{
-            throw new Exception("Asginatura no disponible (Tiene que ser en Ingles)");
+            throw new Exception("Asginatura no disponible (Tiene que ser en Ingles y estar dentro de la lista.)");
         }
     }
     
@@ -69,81 +69,84 @@ public class Teacher extends Employee{
     }
     
     /**
+     * Function to translate the Elements (Gender, Marital Status and Subject)from English to Spanish.
+     * @param object (String) Element to translate from English to Spanish.
+     * @return (String) Element translated to Spanish.
+     */
+    private String spanishTranslation(String object){
+        String translation = "";
+        
+        switch(object){
+            case "Male":
+                translation = "Masculino";
+                break;
+
+            case "Female":
+                translation = "Femenino";
+                break;
+
+            case "Non-Binary":
+                translation = "No-Binario";
+                break;
+                
+                case "Married":
+                translation = "Casado";
+                break;
+
+            case "Widowed":
+                translation = "Viudo";
+                break;
+
+            case "Single":
+                translation = "Soltero";
+                break;
+
+            case "Divorced":
+                translation = "Divorciado";
+                break;
+
+            case "Programming":
+                translation = "Programación";
+                break;
+
+            case "Marked Languages":
+                translation = "Lenguaje de Marcas";
+                break;
+
+            case "Computer Systems":
+                translation = "Sistemas Informáticos";
+                break;
+
+            case "FOL":
+                translation = "Formación y Orientación Laboral";
+                break;
+
+            case "Development Enviroment":
+                translation = "Entornos de Desarrollo";
+                break;
+
+            case "Data Bases":
+                translation = "Base de Datos";
+                break;
+        }
+        
+        return translation;
+    }
+    
+    /**
      * Return a Message with all the information about the Employee.
      * @return the whole information about Employee with type String.
      */
     @Override
     public String toString(){
-        String es_gender = "";
-        String es_marital_status = "";
-        String es_subject = "";
         String message;
 
-        switch(getGender()){
-            case "Male":
-                es_gender = "Masculino";
-                break;
-
-            case "Female":
-                es_gender = "Femenino";
-                break;
-
-            case "Non-Binary":
-                es_gender = "No-Binario";
-                break;
-        }
-
-        switch(getMaritalStatus()) {
-            case "Married":
-                es_marital_status = "Casado";
-                break;
-
-            case "Widowed":
-                es_marital_status = "Viudo";
-                break;
-
-            case "Single":
-                es_marital_status = "Soltero";
-                break;
-
-            case "Divorced":
-                es_marital_status = "Divorciado";
-                break;
-        }
-
-        switch(getSubject()){
-            case "Programming":
-                es_subject = "Programación";
-                break;
-
-            case "Marked Languages":
-                es_subject = "Lenguaje de Marcas";
-                break;
-
-            case "Computer Systems":
-                es_subject = "Sistemas Informáticos";
-                break;
-
-            case "FOL":
-                es_subject = "Formación y Orientación Laboral";
-                break;
-
-            case "Development Enviroment":
-                es_subject = "Entornos de Desarrollo";
-                break;
-
-            case "Data Bases":
-                es_subject = "Base de Datos";
-                break;
-
-        }
-
-        message =   "\nNombre Completo: " + super.getSurname1() + " " + super.getSurname2() + ", " + super.getName() + "\n" +
-                    "Edad: " + super.getAge() + "\n" +
-                    "Sueldo: " + super.getSalary() + "€\n" +
-                    "Género: " + es_gender + "\n" +
-                    "Estado Civil: " + es_marital_status + "\n" +
-                    "Materia: " + es_subject;
+        message =   "\nNombre Completo: " + super.getSurname1() + " " + super.getSurname2() + ", " + super.getName() +
+                    "\nEdad: " + super.getAge() +
+                    "\nSueldo: " + super.getSalary() +
+                    "€\nGénero: " + spanishTranslation(getGender()) +
+                    "\nEstado Civil: " + spanishTranslation(getMaritalStatus()) +
+                    "\nMateria: " + spanishTranslation(getSubject());
 
         return message;
     }

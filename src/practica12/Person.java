@@ -131,6 +131,7 @@ public class Person {
     public void setName(String new_value) throws Exception {
         if(new_value.length() > min_characters && new_value.length() < max_characters){
             this.name = new_value;
+            
         } else if (new_value.length() >= max_characters){
             throw new Exception("El nombre es demasiado largo");
             

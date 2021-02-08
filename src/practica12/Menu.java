@@ -48,77 +48,79 @@ public class Menu {
      * This will be the execution of the whole Menu.
      */
     public void execute(){
-        int option;
-
+        int option = 0;
+        boolean condition;
+        
         do {
+            try{
             option = selectOption();
             System.out.println("\n===========================");
 
-            switch (option){
-                case 0: // [0] SHOW INFORMATION OF EMPLOYEE.
-                    showInformationOfTeacher(getSelectedEmployee());
-                    pause();
-                    break;
+                switch (option){
+                    case 0: // [0] SHOW INFORMATION OF EMPLOYEE.
+                        showInformationOfTeacher(getSelectedEmployee());
+                        pause();
+                        break;
 
-                case 1: // [1] MODIFY THE WHOLE NAME OF THE EMPLOYEE.
-                    modifyWholeName(getSelectedEmployee());
-                    pause();
-                    break;
+                    case 1: // [1] MODIFY THE WHOLE NAME OF THE EMPLOYEE.
+                        modifyWholeName(getSelectedEmployee());
+                        pause();
+                        break;
 
-                case 2: // [2] MODIFY THE AGE OF THE EMPLOYEE.
-                    modifyAge(getSelectedEmployee());
-                    pause();
-                    break;
+                    case 2: // [2] MODIFY THE AGE OF THE EMPLOYEE.
+                        modifyAge(getSelectedEmployee());
+                        pause();
+                        break;
 
-                case 3: // [3] INCREASE THE SALARY OF THE EMPLOYEE.
-                    increaseSalary(getSelectedEmployee());
-                    pause();
-                    break;
+                    case 3: // [3] INCREASE THE SALARY OF THE EMPLOYEE.
+                        increaseSalary(getSelectedEmployee());
+                        pause();
+                        break;
 
-                case 4: // [4] DECREASE THE SALARY OF THE EMPLOYEE.
-                    decreaseSalary(getSelectedEmployee());
-                    pause();
-                    break;
+                    case 4: // [4] DECREASE THE SALARY OF THE EMPLOYEE.
+                        decreaseSalary(getSelectedEmployee());
+                        pause();
+                        break;
 
-                case 5: // [5] MODIFY THE GENDER OF THE EMPLOYEE.
-                    modifyGender(getSelectedEmployee());
-                    pause();
-                    break;
+                    case 5: // [5] MODIFY THE GENDER OF THE EMPLOYEE.
+                        modifyGender(getSelectedEmployee());
+                        pause();
+                        break;
 
-                case 6: // [6] MODIFY THE CIVIL STATUS OF THE EMPLOYEE.
-                    modifyCivilStatus(getSelectedEmployee());
-                    pause();
-                    break;
+                    case 6: // [6] MODIFY THE CIVIL STATUS OF THE EMPLOYEE.
+                        modifyCivilStatus(getSelectedEmployee());
+                        pause();
+                        break;
 
-                case 7: // [7] MODIFY THE SUBJECT OF THE TEACHER.
-                    modifySubject(getSelectedEmployee());
-                    pause();
-                    break;
+                    case 7: // [7] MODIFY THE SUBJECT OF THE TEACHER.
+                        modifySubject(getSelectedEmployee());
+                        pause();
+                        break;
+
+                    case 8: // [8] CREATE A NEW TEACHER.
+                        newTeacher();
+                        pause();
+                        break;
+
+                    case 9: // [9] SELECT ANOTHER EMPLOYEE.
+                        condition = false;
+                        selectTeacher();
+                        pause();
+                        break;
+
+                    case 10: // [10] DELETE SELECTED EMPLOYEE.
+                        deleteTeacher();
+                        pause();
+                        break;
                     
-                case 8: // [8] CREATE A NEW TEACHER.
-                    newTeacher();
-                    pause();
-                    break;
-                    
-                case 9: // [9] SELECT ANOTHER EMPLOYEE.
-                    selectTeacher();
-                    pause();
-                    break;
-                    
-                case 10: // [10] DELETE SELECTED EMPLOYEE.
-                    deleteTeacher();
-                    pause();
-                    break;
-                case 11: // [11] FINISH THE MENU.
-                    System.out.println("\n¡Hasta Luego! Muchas Gracias.\n");
-                    System.out.println("===========================\n");
-                    break;
-
-                default: // OTHER OPTIONS THAT ARE NOT REGISTERED.
-                    System.out.println("Selecciona una opción correcta.");
-                    System.out.println("Entre 0 y 7, inclusive.");
-                    pause();
-                    break;
+                    case 11: // [11] FINISH THE MENU.
+                        System.out.println("\n¡Hasta Luego! Muchas Gracias.\n");
+                        System.out.println("===========================\n");
+                        break;   
+                }
+            } catch(Exception e){
+                System.out.println(e.getMessage());
+                pause();
             }
         } while(option != 11);
     }
@@ -151,13 +153,18 @@ public class Menu {
     /**
      * This function will select the option to execute.
      * @return (int) that is the option selected from the Menu.
+     * @throws 
      */
-    private int selectOption(){
+    private int selectOption() throws Exception{
         int option;
 
         printMenu();
         option = scanner.nextInt();
-
+        
+        if(option < 0 || option > 11){
+            throw new Exception("\nDebe seleccionar una opcion entre 0 y 11");
+        }
+        
         return option;
     }
 
@@ -217,6 +224,7 @@ public class Menu {
             try {
                 teacher.setSurname2(new_value);
                 condition = true;
+                
             } catch (Exception e){
                 System.out.println(e.getMessage());
             }
@@ -232,17 +240,22 @@ public class Menu {
      */
     private void modifyAge(Teacher teacher){
         int age;
+        boolean condition = false;
         
         do{
-            System.out.print("\nIntroduce la nueva edad del Empleado: ");
-            age = scanner.nextInt();
+            try{
+                System.out.print("\nIntroduce la nueva edad del Empleado: ");
+                age = scanner.nextInt();
+                
+                teacher.setAge(age);
+                condition = true;
+                
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            } 
 
-            if(age < MIN_AGE || age > MAX_AGE){
-                System.out.printf("\n\tLa edad introducida (%d) no es aceptada, debe tener entre 18 y 67 (inclusive).\n\n", age);
-            }
-        } while(age < MIN_AGE || age > MAX_AGE);
-
-        teacher.setAge(age);
+        } while(!condition);
+        
         System.out.printf("\n\tLa nueva edad de %s, es %d.\n", teacher.getFullName(), teacher.getAge());
     }
 
@@ -252,16 +265,20 @@ public class Menu {
      */
     private void increaseSalary(Teacher teacher){
         double increase;
-
+        boolean condition = false;
+        
         do{
-            System.out.print("\nIntroduce el % de aumento de salario: ");
-            increase = scanner.nextDouble();
-
-            if(increase <= 0){
-                System.out.println("\n\tError en el Porcentaje Introducido, debe ser mayor a 0 (Ejemplo 0.1)");
+            try{
+                System.out.print("\nIntroduce el % de aumento de salario: ");
+                increase = scanner.nextDouble();
+                
+                teacher.increaseSalary(increase);
+                condition = true;
+                
+            } catch(Exception e){
+                System.out.println(e.getMessage());
             }
-        } while(increase <= 0);
-        teacher.increaseSalary(increase);
+        } while(!condition);
 
         System.out.printf("\n\tEl nuevo salario de %s es %d luego de aplicar el aumento.\n", teacher.getFullName(), teacher.getSalary());
 
@@ -273,17 +290,20 @@ public class Menu {
      */
     private void decreaseSalary(Teacher teacher) {
         double decrease;
-
+        boolean condition = false;
+        
         do{
-            System.out.print("\nIntroduce el % de baja en el salario: ");
-            decrease = scanner.nextDouble();
-
-            if (decrease <= 0 || decrease >= 1){
-                System.out.println("\n\tError en el Porcentaje Introducido, debe ser mayor a 0 y menor a 1 (Ejemplo 0.1)");
+            try{
+                System.out.print("\nIntroduce el % de baja en el salario: ");
+                decrease = scanner.nextDouble(); 
+                
+                teacher.reduceSalary(decrease);
+                condition = true;
+            } catch(Exception e){
+                System.out.println(e.getMessage());
             }
             
-        } while(decrease <= 0 || decrease >= 1);
-        teacher.reduceSalary(decrease);
+        } while(!condition);
 
         System.out.printf("\n\tEl nuevo salario de %s es %d luego de aplicarle la baja salarial.\n", teacher.getFullName(), teacher.getSalary());
     }
@@ -294,16 +314,22 @@ public class Menu {
      */
     private void modifySalary(Teacher teacher){
         int salary;
-        do{
-            System.out.print("\nIntroduce el Nuevo Salario del Empleado: ");
-            salary = scanner.nextInt();
-            
-            if(salary < 950){
-                System.out.println("\n\tEl Salario mínimo de España es 950€, porfavor Introduce un Salario acorde.");
-            }
-        } while(salary < 950);
+        boolean condition = false;
         
-        teacher.setSalary(salary);
+        do{
+            try{
+                System.out.print("\nIntroduce el Nuevo Salario del Empleado: ");
+                salary = scanner.nextInt();
+                
+                teacher.setSalary(salary);
+                condition = true;
+                
+            } catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+            
+        } while(!condition);
+
         System.out.printf("\n\tEl nuevo salario de %s es %d€.\n", teacher.getFullName(), teacher.getSalary());
     }
     
@@ -401,7 +427,28 @@ public class Menu {
             System.out.printf("\n\tEl nuevo Estado Civil del Empleado %s es %s.\n", teacher.getFullName(), teacher.getMaritalStatus());
         }
     }
+    
+    private String selectMaritalStatus(int option){
+        String selected_option = "";
+        
+        switch (civil_status_option){
+            case 0:
+                teacher.setMaritalStatus("Married");
+                break;
 
+            case 1:
+                teacher.setMaritalStatus("Widowed");
+                break;
+
+            case 2:
+                teacher.setMaritalStatus("Divorced");
+                break;
+
+            case 3:
+                teacher.setMaritalStatus("Single");
+                break;
+        }
+    }
     /**
      * This is the Menu of the modifySubject function.
      */
@@ -415,48 +462,62 @@ public class Menu {
         System.out.println("[5] Formación y Orientación Laboral");
         System.out.print("Elige la Materia a Impartir: ");
     }
+    
+    /**
+     * 
+     * @param option
+     * @return 
+     */
+    private String selectSubject(int option){
+        String selected_subject = "";
+        
+            switch(option){
+                case 0:
+                    selected_subject = "Programming";
+                break;
 
+                case 1:
+                    selected_subject = "Development Enviroment";
+                break;
+
+                case 2:
+                    selected_subject = "Computer Systems";
+                break;
+
+                case 3:
+                    selected_subject = "Data Bases";
+                break;
+
+                case 4:
+                    selected_subject = "Marked Languages";
+                break;
+
+                case 5:
+                    selected_subject = "FOL";
+                break;
+            }
+            
+        return selected_subject;
+    }
     /**
      * This function will modify the Subject of the Teacher (Option 7).
      * @param teacher All the information of the Teacher.
      */
     private void modifySubject(Teacher teacher){
         int subject_option;
+        boolean condition = false;
         
         do{
-            subjectMenu();
-            subject_option = scanner.nextInt();
-
-            if(subject_option < 0 || subject_option > 5){
-                System.out.println("\n\tSeleccionaste una opción incorrecta.\n");
+            try{
+                subjectMenu();
+                subject_option = scanner.nextInt();
+                
+                teacher.setSubject(selectSubject(subject_option));
+                condition = true;
+            } catch(Exception e){
+                System.out.println(e.getMessage());
             }
-        } while(subject_option < 0 || subject_option > 5);
-
-        switch(subject_option){
-            case 0:
-                teacher.setSubject("Programming");
-                break;
-
-            case 1:
-                teacher.setSubject("Development Enviroment");
-                break;
-
-            case 2:
-                teacher.setSubject("Computer Systems");
-                break;
-
-            case 3:
-                teacher.setSubject("Data Bases");
-                break;
-
-            case 4:
-                teacher.setSubject("Marked Languages");
-                break;
-
-            case 5:
-                teacher.setSubject("FOL");
-                break;
-        }
+        } while(!condition);
 
         System.out.printf("\n\tLa nueva materia del maestro %s es %s.\n", teacher.getFullName(), teacher.getSubject());
     }
@@ -490,29 +551,30 @@ public class Menu {
     
     /**
      * Select the Teacher to see his information.
+     * @throws java.lang.Exception If the new selected_employee_index is negative or greater or equal to the size of the ArrayList.
      */
-    private void selectTeacher(){
+    private void selectTeacher() throws Exception{
+        
         if(employees.size() == 1){
             System.out.println("\nTiene seleccionado el unico empleado, debe tener +1 Empleado para poder seleccionar otro.");
-            
         } else{
-            do{
-                menuTeachers();
-                selected_teacher_index = scanner.nextInt();
-            
-                if(selected_teacher_index < 0 || selected_teacher_index >= employees.size()){
-                    System.out.printf("\tPorfavor seleccione un valor entre 0 y %d (inclusive).\n", employees.size() - 1);
-                } else{
-                    System.out.printf("\n\tEl empleado seleccionado es: %s\n", getSelectedEmployee().getFullName());
-                }
-            } while(selected_teacher_index < 0 || selected_teacher_index >= employees.size());
+            menuTeachers();
+            selected_teacher_index = scanner.nextInt();
+                
+            if(selected_teacher_index >= 0 && selected_teacher_index < employees.size()){
+                System.out.printf("\n\tEl empleado seleccionado es: %s\n", getSelectedEmployee().getFullName());
+                
+            } else{
+                throw new Exception("Debe seleccionar un empleado dentro del indice.");
+            }
         }
+        
     }
     
     /**
      * Menu to delete a Teacher or not.
      */
-    private void deleteMenu(){
+    private void deleteTeacherMenu(){
         System.out.printf("\n[0] No deseo borrar al Profesor %s.\n", getSelectedEmployee().getFullName());
         System.out.printf("[1] Sí deseo borrar al Profesor %s.\n", getSelectedEmployee().getFullName());
         System.out.print("¿Estas Seguro? ");
@@ -520,38 +582,35 @@ public class Menu {
     
     /**
      * Option to Delete a the actual Teacher.
+     * @throws java.lang.Exception 
      */
-    private void deleteTeacher(){
+    private void deleteTeacher() throws Exception{
         int decision;
         
         if(employees.size() > 1){
-            do{
-                deleteMenu();
-                decision = scanner.nextInt();
+            deleteTeacherMenu();
+            decision = scanner.nextInt();
                 
-                switch(decision){
+            switch(decision){
+                case 0:
+                    System.out.printf("\n\tEl profesor %s no ha sido Eliminado.\n", getSelectedEmployee().getFullName());
+                break;
+                        
+                case 1:
+                    System.out.printf("\n\tEl profesor %s ha sido Eliminado.\n", getSelectedEmployee().getFullName());
+                    employees.remove(getSelectedEmployee());
+                    selected_teacher_index--;
                     
-                    case 0:
-                        System.out.printf("\n\tEl profesor %s no ha sido Eliminado.\n", getSelectedEmployee().getFullName());
-                        break;
+                    if(selected_teacher_index < 0){
+                        selected_teacher_index = 0;
+                    }
                         
-                    case 1:
-                        System.out.printf("\n\tEl profesor %s ha sido Eliminado.\n", getSelectedEmployee().getFullName());
-                        employees.remove(getSelectedEmployee());
-                        selected_teacher_index--;
-                    
-                        if(selected_teacher_index < 0){
-                            selected_teacher_index = 0;
-                        }
-                        
-                        break;
-                        
-                    default:
-                        System.out.println("\n\t Porfavor seleccione una opcion entre 0 y 1");
-                        break;
-                }
-            } while(decision != 1 && decision != 0);
-            
+                break;
+                
+                default:
+                    throw new Exception("Debe seleccionar una opcion entre Eliminar(1) o No Eliminar (0) al empleado");
+//                break;
+            }
         } else {
             System.out.println("\nNo puede dejar a MEDAC sin Profesores.");
         }

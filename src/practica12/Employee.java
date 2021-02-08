@@ -75,13 +75,15 @@ public class Employee extends Person{
      * Increase the Salary of the employee by a % entered by the user.
      * @param increase The % of increase to apply to the salary.
      */
-    public void increaseSalary(double increase){
+    public void increaseSalary(double increase) throws Exception{
         int final_salary;
 
         final_salary = getSalary();
 
         if(increase > 0){
             final_salary = (int) (getSalary() + (getSalary() * increase));
+        } else{
+            throw new Exception("El % de incremento debe ser superior o igual 0");
         }
 
         try{
@@ -101,14 +103,16 @@ public class Employee extends Person{
         
         if ( decrease > 0 && decrease < 1) {
             final_salary = (int) (getSalary() - (getSalary() * decrease));
-        } else if(decrease < 0){
-            throw new Exception("The decrease % is to low (format follows next example 0.80 is equal to 80%)");
+        } else if(decrease <= 0){
+            throw new Exception("El % de descuento debe ser por encima de 0 (Con el siguiente formato 0.80 == 80%.)");
         } else if(decrease > 1){
-            throw new Exception("The decrease % is to high (format follows next example 0.80 is equal to 80%)");
+            throw new Exception("El % de descuento debe ser menor a 1 (Con el siguiente formato 0.80 = 80%.))");
         }
 
         if (final_salary < min_salary){
             final_salary = min_salary;
+        } else{
+            throw new Exception("Con el descuento, el salario queda por debajo del salario mínimo.");
         }
 
         try{
