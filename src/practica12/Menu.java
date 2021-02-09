@@ -10,16 +10,14 @@ import java.util.Scanner;
 
 /**
  * This class is about the Menu of Human Resources of MEDAC
+ * @date February 9, 2021
  * @version 1.0
  * @author Alberto Marun
  */
 public class Menu {
-    // CONSTANTS FOR THE VALUES.
-    final static private int MIN_AGE = 18;
-    final static private int MAX_AGE = 67;
-    
-    private ArrayList<Teacher> employees;
+    final private ArrayList<Teacher> employees;
     private int selected_teacher_index;
+    Scanner scanner;
 
     /**
      * This is the Constructor of the Class Menu.
@@ -30,6 +28,7 @@ public class Menu {
         selected_teacher_index = 0;
         employees = new ArrayList<>();
         employees.add(selected_teacher_index, new Teacher());
+        scanner = new Scanner(System.in);
     }
     
     /**
@@ -146,7 +145,7 @@ public class Menu {
     /**
      * This function will select the option to execute.
      * @return (int) that is the option selected from the Menu.
-     * @throws 
+     * @throws java.lang.Exception if the option entered is greater than 11 or lower than 0.
      */
     private int selectOption() throws Exception{
         int option;
@@ -167,7 +166,6 @@ public class Menu {
     private void showInformationOfTeacher(){
         
         System.out.println(getSelectedEmployee().toString());
-    
     }
 
     /**
@@ -328,9 +326,9 @@ public class Menu {
      */
     private void genderMenu(){
         System.out.println();
-        System.out.println("[0] Hombre.");
-        System.out.println("[1] Mujer.");
-        System.out.println("[2] No Binario.");
+        System.out.println("[H] Hombre.");
+        System.out.println("[M] Mujer.");
+        System.out.println("[B] No Binario.");
         System.out.print("Elige un género: ");
     }
 
@@ -339,19 +337,19 @@ public class Menu {
      * @param option (int) Gender selected by number.
      * @return (String) Gender selected in String format.
      */
-    private String selectGender(int option){
+    private String selectGender(char option){
         String selected_option = "";
         
         switch (option){
-            case 0:
+            case 'H':
                 selected_option = "Male";
                 break;
 
-            case 1:
+            case 'M':
                 selected_option = "Female";
                 break;
 
-            case 2:
+            case 'B':
                 selected_option = "Non-Binary";
                 break;
         }
@@ -363,13 +361,13 @@ public class Menu {
      * This function will modify the Gender of the Teacher (Option 5).
      */
     private void modifyGender(){
-        int gender_option;
+        char gender_option;
         boolean condition = false;
         
         do{
             try{
                 genderMenu();
-                gender_option = UserInput.getInt();
+                gender_option = UserInput.getChar();
             
                 getSelectedEmployee().setGender(selectGender(gender_option));
                 condition = true;
@@ -380,7 +378,7 @@ public class Menu {
             
         }while(!condition);
         
-        System.out.printf("\n\tEl nuevo género del Empleado %s es %s.\n", getSelectedEmployee().getFullName(), getSelectedEmployee().getGender());
+        System.out.printf("\n\tEl nuevo género del Empleado %s es %s.\n", getSelectedEmployee().getFullName(), spanishTranslation(getSelectedEmployee().getGender()));
     }
 
     /**
@@ -388,24 +386,53 @@ public class Menu {
      */
     private void civilStatusMenu(){
         System.out.println();
-        System.out.println("[0] Casado.");
-        System.out.println("[1] Viudo.");
-        System.out.println("[2] Divorciado.");
-        System.out.println("[3] Soltero.");
+        System.out.println("[C] Casado.");
+        System.out.println("[V] Viudo.");
+        System.out.println("[D] Divorciado.");
+        System.out.println("[S] Soltero.");
         System.out.print("Elige un Estado Civil: ");
     }
+    
+    /**
+     * This function pass from a int to a String gived by a list of option.
+     * @param option (int) Marital Status selected.
+     * @return (String) With the Marital Status selected in String format.
+     */
+    private String selectMaritalStatus(char option){
+        String selected_option = "";
+        
+        switch (option){
+            case 'C':
+                selected_option = "Married";
+                break;
 
+            case 'V':
+                selected_option = "Widowed";
+                break;
+
+            case 'D':
+                selected_option = "Divorced";
+                break;
+
+            case 'S':
+                selected_option = "Single";
+                break;
+        }
+        
+        return selected_option;
+    }
+    
     /**
      * This function will modify the Civil Status of the Teacher (Option 6).
      */
     private void modifyCivilStatus(){
-        int civil_status_option;
+        char civil_status_option;
         boolean condition = false;
 
         do{
             try{
                civilStatusMenu();
-               civil_status_option = UserInput.getInt();
+               civil_status_option = UserInput.getChar();
 
                getSelectedEmployee().setMaritalStatus(selectMaritalStatus(civil_status_option));
                condition = true;
@@ -415,36 +442,7 @@ public class Menu {
             }   
         } while(!condition);
         
-        System.out.printf("\n\tEl nuevo Estado Civil del Empleado %s es %s.\n", getSelectedEmployee().getFullName(), getSelectedEmployee().getMaritalStatus());
-    }
-    
-    /**
-     * This function pass from a int to a String gived by a list of option.
-     * @param option (int) Marital Status selected.
-     * @return (String) With the Marital Status selected in String format.
-     */
-    private String selectMaritalStatus(int option){
-        String selected_option = "";
-        
-        switch (option){
-            case 0:
-                selected_option = "Married";
-                break;
-
-            case 1:
-                selected_option = "Widowed";
-                break;
-
-            case 2:
-                selected_option = "Divorced";
-                break;
-
-            case 3:
-                selected_option = "Single";
-                break;
-        }
-        
-        return selected_option;
+        System.out.printf("\n\tEl nuevo Estado Civil del Empleado %s es %s.\n", getSelectedEmployee().getFullName(), spanishTranslation(getSelectedEmployee().getMaritalStatus()));
     }
     
     /**
@@ -516,7 +514,7 @@ public class Menu {
             }
         } while(!condition);
 
-        System.out.printf("\n\tLa nueva materia del maestro %s es %s.\n", getSelectedEmployee().getFullName(), getSelectedEmployee().getSubject());
+        System.out.printf("\n\tLa nueva materia del maestro %s es %s.\n", getSelectedEmployee().getFullName(), spanishTranslation(getSelectedEmployee().getSubject()));
     }
     
     /**
@@ -582,32 +580,27 @@ public class Menu {
      * @throws java.lang.Exception if the decision is not between 1 and 0 (inclusive) make an advice.
      */
     private void deleteTeacher() throws Exception{
-        int decision;
+        boolean decision;
         
         if(employees.size() > 1){
             deleteTeacherMenu();
-            decision = UserInput.getInt();
+            decision = UserInput.getBoolean();
                 
-            switch(decision){
-                case 0:
-                    System.out.printf("\n\tEl profesor %s no ha sido Eliminado.\n", getSelectedEmployee().getFullName());
-                break;
-                        
-                case 1:
-                    System.out.printf("\n\tEl profesor %s ha sido Eliminado.\n", getSelectedEmployee().getFullName());
-                    employees.remove(getSelectedEmployee());
-                    selected_teacher_index--;
+            if(decision){
+                System.out.printf("\n\tEl profesor %s ha sido Eliminado.\n", getSelectedEmployee().getFullName());
+                employees.remove(getSelectedEmployee());
+                selected_teacher_index--;
                     
-                    if(selected_teacher_index < 0){
-                        selected_teacher_index = 0;
-                    }
-                        
-                break;
+                if(selected_teacher_index < 0){
+                    selected_teacher_index = 0;
+                }
                 
-                default:
-                    throw new Exception("Debe seleccionar una opcion entre Eliminar(1) o No Eliminar (0) al empleado");
-                // break;
+            } else if (!decision){
+                System.out.printf("\n\tEl profesor %s no ha sido Eliminado.\n", getSelectedEmployee().getFullName());
+            } else{
+                throw new Exception("Debe seleccionar una opcion entre Eliminar(true) o No Eliminar (false) al empleado");
             }
+            
         } else {
             System.out.println("\nNo puede dejar a MEDAC sin Profesores.");
         }
@@ -625,7 +618,72 @@ public class Menu {
      * This function will make a pause in every function executed.
      */
     private void pause(){
-        UserInput.getString();
+        scanner.nextLine();
+    }
+    
+    /**
+     * Function to translate the Elements (Gender, Marital Status and Subject) from English to Spanish.
+     * @param object (String) Element to translate from English to Spanish.
+     * @return (String) Element translated to Spanish.
+     */
+    private String spanishTranslation(String object){
+        String translation = "";
+        
+        switch(object){
+            case "Male":
+                translation = "Masculino";
+                break;
+
+            case "Female":
+                translation = "Femenino";
+                break;
+
+            case "Non-Binary":
+                translation = "No-Binario";
+                break;
+                
+                case "Married":
+                translation = "Casado";
+                break;
+
+            case "Widowed":
+                translation = "Viudo";
+                break;
+
+            case "Single":
+                translation = "Soltero";
+                break;
+
+            case "Divorced":
+                translation = "Divorciado";
+                break;
+
+            case "Programming":
+                translation = "Programación";
+                break;
+
+            case "Marked Languages":
+                translation = "Lenguaje de Marcas";
+                break;
+
+            case "Computer Systems":
+                translation = "Sistemas Informáticos";
+                break;
+
+            case "FOL":
+                translation = "Formación y Orientación Laboral";
+                break;
+
+            case "Development Enviroment":
+                translation = "Entornos de Desarrollo";
+                break;
+
+            case "Data Bases":
+                translation = "Base de Datos";
+                break;
+        }
+        
+        return translation;
     }
     
     public static void main(String[] args){

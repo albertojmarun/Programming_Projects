@@ -12,7 +12,7 @@ package practica12;
  */
 public class Employee extends Person{
     // CONSTANTS FOR THE VALUES.
-    final private int min_salary = 950;
+    final private int min_salary;
 
     // ATTRIBUTES OF THE CLASS
     private int salary;
@@ -22,6 +22,7 @@ public class Employee extends Person{
      */
     public Employee(){
         super();
+        this.min_salary = 950;
         
         try{
             setSalary(1500);   
@@ -42,6 +43,7 @@ public class Employee extends Person{
      */
     public Employee(String name, String surname1, String surname2, int age, int salary, String gender, String marital_status){
         super(name, surname1, surname2, age, gender, marital_status);
+        this.min_salary = 950;
         
         try{
             setSalary(salary);   
@@ -61,7 +63,7 @@ public class Employee extends Person{
     /**
      * Establishes the salary of the Employee (It needs to be equal or greater than Minimum Salary)
      * @param new_value The Salary of the Employee entered by the user.
-     * @throws java.lang.Exception
+     * @throws java.lang.Exception if the salary entered is lower than the minimum salary.
      */
     public void setSalary(int new_value) throws Exception{
         if(new_value >= min_salary){
@@ -73,7 +75,8 @@ public class Employee extends Person{
 
     /**
      * Increase the Salary of the employee by a % entered by the user.
-     * @param increase The % of increase to apply to the salary.
+     * @param increase (double) The % of increase to apply to the salary.
+     * @throws java.lang.Exception if the % entered by the user is lower than 0.
      */
     public void increaseSalary(double increase) throws Exception{
         int final_salary;
@@ -104,9 +107,9 @@ public class Employee extends Person{
         if ( decrease > 0 && decrease < 1) {
             final_salary = (int) (getSalary() - (getSalary() * decrease));
         } else if(decrease <= 0){
-            throw new Exception("\n\tEl % de descuento debe ser por encima de 0 (Con el siguiente formato 0.80 == 80%.)");
+            throw new Exception("\n\tEl % de descuento debe ser por encima de 0 (Con el siguiente formato 0,80 == 80%.)");
         } else if(decrease > 1){
-            throw new Exception("\n\tEl % de descuento debe ser menor a 1 (Con el siguiente formato 0.80 = 80%.)");
+            throw new Exception("\n\tEl % de descuento debe ser menor a 1 (Con el siguiente formato 0,80 = 80%.)");
         }
 
         if (final_salary < min_salary){

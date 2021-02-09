@@ -12,10 +12,10 @@ package practica12;
  */
 public class Person {
     // CONSTANTS FOR THE VALUES
-    final private int min_characters = 0;
-    final private int max_characters = 50;
-    final private int min_age = 18;
-    final private int max_age = 67;
+    final private int MIN_CHARACTERS;
+    final private int MAX_CHARACTERS;
+    final private int MIN_AGE;
+    final private int MAX_AGE;
 
     // ATTRIBUTES OF THE CLASS
     private String name;
@@ -29,6 +29,11 @@ public class Person {
      * Constructor of the Class Person without Parameters.
      */
     public Person(){
+        this.MAX_AGE = 67;
+        this.MIN_AGE = 18;
+        this.MAX_CHARACTERS = 50;
+        this.MIN_CHARACTERS = 0;
+        
         try{
             setName("Alberto");
             setSurname1("Marun");
@@ -48,11 +53,14 @@ public class Person {
      * @param surname1 (String) 1st Surname of the Teacher.
      * @param surname2 (String) 2nd Surname of the Teacher.
      * @param age (int) Age of the Teacher.
-     * @param salary (int) Salary of the Teacher.
      * @param gender (String) Gender of the Teacher.
      * @param marital_status (String) Marital Status of the Teacher.
      */
     public Person(String name, String surname1, String surname2, int age, String gender, String marital_status){
+        this.MAX_AGE = 67;
+        this.MIN_AGE = 18;
+        this.MAX_CHARACTERS = 50;
+        this.MIN_CHARACTERS = 0;
         try{
             setName(name);
             setSurname1(surname1);
@@ -129,13 +137,13 @@ public class Person {
      * @throws java.lang.Exception in the case that the String is empty or have more than 50 characters (inclusive).
      */
     public void setName(String new_value) throws Exception {
-        if(new_value.length() > min_characters && new_value.length() < max_characters){
+        if(new_value.length() > MIN_CHARACTERS && new_value.length() < MAX_CHARACTERS){
             this.name = new_value;
             
-        } else if (new_value.length() >= max_characters){
+        } else if (new_value.length() >= MAX_CHARACTERS){
             throw new Exception("\n\tEl nombre es demasiado largo");
             
-        } else if (new_value.length() <= min_characters){
+        } else if (new_value.length() <= MIN_CHARACTERS){
             throw new Exception("\n\tEl nombre es demasiado corto");
         }
     }
@@ -146,12 +154,12 @@ public class Person {
      * @throws java.lang.Exception in the case that the String is empty or have more than 50 characters (inclusive).
      */
     public void setSurname1(String new_value) throws Exception{
-        if(new_value.length() > min_characters && new_value.length() < max_characters){
+        if(new_value.length() > MIN_CHARACTERS && new_value.length() < MAX_CHARACTERS){
             this.surname_1 = new_value;
-        } else if (new_value.length() >= max_characters){
+        } else if (new_value.length() >= MAX_CHARACTERS){
             throw new Exception("\n\tEl 1er Apellido es demasiado largo");
             
-        } else if (new_value.length() <= min_characters){
+        } else if (new_value.length() <= MIN_CHARACTERS){
             throw new Exception("\n\tEl 1er Apellido es demasiado corto");
         }
     }
@@ -162,12 +170,12 @@ public class Person {
      * @throws java.lang.Exception in the case that the String is empty or have more than 50 characters (inclusive).
      */
     public void setSurname2(String new_value) throws Exception {
-            if(new_value.length() > min_characters && new_value.length() < max_characters){
+            if(new_value.length() > MIN_CHARACTERS && new_value.length() < MAX_CHARACTERS){
             this.surname_2 = new_value;
-        } else if (new_value.length() >= max_characters){
+        } else if (new_value.length() >= MAX_CHARACTERS){
             throw new Exception("\n\tEl Segundo Apellido es demasiado largo");
             
-        } else if (new_value.length() <= min_characters){
+        } else if (new_value.length() <= MIN_CHARACTERS){
             throw new Exception("\n\tEl Segundo apellido es demasiado corto");
         }
     }
@@ -178,13 +186,13 @@ public class Person {
      * @throws java.lang.Exception in the case that the age is less than the minimun or greater than the maximum.
      */
     public void setAge(int new_value) throws Exception{
-        if(new_value >= min_age && new_value <= max_age){
+        if(new_value >= MIN_AGE && new_value <= MAX_AGE){
             this.age = new_value;
-        } else if (new_value < min_age){
-            throw new Exception("\n\tLa edad debe ser mayor o igual a los " + min_age +" años de edad");
+        } else if (new_value < MIN_AGE){
+            throw new Exception("\n\tLa edad debe ser mayor o igual a los " + MIN_AGE +" años de edad");
             
-        } else if (new_value > max_age){
-            throw new Exception("\n\tLa edad debe ser menor o igual a los " + max_age +" años de edad");
+        } else if (new_value > MAX_AGE){
+            throw new Exception("\n\tLa edad debe ser menor o igual a los " + MAX_AGE +" años de edad");
         }
     }
 
@@ -197,7 +205,7 @@ public class Person {
         if( new_value.equals("Male") || new_value.equals("Female") || new_value.equals("Non-Binary") ){
             this.gender = new_value;
         } else {
-            throw new Exception("\n\tGenero Incorrecto (Debe ser Ingles).");
+            throw new Exception("\n\tGenero Incorrecto.");
         }
     }
 
@@ -210,7 +218,7 @@ public class Person {
         if( new_value.equals("Married") || new_value.equals("Widowed") || new_value.equals("Divorced") || new_value.equals("Single")){
             this.marital_status = new_value;
         } else {
-            throw new Exception("\n\tEstado Civil Incorrecto (Debe ser Ingles).");
+            throw new Exception("\n\tEstado Civil Incorrecto.");
         }
     }
 }
