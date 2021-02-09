@@ -149,7 +149,7 @@ public class Menu {
      * @throws 
      */
     private int selectOption() throws Exception{
-        int option = 0;
+        int option;
         
         printMenu();
         option = UserInput.getInt();
