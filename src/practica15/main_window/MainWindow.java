@@ -26,46 +26,108 @@ public class MainWindow extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         northPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        panelsTitleAuthorInputs = new javax.swing.JPanel();
+        bookTitleLabel = new javax.swing.JLabel();
+        bookTitleInput = new javax.swing.JTextField();
+        bookAuthorLabel = new javax.swing.JLabel();
+        bookAuthorInput = new javax.swing.JTextField();
         centerPanel = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jTextField1 = new javax.swing.JTextField();
+        editorialLayout = new javax.swing.JPanel();
+        labelEditorial = new javax.swing.JLabel();
+        javax.swing.JComboBox<String> editorialOptions = new javax.swing.JComboBox<>();
+        layoutAgeLiteraryType = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         southPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Biblioteca MEDAC");
         setBackground(new java.awt.Color(255, 255, 255));
 
+        northPanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10), null));
         northPanel.setLayout(new java.awt.BorderLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("BIBLIOTECA");
+        jLabel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         northPanel.add(jLabel1, java.awt.BorderLayout.NORTH);
 
-        getContentPane().add(northPanel, java.awt.BorderLayout.NORTH);
+        panelsTitleAuthorInputs.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 40, 1, 40));
+        panelsTitleAuthorInputs.setLayout(new java.awt.GridLayout(2, 0, 0, 40));
 
-        centerPanel.setLayout(new javax.swing.BoxLayout(centerPanel, javax.swing.BoxLayout.LINE_AXIS));
+        bookTitleLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        bookTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bookTitleLabel.setText("Titulo Del Libro:");
+        bookTitleLabel.setRequestFocusEnabled(false);
+        panelsTitleAuthorInputs.add(bookTitleLabel);
 
-        jLabel2.setText("Titulo");
-        centerPanel.add(jLabel2);
-        centerPanel.add(jSeparator1);
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        bookTitleInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        bookTitleInput.setToolTipText("");
+        bookTitleInput.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20)));
+        bookTitleInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                bookTitleInputActionPerformed(evt);
             }
         });
-        centerPanel.add(jTextField1);
+        panelsTitleAuthorInputs.add(bookTitleInput);
+
+        bookAuthorLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        bookAuthorLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        bookAuthorLabel.setText("Autor del Libro:");
+        panelsTitleAuthorInputs.add(bookAuthorLabel);
+
+        bookAuthorInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        bookAuthorInput.setToolTipText("");
+        bookAuthorInput.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20)));
+        bookAuthorInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bookAuthorInputActionPerformed(evt);
+            }
+        });
+        panelsTitleAuthorInputs.add(bookAuthorInput);
+
+        northPanel.add(panelsTitleAuthorInputs, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(northPanel, java.awt.BorderLayout.NORTH);
+
+        centerPanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10), null));
+        centerPanel.setLayout(new java.awt.GridLayout(3, 2));
+
+        editorialLayout.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 80, 1, 80));
+        editorialLayout.setToolTipText("");
+        editorialLayout.setLayout(new java.awt.GridLayout());
+
+        labelEditorial.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        labelEditorial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelEditorial.setText("Editorial del Libro:");
+        editorialLayout.add(labelEditorial);
+
+        editorialOptions.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        editorialOptions.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Panini Comics", "NAVONA PERESUR", "MALPASOYCIA", "Astiberri Edici", "MAxEstrellaEdic" }));
+        editorialLayout.add(editorialOptions);
+
+        centerPanel.add(editorialLayout);
+
+        layoutAgeLiteraryType.setLayout(new java.awt.GridLayout(1, 2));
+        layoutAgeLiteraryType.add(jPanel1);
+        layoutAgeLiteraryType.add(jPanel2);
+
+        centerPanel.add(layoutAgeLiteraryType);
+        centerPanel.add(jPanel3);
 
         getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
 
+        southPanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10), null));
         southPanel.setLayout(new java.awt.BorderLayout());
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -86,9 +148,13 @@ public class MainWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void bookTitleInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookTitleInputActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_bookTitleInputActionPerformed
+
+    private void bookAuthorInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookAuthorInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bookAuthorInputActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,15 +192,23 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField bookAuthorInput;
+    private javax.swing.JLabel bookAuthorLabel;
+    private javax.swing.JTextField bookTitleInput;
+    private javax.swing.JLabel bookTitleLabel;
     private javax.swing.JPanel centerPanel;
+    private javax.swing.JPanel editorialLayout;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel labelEditorial;
+    private javax.swing.JPanel layoutAgeLiteraryType;
     private javax.swing.JPanel northPanel;
+    private javax.swing.JPanel panelsTitleAuthorInputs;
     private javax.swing.JPanel southPanel;
     // End of variables declaration//GEN-END:variables
 }
