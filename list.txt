@@ -1,5 +1,0 @@
-Producto: Peras - Cantidad: 5 - Precio Total: 27.5 €
-Producto: Manzanas - Cantidad: 3 - Precio Total: 9.0 €
-Producto: Naranjas - Cantidad: 2 - Precio Total: 4.0 €
-Producto: CocaColas - Cantidad: 2 - Precio Total: 4.0 €
-Producto: Pepsi - Cantidad: 23 - Precio Total: 46.0 €

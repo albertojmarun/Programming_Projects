@@ -68,7 +68,7 @@ public class Book {
      * @return 
      */
     public String getEditorial(){
-        return this.title;
+        return this.editorial;
     }
     
     /**

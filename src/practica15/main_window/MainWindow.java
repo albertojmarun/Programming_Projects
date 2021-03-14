@@ -5,9 +5,15 @@
  */
 package practica15.main_window;
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import practica15.library.Book;
+
 /**
- *
- * @author AlbertoMarun
+ * This class is about a Book.
+ * @version 1.0
+ * @author Alberto J. Marun I.
+ * @date March 2021.
  */
 public class MainWindow extends javax.swing.JFrame {
 
@@ -26,8 +32,8 @@ public class MainWindow extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
+        ageSelection = new javax.swing.ButtonGroup();
         northPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         panelsTitleAuthorInputs = new javax.swing.JPanel();
@@ -38,32 +44,46 @@ public class MainWindow extends javax.swing.JFrame {
         centerPanel = new javax.swing.JPanel();
         editorialLayout = new javax.swing.JPanel();
         labelEditorial = new javax.swing.JLabel();
-        javax.swing.JComboBox<String> editorialOptions = new javax.swing.JComboBox<>();
+        editorialOptions = new javax.swing.JComboBox<>();
         layoutAgeLiteraryType = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        agePanel = new javax.swing.JPanel();
+        labelAge = new javax.swing.JLabel();
+        ageOptionsPanel = new javax.swing.JPanel();
+        ageChild = new javax.swing.JRadioButton();
+        agePlusSeven = new javax.swing.JRadioButton();
+        agePlusTwelve = new javax.swing.JRadioButton();
+        ageAdult = new javax.swing.JRadioButton();
+        literaryPanel = new javax.swing.JPanel();
+        labelGenres = new javax.swing.JLabel();
+        genresPanel = new javax.swing.JPanel();
+        genreFantasy = new javax.swing.JCheckBox();
+        genreHorror = new javax.swing.JCheckBox();
+        genreComedy = new javax.swing.JCheckBox();
+        genreRomance = new javax.swing.JCheckBox();
+        layoutButtons = new javax.swing.JPanel();
+        addBookButton = new javax.swing.JButton();
+        removeBookButton = new javax.swing.JButton();
         southPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jSeparator2 = new javax.swing.JSeparator();
+        libraryTable = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Biblioteca MEDAC");
         setBackground(new java.awt.Color(255, 255, 255));
+        setMinimumSize(new java.awt.Dimension(500, 750));
 
         northPanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10), null));
         northPanel.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("BIBLIOTECA");
         jLabel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         northPanel.add(jLabel1, java.awt.BorderLayout.NORTH);
 
-        panelsTitleAuthorInputs.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 40, 1, 40));
-        panelsTitleAuthorInputs.setLayout(new java.awt.GridLayout(2, 0, 0, 40));
+        panelsTitleAuthorInputs.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 40, 20, 40));
+        panelsTitleAuthorInputs.setLayout(new java.awt.GridLayout(2, 0, 10, 40));
 
         bookTitleLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         bookTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -74,11 +94,6 @@ public class MainWindow extends javax.swing.JFrame {
         bookTitleInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         bookTitleInput.setToolTipText("");
         bookTitleInput.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20)));
-        bookTitleInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bookTitleInputActionPerformed(evt);
-            }
-        });
         panelsTitleAuthorInputs.add(bookTitleInput);
 
         bookAuthorLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -89,23 +104,18 @@ public class MainWindow extends javax.swing.JFrame {
         bookAuthorInput.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         bookAuthorInput.setToolTipText("");
         bookAuthorInput.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), javax.swing.BorderFactory.createEmptyBorder(10, 20, 10, 20)));
-        bookAuthorInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bookAuthorInputActionPerformed(evt);
-            }
-        });
         panelsTitleAuthorInputs.add(bookAuthorInput);
 
         northPanel.add(panelsTitleAuthorInputs, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(northPanel, java.awt.BorderLayout.NORTH);
 
-        centerPanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10), null));
-        centerPanel.setLayout(new java.awt.GridLayout(3, 2));
+        centerPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 40, 1, 40));
+        centerPanel.setLayout(new java.awt.BorderLayout());
 
-        editorialLayout.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 80, 1, 80));
+        editorialLayout.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 80, 40, 80));
         editorialLayout.setToolTipText("");
-        editorialLayout.setLayout(new java.awt.GridLayout());
+        editorialLayout.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 40, 5));
 
         labelEditorial.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         labelEditorial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -114,23 +124,123 @@ public class MainWindow extends javax.swing.JFrame {
 
         editorialOptions.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         editorialOptions.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Panini Comics", "NAVONA PERESUR", "MALPASOYCIA", "Astiberri Edici", "MAxEstrellaEdic" }));
+        editorialOptions.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10), null));
+        editorialOptions.setMaximumSize(new java.awt.Dimension(32767, 45));
+        editorialOptions.setMinimumSize(new java.awt.Dimension(245, 45));
         editorialLayout.add(editorialOptions);
 
-        centerPanel.add(editorialLayout);
+        centerPanel.add(editorialLayout, java.awt.BorderLayout.NORTH);
 
-        layoutAgeLiteraryType.setLayout(new java.awt.GridLayout(1, 2));
-        layoutAgeLiteraryType.add(jPanel1);
-        layoutAgeLiteraryType.add(jPanel2);
+        layoutAgeLiteraryType.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 40, 1, 40));
+        layoutAgeLiteraryType.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 25, 0));
 
-        centerPanel.add(layoutAgeLiteraryType);
-        centerPanel.add(jPanel3);
+        agePanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        agePanel.setLayout(new java.awt.BorderLayout());
+
+        labelAge.setFont(new java.awt.Font(".SF NS Text", 0, 14)); // NOI18N
+        labelAge.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelAge.setText("Edad:");
+        labelAge.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        labelAge.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 1, 5));
+        labelAge.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        agePanel.add(labelAge, java.awt.BorderLayout.NORTH);
+
+        ageOptionsPanel.setLayout(new java.awt.GridLayout(4, 0));
+
+        ageSelection.add(ageChild);
+        ageChild.setText("Infantil.");
+        ageChild.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 1, 5));
+        ageChild.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        ageOptionsPanel.add(ageChild);
+
+        ageSelection.add(agePlusSeven);
+        agePlusSeven.setText("Mayores de 7 Años.");
+        agePlusSeven.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 1, 5));
+        agePlusSeven.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        ageOptionsPanel.add(agePlusSeven);
+
+        ageSelection.add(agePlusTwelve);
+        agePlusTwelve.setText("Mayores de 12 Años.");
+        agePlusTwelve.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 1, 5));
+        agePlusTwelve.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        agePlusTwelve.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        ageOptionsPanel.add(agePlusTwelve);
+
+        ageSelection.add(ageAdult);
+        ageAdult.setText("Adultos.");
+        ageAdult.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 1, 5));
+        ageAdult.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        ageOptionsPanel.add(ageAdult);
+
+        agePanel.add(ageOptionsPanel, java.awt.BorderLayout.CENTER);
+
+        layoutAgeLiteraryType.add(agePanel);
+
+        literaryPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        literaryPanel.setLayout(new java.awt.BorderLayout());
+
+        labelGenres.setFont(new java.awt.Font(".SF NS Text", 0, 14)); // NOI18N
+        labelGenres.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        labelGenres.setText("Estilo Literario:");
+        labelGenres.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        labelGenres.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 1, 5));
+        literaryPanel.add(labelGenres, java.awt.BorderLayout.NORTH);
+
+        genresPanel.setLayout(new java.awt.GridLayout(4, 0));
+
+        genreFantasy.setText("Fantasía");
+        genreFantasy.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 1, 5));
+        genresPanel.add(genreFantasy);
+
+        genreHorror.setText("Terror");
+        genreHorror.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 1, 5));
+        genresPanel.add(genreHorror);
+
+        genreComedy.setText("Comedia");
+        genreComedy.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 1, 5));
+        genresPanel.add(genreComedy);
+
+        genreRomance.setText("Romance");
+        genreRomance.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 1, 1, 5));
+        genresPanel.add(genreRomance);
+
+        literaryPanel.add(genresPanel, java.awt.BorderLayout.CENTER);
+
+        layoutAgeLiteraryType.add(literaryPanel);
+
+        centerPanel.add(layoutAgeLiteraryType, java.awt.BorderLayout.CENTER);
+
+        layoutButtons.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 80, 10, 80));
+        layoutButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 50, 5));
+
+        addBookButton.setText("Añadir");
+        addBookButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        addBookButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBookButtonActionPerformed(evt);
+            }
+        });
+        layoutButtons.add(addBookButton);
+
+        removeBookButton.setText("Eliminar");
+        removeBookButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeBookButtonActionPerformed(evt);
+            }
+        });
+        layoutButtons.add(removeBookButton);
+
+        centerPanel.add(layoutButtons, java.awt.BorderLayout.SOUTH);
 
         getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
 
-        southPanel.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10), null));
+        southPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5));
         southPanel.setLayout(new java.awt.BorderLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(32767, 600));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(400, 200));
+
+        libraryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -138,24 +248,115 @@ public class MainWindow extends javax.swing.JFrame {
                 "Titulo", "Autor", "Editorial", "Edad", "Estilo Literario"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(libraryTable);
 
         southPanel.add(jScrollPane1, java.awt.BorderLayout.CENTER);
-        southPanel.add(jSeparator2, java.awt.BorderLayout.PAGE_END);
 
         getContentPane().add(southPanel, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bookTitleInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookTitleInputActionPerformed
+    /**
+     * Check if the inputs are complet or not.
+     * @return (boolean) If the whole Inputs have an Information returns true,
+     * if one of the Inputs is empty returns false.
+     */
+    private boolean completeInput(){
+        boolean input = true;
+        
+        if(bookTitleInput.getText().isEmpty() || bookAuthorInput.getText().isEmpty() ||
+            editorialOptions.getSelectedItem() == null || this.getSelectedAge().isEmpty() ||
+            this.getSelectedGenres().size() < 1){
+            
+            System.out.println("Error en introduciendo un Libro.");
+            input = false;
+        }
+        
+        return input;
+    }
+    
+    /**
+     * This function corresponds to add a book on the Table.
+     * @param evt (ActionEvent) When the user press the add button this function turns on.
+     */
+    private void addBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_bookTitleInputActionPerformed
+        Book new_book = new Book();
+        DefaultTableModel library = (DefaultTableModel) libraryTable.getModel();
+        
+        if(this.completeInput()){
+            new_book.setTitle(bookTitleInput.getText());
+            new_book.setAuthor(bookAuthorInput.getText());
+            new_book.setEditorial(editorialOptions.getSelectedItem().toString());
+            new_book.setAge(this.getSelectedAge());
+            new_book.setGenres(this.getSelectedGenres());
 
-    private void bookAuthorInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bookAuthorInputActionPerformed
+            library.addRow(new_book.toArray());
+        }
+    }//GEN-LAST:event_addBookButtonActionPerformed
+
+    /**
+     * Remove the selected book on the Table.
+     * @param evt (ActionEvent) When the Remove Button is pressed it activates.
+     */
+    private void removeBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBookButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_bookAuthorInputActionPerformed
-
+        DefaultTableModel library = (DefaultTableModel) libraryTable.getModel();
+        
+        if(libraryTable.getSelectedRow() != -1){
+            library.removeRow(libraryTable.getSelectedRow());
+        } else{
+            System.out.println("No has seleccionado ningún libro.");
+        }
+    }//GEN-LAST:event_removeBookButtonActionPerformed
+    
+    /**
+     * Return the selected age for the book.
+     * @return (String) The age at which the book is directed.
+     */
+    private String getSelectedAge(){
+        String selected_age = null;
+        
+        if(ageChild.isSelected()){
+            selected_age = "Infantil";
+        } else if(agePlusSeven.isSelected()){
+            selected_age = "Mayores de 7 años";
+        } else if(agePlusTwelve.isSelected()){
+            selected_age = "Mayores de 12 años";
+        } else if(ageAdult.isSelected()){
+            selected_age = "Adulto";
+        }
+        
+        return selected_age;
+    }
+    
+    /**
+     * Return all the selected genres for a book.
+     * @return (ArrayList<String>) An array list with the selected genres.
+     */
+    private ArrayList<String> getSelectedGenres(){
+        ArrayList<String> selected_genres = new ArrayList<>();
+        
+        if(genreFantasy.isSelected()){
+            selected_genres.add("Fantasía");
+        } 
+        
+        if(genreHorror.isSelected()){
+            selected_genres.add("Fantasía");
+        }
+        
+        if(genreComedy.isSelected()){
+            selected_genres.add("Comedia");
+        }
+        
+        if(genreRomance.isSelected()){
+            selected_genres.add("Romance");
+        } 
+        
+        return selected_genres;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -192,23 +393,38 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addBookButton;
+    private javax.swing.JRadioButton ageAdult;
+    private javax.swing.JRadioButton ageChild;
+    private javax.swing.JPanel ageOptionsPanel;
+    private javax.swing.JPanel agePanel;
+    private javax.swing.JRadioButton agePlusSeven;
+    private javax.swing.JRadioButton agePlusTwelve;
+    private javax.swing.ButtonGroup ageSelection;
     private javax.swing.JTextField bookAuthorInput;
     private javax.swing.JLabel bookAuthorLabel;
     private javax.swing.JTextField bookTitleInput;
     private javax.swing.JLabel bookTitleLabel;
     private javax.swing.JPanel centerPanel;
     private javax.swing.JPanel editorialLayout;
+    private javax.swing.JComboBox<String> editorialOptions;
+    private javax.swing.JCheckBox genreComedy;
+    private javax.swing.JCheckBox genreFantasy;
+    private javax.swing.JCheckBox genreHorror;
+    private javax.swing.JCheckBox genreRomance;
+    private javax.swing.JPanel genresPanel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel labelAge;
     private javax.swing.JLabel labelEditorial;
+    private javax.swing.JLabel labelGenres;
     private javax.swing.JPanel layoutAgeLiteraryType;
+    private javax.swing.JPanel layoutButtons;
+    private javax.swing.JTable libraryTable;
+    private javax.swing.JPanel literaryPanel;
     private javax.swing.JPanel northPanel;
     private javax.swing.JPanel panelsTitleAuthorInputs;
+    private javax.swing.JButton removeBookButton;
     private javax.swing.JPanel southPanel;
     // End of variables declaration//GEN-END:variables
 }
