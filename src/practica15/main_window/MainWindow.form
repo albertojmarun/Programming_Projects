@@ -12,7 +12,7 @@
       <Color blue="ff" green="ff" red="ff" type="rgb"/>
     </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[500, 750]"/>
+      <Dimension value="[500, 760]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
