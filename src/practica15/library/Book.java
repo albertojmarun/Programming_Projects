@@ -124,20 +124,4 @@ public class Book {
         
         return information;
     }
-    
-    // PRUEBA AQUI, BORRAR ANTES DE ENTREGAR LA PRACTICA.
-    public static void main(String[] args){
-        Book book = new Book();
-        ArrayList<String> list = new ArrayList<>();
-        
-        list.add("Perro");
-        list.add("Perro");
-        list.add("Perro");
-        list.add("Perro");
-        list.add("Perro");
-        
-        book.setGenres(list);
-        
-        System.out.println(book.toArray()[4]);
-    }
 }
