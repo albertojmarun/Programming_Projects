@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 /**
  * This class is about a Book.
- *
  * @version 1.0
  * @author Alberto J. Marun I.
  * @date March 2021.
@@ -143,8 +142,8 @@ public class Book implements Serializable {
      * Check if the variables are valid. Needs to follow the following rules:
      * 1. Title, Author, Editorial, Age and Genres cannot be empty.
      * 2. Title and Author cannot have 100 characters or more.
-     * @return (boolean) If the variables are correct, true;
-     *                  If the variables are incorrect, false.
+     * @return (boolean)    If the variables are correct, true;
+     *                      If the variables are incorrect, false.
      */
     public boolean isValid() {
         boolean valid = true;
