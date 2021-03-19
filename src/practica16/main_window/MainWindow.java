@@ -5,7 +5,9 @@
  */
 package practica16.main_window;
 
+import javax.swing.*;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import practica16.library.Book;
 import practica16.library.Library;
@@ -338,7 +340,7 @@ public class MainWindow extends javax.swing.JFrame {
             this.library.addBook(new_book);
             this.updateTable();
         } else{
-            System.out.println("Error al Introducir el libro.");
+            JOptionPane.showMessageDialog(this, "La información del Libro es Inválida", "LIBRO NO VÁLIDO", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_addBookButtonActionPerformed
 
@@ -348,11 +350,24 @@ public class MainWindow extends javax.swing.JFrame {
      */
     private void removeBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBookButtonActionPerformed
         // TODO add your handling code here:
+        Book remove_book;
+        String remove_confirmation;
+        String[] options = {"Si", "No"};
+        int selected_option;
+        
         if(libraryTable.getSelectedRow() != -1){
-            library.removeBook(libraryTable.getSelectedRow());
-            this.updateTable();
+            remove_book = library.getBooks(libraryTable.getSelectedRow());
+            remove_confirmation = "¿Estás seguro que deseas eliminar el libro " + remove_book.getTitle() + "?";
+            
+            selected_option = JOptionPane.showOptionDialog(this, remove_confirmation, "ELIMINAR LIBRO", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "No");
+            
+            if(selected_option == 0){
+                library.removeBook(libraryTable.getSelectedRow());
+                this.updateTable();   
+            }
+            
         } else{
-            System.out.println("No has seleccionado ningún libro.");
+            JOptionPane.showMessageDialog(this, "Ninguna fila ha sido seleccionada", "ERROR: NINGUNA FILA SELECCIONADA", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_removeBookButtonActionPerformed
     
