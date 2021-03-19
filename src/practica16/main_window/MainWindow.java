@@ -5,9 +5,11 @@
  */
 package practica16.main_window;
 
-import javax.swing.*;
+import java.io.File;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import practica16.library.Book;
 import practica16.library.Library;
@@ -131,6 +133,10 @@ public class MainWindow extends javax.swing.JFrame {
         southPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         libraryTable = new javax.swing.JTable();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        menuFiles = new javax.swing.JMenu();
+        menuExportLibrary = new javax.swing.JMenuItem();
+        menuImportLibrary = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Biblioteca MEDAC");
@@ -319,6 +325,30 @@ public class MainWindow extends javax.swing.JFrame {
 
         getContentPane().add(southPanel, java.awt.BorderLayout.SOUTH);
 
+        menuFiles.setText("Ficheros");
+
+        menuExportLibrary.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        menuExportLibrary.setText("Exportar Biblioteca");
+        menuExportLibrary.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuExportLibraryActionPerformed(evt);
+            }
+        });
+        menuFiles.add(menuExportLibrary);
+
+        menuImportLibrary.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        menuImportLibrary.setText("Importar Biblioteca");
+        menuImportLibrary.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuImportLibraryActionPerformed(evt);
+            }
+        });
+        menuFiles.add(menuImportLibrary);
+
+        jMenuBar1.add(menuFiles);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -350,14 +380,12 @@ public class MainWindow extends javax.swing.JFrame {
      */
     private void removeBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBookButtonActionPerformed
         // TODO add your handling code here:
-        Book remove_book;
         String remove_confirmation;
         String[] options = {"Si", "No"};
         int selected_option;
         
         if(libraryTable.getSelectedRow() != -1){
-            remove_book = library.getBooks(libraryTable.getSelectedRow());
-            remove_confirmation = "¿Estás seguro que deseas eliminar el libro " + remove_book.getTitle() + "?";
+            remove_confirmation = "¿Estás seguro que deseas eliminar el libro " + library.getBooks(libraryTable.getSelectedRow()).getTitle() + "?";
             
             selected_option = JOptionPane.showOptionDialog(this, remove_confirmation, "ELIMINAR LIBRO", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "No");
             
@@ -370,6 +398,68 @@ public class MainWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Ninguna fila ha sido seleccionada", "ERROR: NINGUNA FILA SELECCIONADA", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_removeBookButtonActionPerformed
+
+    private void menuExportLibraryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExportLibraryActionPerformed
+        // TODO add your handling code here:
+        JFileChooser selected_file = new JFileChooser();
+        FileNameExtensionFilter extension = new FileNameExtensionFilter("Ficheros Binarios", "dat");
+        String path, file_extension = "";
+        
+        selected_file.setAcceptAllFileFilterUsed(false);
+        selected_file.addChoosableFileFilter(extension);
+        
+        if(selected_file.showDialog(this, "Seleccionado") == JFileChooser.APPROVE_OPTION){
+            path = selected_file.getSelectedFile().getAbsolutePath();
+            
+            if(path.lastIndexOf(".") != -1 && path.lastIndexOf(".") != 0){
+                file_extension = path.substring(path.lastIndexOf(".") + 1);
+            }
+            
+            if(file_extension.equals("dat")){
+                try{
+                    library.writeFile(path);
+                    this.updateTable();
+                
+                } catch (Exception error){
+                    System.out.println(error.getMessage());
+                }
+            } else{
+                JOptionPane.showMessageDialog(this, "La extensión del Documento es Invalida", "EXTENSION NO VALIDA", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_menuExportLibraryActionPerformed
+    
+    
+    private void menuImportLibraryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuImportLibraryActionPerformed
+        // TODO add your handling code here:
+        JFileChooser selected_file = new JFileChooser();
+        FileNameExtensionFilter extension = new FileNameExtensionFilter("Ficheros Binarios", "dat");
+        String path, file_extension = "";
+        
+        selected_file.setAcceptAllFileFilterUsed(false);
+        selected_file.addChoosableFileFilter(extension);
+        
+        selected_file.setDialogTitle("BUSCA UN FICHERO");
+        
+        if(selected_file.showDialog(this, "Seleccionado") == JFileChooser.APPROVE_OPTION){
+            path = selected_file.getSelectedFile().getAbsolutePath();
+            
+            if(path.lastIndexOf(".") != -1 && path.lastIndexOf(".") != 0){
+                file_extension = path.substring(path.lastIndexOf(".") + 1);
+            }
+            
+            if(file_extension.equals("dat")){
+                try{
+                    library.readFile(path);
+                    this.updateTable();
+
+                } catch (Exception error){
+                    System.out.println(error.getMessage());
+                }
+            }
+        }
+        
+    }//GEN-LAST:event_menuImportLibraryActionPerformed
     
     /**
      * @param args the command line arguments
@@ -429,6 +519,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JCheckBox genreRomance;
     private javax.swing.JPanel genresPanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelAge;
     private javax.swing.JLabel labelEditorial;
@@ -437,6 +528,9 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JPanel layoutButtons;
     private javax.swing.JTable libraryTable;
     private javax.swing.JPanel literaryPanel;
+    private javax.swing.JMenuItem menuExportLibrary;
+    private javax.swing.JMenu menuFiles;
+    private javax.swing.JMenuItem menuImportLibrary;
     private javax.swing.JPanel northPanel;
     private javax.swing.JPanel panelsTitleAuthorInputs;
     private javax.swing.JButton removeBookButton;
