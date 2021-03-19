@@ -63,26 +63,26 @@ public class Library {
     }
     
     /**
-     * 
-     * @return 
+     * Function to return all the Books from the List.
+     * @return (ArrayList<Book>) The list of the class Library.
      */
     public ArrayList<Book> getBooks(){
         return this.books;
     }
    
     /**
-     * 
-     * @param file_route
-     * @throws Exception 
+     * Write a Binary File with all the elements inside the books List.
+     * @param file_route (String) Absolute Route of the File that will be written.
+     * @throws Exception If openning the file, closing it or writing it have an error
+     * and the program throw an exception inside the function,
+     * the function needs to throw the exception where it is implemented.
      */
     public void writeFile(String file_route) throws Exception{
-        String file_name = "alberto.bin";
-        
         FileOutputStream file_binary = null;
         ObjectOutputStream write_binary = null;
         
         try{
-            file_binary = new FileOutputStream(file_name);
+            file_binary = new FileOutputStream(file_route);
             write_binary = new ObjectOutputStream(file_binary);
             
             write_binary.writeInt(getBooks().size());
@@ -105,19 +105,20 @@ public class Library {
     }
     
     /**
-     * 
-     * @param file_route
-     * @throws Exception 
+     * Read a Binary File that contains Books to add to the Library list.
+     * @param file_route (String) Absolute Route of the File that will be readed.
+     * @throws Exception If openning the file, closing it or reading it have an error
+     * and the program throw an exception inside the function,
+     * the function needs to throw the exception where it is implemented.
      */
     public void readFile(String file_route) throws Exception{
-        String file_name = "alberto.bin";
         FileInputStream file_binary = null;
         ObjectInputStream object_binary = null;
         int size;
         Book item;
         
         try{
-            file_binary = new FileInputStream(file_name);
+            file_binary = new FileInputStream(file_route);
             object_binary = new ObjectInputStream(file_binary);
              
             size = object_binary.readInt();

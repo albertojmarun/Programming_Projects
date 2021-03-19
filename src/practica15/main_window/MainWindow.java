@@ -343,7 +343,7 @@ public class MainWindow extends javax.swing.JFrame {
         } 
         
         if(genreHorror.isSelected()){
-            selected_genres.add("Fantasía");
+            selected_genres.add("Horror");
         }
         
         if(genreComedy.isSelected()){

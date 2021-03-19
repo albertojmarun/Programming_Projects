@@ -7,7 +7,7 @@ package practica16.main_window;
 
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import practica15.library.Book;
+import practica16.library.Book;
 import practica16.library.Library;
 
 /**
@@ -26,7 +26,10 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         library = new Library();
         initComponents();
+        DefaultTableModel my_library = (DefaultTableModel) libraryTable.getModel();
         
+        my_library.addColumn("Titulo");
+        my_library.addColumn("Autor");
     }
     
     /**
@@ -61,7 +64,7 @@ public class MainWindow extends javax.swing.JFrame {
         } 
         
         if(genreHorror.isSelected()){
-            selected_genres.add("Fantasía");
+            selected_genres.add("Horror");
         }
         
         if(genreComedy.isSelected()){
@@ -76,7 +79,13 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     private void updateTable(){
+        DefaultTableModel my_library = (DefaultTableModel) libraryTable.getModel();
         
+        my_library.setRowCount(0);
+        
+        for(int i = 0; i < library.getBooks().size(); i++){
+            my_library.addRow(library.getBooks(i).toArray());
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -299,7 +308,7 @@ public class MainWindow extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Titulo", "Autor", "Editorial", "Edad", "Estilo Literario"
+
             }
         ));
         jScrollPane1.setViewportView(libraryTable);
@@ -312,41 +321,24 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Check if the inputs are complet or not.
-     * @return (boolean) If the whole Inputs have an Information returns true,
-     * if one of the Inputs is empty returns false.
-     */
-    private boolean completeInput(){
-        boolean input = true;
-        
-        if(bookTitleInput.getText().isEmpty() || bookAuthorInput.getText().isEmpty() ||
-            editorialOptions.getSelectedItem() == null || this.getSelectedAge().isEmpty() ||
-            this.getSelectedGenres().size() < 1){
-            
-            System.out.println("Error en introduciendo un Libro.");
-            input = false;
-        }
-        
-        return input;
-    }
-    
-    /**
      * This function corresponds to add a book on the Table.
      * @param evt (ActionEvent) When the user press the add button this function turns on.
      */
     private void addBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookButtonActionPerformed
         // TODO add your handling code here:
         Book new_book = new Book();
-        DefaultTableModel library = (DefaultTableModel) libraryTable.getModel();
         
-        if(this.completeInput()){
-            new_book.setTitle(bookTitleInput.getText());
-            new_book.setAuthor(bookAuthorInput.getText());
-            new_book.setEditorial(editorialOptions.getSelectedItem().toString());
-            new_book.setAge(this.getSelectedAge());
-            new_book.setGenres(this.getSelectedGenres());
-
-            library.addRow(new_book.toArray());
+        new_book.setTitle(bookTitleInput.getText());
+        new_book.setAuthor(bookAuthorInput.getText());
+        new_book.setEditorial(editorialOptions.getSelectedItem().toString());
+        new_book.setAge(this.getSelectedAge());
+        new_book.setGenres(this.getSelectedGenres());
+            
+        if(new_book.isValid()){
+            this.library.addBook(new_book);
+            this.updateTable();
+        } else{
+            System.out.println("Error al Introducir el libro.");
         }
     }//GEN-LAST:event_addBookButtonActionPerformed
 
@@ -356,10 +348,9 @@ public class MainWindow extends javax.swing.JFrame {
      */
     private void removeBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBookButtonActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel library = (DefaultTableModel) libraryTable.getModel();
-        
         if(libraryTable.getSelectedRow() != -1){
-            library.removeRow(libraryTable.getSelectedRow());
+            library.removeBook(libraryTable.getSelectedRow());
+            this.updateTable();
         } else{
             System.out.println("No has seleccionado ningún libro.");
         }
