@@ -499,7 +499,7 @@ public class MainWindow extends javax.swing.JFrame {
      */
     private void menuExportLibraryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExportLibraryActionPerformed
         JFileChooser selected_file = new JFileChooser();
-        FileNameExtensionFilter extension = new FileNameExtensionFilter("Ficheros Binarios", ".dat");
+        FileNameExtensionFilter extension = new FileNameExtensionFilter("Ficheros Binarios", "dat");
         String path;
         int extension_option;
         
@@ -537,7 +537,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void menuImportLibraryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuImportLibraryActionPerformed
         // TODO add your handling code here:
         JFileChooser selected_file = new JFileChooser();
-        FileNameExtensionFilter extension = new FileNameExtensionFilter("Ficheros Binarios", ".dat");
+        FileNameExtensionFilter extension = new FileNameExtensionFilter("Ficheros Binarios", "dat");
         String path;
         int extension_option;
         
