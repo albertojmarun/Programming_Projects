@@ -5,7 +5,6 @@
  */
 package practica16.main_window;
 
-import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -21,17 +20,16 @@ import practica16.library.Library;
  * @date March 2021.
  */
 public class MainWindow extends javax.swing.JFrame {
-    
-    private Library library;
+    private final Library library;
+    private final DefaultTableModel my_library;
     
     /**
-     * Creates new form MainWindow
+     * Creates new form MainWindow.
      */
     public MainWindow() {
-        library = new Library();
         initComponents();
-        DefaultTableModel my_library = (DefaultTableModel) libraryTable.getModel();
-        
+        library = new Library();
+        my_library = (DefaultTableModel) libraryTable.getModel();
         my_library.addColumn("Titulo");
         my_library.addColumn("Autor");
     }
@@ -63,18 +61,22 @@ public class MainWindow extends javax.swing.JFrame {
     private ArrayList<String> getSelectedGenres(){
         ArrayList<String> selected_genres = new ArrayList<>();
         
+        // The radio button of the Fantasy genre.
         if(genreFantasy.isSelected()){
             selected_genres.add("Fantasía");
         } 
         
+        // The radio button of the Horror genre.
         if(genreHorror.isSelected()){
             selected_genres.add("Horror");
         }
         
+        // The radio button of the Comedy genre.
         if(genreComedy.isSelected()){
             selected_genres.add("Comedia");
         }
         
+        // The radio button of the Romance genre.
         if(genreRomance.isSelected()){
             selected_genres.add("Romance");
         } 
@@ -82,15 +84,91 @@ public class MainWindow extends javax.swing.JFrame {
         return selected_genres;
     }
     
+    /**
+     * This function reset the Table inside the JFrame MainWindow
+     *  and clear all the rows, add one book per row,
+     *  and stablish that every cell added is non-editable.
+     */
     private void updateTable(){
-        DefaultTableModel my_library = (DefaultTableModel) libraryTable.getModel();
-        
+        // Erase all the Rows inside the Table.
         my_library.setRowCount(0);
         
+        // Introduce every book inside the library.
         for(int i = 0; i < library.getBooks().size(); i++){
             my_library.addRow(library.getBooks(i).toArray());
+            
+            // Stablish that every cell introduced to the table is non-editable.
+            for(int j = 0; j < my_library.getColumnCount(); j++){
+                my_library.isCellEditable(i, j);
+            }
         }
     }
+    
+    /**
+     * Select all the attributes of a Book and transform it into an String array,
+     * With the following schema:
+     *  [0] Book Title
+     *  [1] Book Author
+     *  [2] Book Editorial
+     *  [3] Book Age Public
+     *  [4] Book Genres
+     * @return (String[]) An array of String with the Information of the selected Book at the moment.
+     */
+    public String[] toArray(){
+        String[] book_information_selected = new String[5];
+        
+        if(libraryTable.getSelectedRow() != -1){
+            book_information_selected[0] = library.getBooks(libraryTable.getSelectedRow()).getTitle();
+            book_information_selected[1] = library.getBooks(libraryTable.getSelectedRow()).getAuthor();
+            book_information_selected[2] = library.getBooks(libraryTable.getSelectedRow()).getEditorial();
+            book_information_selected[3] = library.getBooks(libraryTable.getSelectedRow()).getAge();
+            book_information_selected[4] = String.join("-", library.getBooks(libraryTable.getSelectedRow()).getGenres());
+        }
+        
+        return book_information_selected;
+    }
+    
+    /**
+     * This function check if the extension of the file is the correct one
+     * @param file_path (String) Absolute path of the file
+     * @return (int) Number that stablish which is the situation that correspond
+     * to the extension of the file.
+     */
+    private int checkFile(String file_path){
+        /**
+         * [-1] The "." of the file_path is at the beggining or the extension of the file is not ".dat"
+         * [0]  Add to the file_path ".dat"
+         * [1]  The extension of the file is ".dat".
+         */
+        int file_situation;
+        
+        file_path = file_path.substring(file_path.lastIndexOf("/") + 1);
+        
+        // This means it doesn't contains the "."
+        if(file_path.lastIndexOf(".") == -1 && file_path.length() > 0){
+            // file_path += ".dat";
+            file_situation = 0;
+            
+            // This means the "." is at the first character of the file.    
+        } else if(file_path.lastIndexOf(".") == 0){
+            file_situation = -1;
+            
+            // The "." of the path of the file exist and it is not the first character.
+        } else{
+            
+            // The extension of the file is ".dat".
+            if(file_path.substring(file_path.lastIndexOf(".") + 1).equals("dat")){
+                file_situation = 1;
+                
+            // The extension of the file is not ".dat".    
+            } else{
+                file_situation = -1;
+            }
+        }
+        
+        return file_situation;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -130,6 +208,7 @@ public class MainWindow extends javax.swing.JFrame {
         layoutButtons = new javax.swing.JPanel();
         addBookButton = new javax.swing.JButton();
         removeBookButton = new javax.swing.JButton();
+        buttonShowBook = new javax.swing.JButton();
         southPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         libraryTable = new javax.swing.JTable();
@@ -301,6 +380,14 @@ public class MainWindow extends javax.swing.JFrame {
         });
         layoutButtons.add(removeBookButton);
 
+        buttonShowBook.setText("Mostrar Libro");
+        buttonShowBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonShowBookActionPerformed(evt);
+            }
+        });
+        layoutButtons.add(buttonShowBook);
+
         centerPanel.add(layoutButtons, java.awt.BorderLayout.SOUTH);
 
         getContentPane().add(centerPanel, java.awt.BorderLayout.CENTER);
@@ -311,6 +398,11 @@ public class MainWindow extends javax.swing.JFrame {
         jScrollPane1.setMaximumSize(new java.awt.Dimension(32767, 600));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(400, 200));
 
+        libraryTable = new javax.swing.JTable(){
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
         libraryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -327,7 +419,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         menuFiles.setText("Ficheros");
 
-        menuExportLibrary.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        menuExportLibrary.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuExportLibrary.setText("Exportar Biblioteca");
         menuExportLibrary.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -336,7 +428,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         menuFiles.add(menuExportLibrary);
 
-        menuImportLibrary.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        menuImportLibrary.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuImportLibrary.setText("Importar Biblioteca");
         menuImportLibrary.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -353,7 +445,7 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * This function corresponds to add a book on the Table.
+     * This function corresponds to add a book to the Library and update the Table.
      * @param evt (ActionEvent) When the user press the add button this function turns on.
      */
     private void addBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookButtonActionPerformed
@@ -363,12 +455,13 @@ public class MainWindow extends javax.swing.JFrame {
         new_book.setTitle(bookTitleInput.getText());
         new_book.setAuthor(bookAuthorInput.getText());
         new_book.setEditorial(editorialOptions.getSelectedItem().toString());
-        new_book.setAge(this.getSelectedAge());
-        new_book.setGenres(this.getSelectedGenres());
+        new_book.setAge(getSelectedAge());
+        new_book.setGenres(getSelectedGenres());
             
         if(new_book.isValid()){
-            this.library.addBook(new_book);
-            this.updateTable();
+            library.addBook(new_book);
+            updateTable();
+            
         } else{
             JOptionPane.showMessageDialog(this, "La información del Libro es Inválida", "LIBRO NO VÁLIDO", JOptionPane.WARNING_MESSAGE);
         }
@@ -391,7 +484,7 @@ public class MainWindow extends javax.swing.JFrame {
             
             if(selected_option == 0){
                 library.removeBook(libraryTable.getSelectedRow());
-                this.updateTable();   
+                updateTable();   
             }
             
         } else{
@@ -399,11 +492,16 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeBookButtonActionPerformed
 
+    /**
+     * To Export the Library that the program already has.
+     * @param evt (ActionEvent) When the user press the Option or do the
+     *  corresponded combination of keys on the keyboard.
+     */
     private void menuExportLibraryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuExportLibraryActionPerformed
-        // TODO add your handling code here:
         JFileChooser selected_file = new JFileChooser();
-        FileNameExtensionFilter extension = new FileNameExtensionFilter("Ficheros Binarios", "dat");
-        String path, file_extension = "";
+        FileNameExtensionFilter extension = new FileNameExtensionFilter("Ficheros Binarios", ".dat");
+        String path;
+        int extension_option;
         
         selected_file.setAcceptAllFileFilterUsed(false);
         selected_file.addChoosableFileFilter(extension);
@@ -411,17 +509,19 @@ public class MainWindow extends javax.swing.JFrame {
         if(selected_file.showDialog(this, "Seleccionado") == JFileChooser.APPROVE_OPTION){
             path = selected_file.getSelectedFile().getAbsolutePath();
             
-            if(path.lastIndexOf(".") != -1 && path.lastIndexOf(".") != 0){
-                file_extension = path.substring(path.lastIndexOf(".") + 1);
-            }
+            extension_option = this.checkFile(path);
             
-            if(file_extension.equals("dat")){
+            if(extension_option == 0 || extension_option == 1){
+                if(extension_option == 0){
+                    path += ".dat";
+                }
+                
                 try{
                     library.writeFile(path);
                     this.updateTable();
-                
+
                 } catch (Exception error){
-                    System.out.println(error.getMessage());
+                    JOptionPane.showMessageDialog(this, error.getMessage(), "ERROR EXPORTANDO LA LIBRERIA", JOptionPane.WARNING_MESSAGE);
                 }
             } else{
                 JOptionPane.showMessageDialog(this, "La extensión del Documento es Invalida", "EXTENSION NO VALIDA", JOptionPane.WARNING_MESSAGE);
@@ -429,12 +529,17 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_menuExportLibraryActionPerformed
     
-    
+    /**
+     * Import a Library that comes from a Binary File
+     * @param evt (ActionEvent) When the user press the Option or do the
+     *  corresponded combination of keys on the keyboard.
+     */
     private void menuImportLibraryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuImportLibraryActionPerformed
         // TODO add your handling code here:
         JFileChooser selected_file = new JFileChooser();
-        FileNameExtensionFilter extension = new FileNameExtensionFilter("Ficheros Binarios", "dat");
-        String path, file_extension = "";
+        FileNameExtensionFilter extension = new FileNameExtensionFilter("Ficheros Binarios", ".dat");
+        String path;
+        int extension_option;
         
         selected_file.setAcceptAllFileFilterUsed(false);
         selected_file.addChoosableFileFilter(extension);
@@ -444,22 +549,42 @@ public class MainWindow extends javax.swing.JFrame {
         if(selected_file.showDialog(this, "Seleccionado") == JFileChooser.APPROVE_OPTION){
             path = selected_file.getSelectedFile().getAbsolutePath();
             
-            if(path.lastIndexOf(".") != -1 && path.lastIndexOf(".") != 0){
-                file_extension = path.substring(path.lastIndexOf(".") + 1);
-            }
+            extension_option = this.checkFile(path);
             
-            if(file_extension.equals("dat")){
+            if(extension_option == 0 || extension_option == 1){
+                
+                if(extension_option == 0){
+                    path += ".dat";
+                }
+                
                 try{
                     library.readFile(path);
                     this.updateTable();
 
                 } catch (Exception error){
-                    System.out.println(error.getMessage());
+                    JOptionPane.showMessageDialog(this, error.getMessage(), "ERROR IMPORTANDO LA LIBRERIA", JOptionPane.WARNING_MESSAGE);
                 }
+                
+            }  else{
+                JOptionPane.showMessageDialog(this, "La extensión del Documento es Invalida", "EXTENSION NO VALIDA", JOptionPane.WARNING_MESSAGE);
             }
         }
-        
     }//GEN-LAST:event_menuImportLibraryActionPerformed
+
+    /**
+     * Show the selected book on a new Window with all of his attributes.
+     * @param evt (ActionEvent) When the user press the button, activate this function.
+     */
+    private void buttonShowBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonShowBookActionPerformed
+        // TODO add your handling code here:
+        BookInformationWindow book_window = new BookInformationWindow(this);
+        
+        if(libraryTable.getSelectedRow() != -1){
+            book_window.setVisible(true);
+        } else{
+            JOptionPane.showMessageDialog(this, "Ninguna fila ha sido seleccionada", "ERROR: NINGUNA FILA SELECCIONADA", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_buttonShowBookActionPerformed
     
     /**
      * @param args the command line arguments
@@ -510,6 +635,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JLabel bookAuthorLabel;
     private javax.swing.JTextField bookTitleInput;
     private javax.swing.JLabel bookTitleLabel;
+    private javax.swing.JButton buttonShowBook;
     private javax.swing.JPanel centerPanel;
     private javax.swing.JPanel editorialLayout;
     private javax.swing.JComboBox<String> editorialOptions;

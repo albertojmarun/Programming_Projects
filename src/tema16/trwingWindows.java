@@ -172,7 +172,7 @@ public class trwingWindows extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addComponent(ageUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
 
         pack();
@@ -235,9 +235,18 @@ public class trwingWindows extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
+        String hello = "Hello";
+        
+        this.trying(hello);
+        
+        
         System.out.println("NPI...");
+        System.out.println(hello);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private static void trying(String word){
+        word = "Good Bye";
+    }
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         System.out.println("Seleccionar...");
