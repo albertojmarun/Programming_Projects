@@ -128,6 +128,7 @@ public class MainWindow extends javax.swing.JFrame {
         return book_information_selected;
     }
     
+    
     /**
      * This function check if the extension of the file is the correct one
      * @param file_path (String) Absolute path of the file
@@ -142,7 +143,13 @@ public class MainWindow extends javax.swing.JFrame {
          */
         int file_situation;
         
-        file_path = file_path.substring(file_path.lastIndexOf("/") + 1);
+        if(file_path.lastIndexOf("/") != -1){
+            file_path = file_path.substring(file_path.lastIndexOf("/") + 1);
+        } else if(file_path.lastIndexOf("\\") != -1){
+            file_path = file_path.substring(file_path.lastIndexOf("\\") + 1);
+        } else{
+            file_situation = -1;
+        }
         
         // This means it doesn't contains the "."
         if(file_path.lastIndexOf(".") == -1 && file_path.length() > 0){
