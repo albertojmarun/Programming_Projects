@@ -6,8 +6,10 @@
 package practica16.main_window;
 
 /**
- *
- * @author AlbertoMarun
+ * This class is about a Window for a Specified Book.
+ * @version 1.0
+ * @author Alberto J. Marun I.
+ * @date March 2021.
  */
 public class BookInformationWindow extends javax.swing.JFrame {
     private final MainWindow parent_window;

@@ -452,6 +452,32 @@ public class MainWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
+     * The functionability of this is to clear all the check boxes
+     * that are selected, when the Book is selected.
+     */
+    private void clearCheckBoxes(){
+        // The radio button of the Fantasy genre.
+        if(genreFantasy.isSelected()){
+            genreFantasy.setSelected(false);
+        } 
+        
+        // The radio button of the Horror genre.
+        if(genreHorror.isSelected()){
+            genreHorror.setSelected(false);
+        }
+        
+        // The radio button of the Comedy genre.
+        if(genreComedy.isSelected()){
+            genreComedy.setSelected(false);
+        }
+        
+        // The radio button of the Romance genre.
+        if(genreRomance.isSelected()){
+            genreRomance.setSelected(false);
+        }
+    }
+    
+    /**
      * This function corresponds to add a book to the Library and update the Table.
      * @param evt (ActionEvent) When the user press the add button this function turns on.
      */
@@ -466,6 +492,11 @@ public class MainWindow extends javax.swing.JFrame {
         new_book.setGenres(getSelectedGenres());
             
         if(new_book.isValid()){
+            bookTitleInput.setText("");
+            bookAuthorInput.setText("");
+            ageSelection.clearSelection();
+            this.clearCheckBoxes();
+            
             library.addBook(new_book);
             updateTable();
             
@@ -481,7 +512,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void removeBookButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBookButtonActionPerformed
         // TODO add your handling code here:
         String remove_confirmation;
-        String[] options = {"Si", "No"};
+        String[] options = {"No", "Si"};
         int selected_option;
         
         if(libraryTable.getSelectedRow() != -1){
