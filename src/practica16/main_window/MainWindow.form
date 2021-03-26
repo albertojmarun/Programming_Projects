@@ -242,12 +242,13 @@
                   <Font name="Tahoma" size="12" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="5">
-                    <StringItem index="0" value="Panini Comics"/>
-                    <StringItem index="1" value="NAVONA PERESUR"/>
-                    <StringItem index="2" value="MALPASOYCIA"/>
-                    <StringItem index="3" value="Astiberri Edici"/>
-                    <StringItem index="4" value="MAxEstrellaEdic"/>
+                  <StringArray count="6">
+                    <StringItem index="0" value="Selecciona una Editorial..."/>
+                    <StringItem index="1" value="Panini Comics"/>
+                    <StringItem index="2" value="NAVONA PERESUR"/>
+                    <StringItem index="3" value="MALPASOYCIA"/>
+                    <StringItem index="4" value="Astiberri Edici"/>
+                    <StringItem index="5" value="MAxEstrellaEdic"/>
                   </StringArray>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

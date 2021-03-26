@@ -79,7 +79,7 @@ public class MainWindow extends javax.swing.JFrame {
         // The radio button of the Romance genre.
         if(genreRomance.isSelected()){
             selected_genres.add("Romance");
-        } 
+        }
         
         return selected_genres;
     }
@@ -127,7 +127,6 @@ public class MainWindow extends javax.swing.JFrame {
         
         return book_information_selected;
     }
-    
     
     /**
      * This function check if the extension of the file is the correct one
@@ -280,7 +279,7 @@ public class MainWindow extends javax.swing.JFrame {
         editorialLayout.add(labelEditorial);
 
         editorialOptions.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        editorialOptions.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Panini Comics", "NAVONA PERESUR", "MALPASOYCIA", "Astiberri Edici", "MAxEstrellaEdic" }));
+        editorialOptions.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona una Editorial...", "Panini Comics", "NAVONA PERESUR", "MALPASOYCIA", "Astiberri Edici", "MAxEstrellaEdic" }));
         editorialOptions.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10), null));
         editorialOptions.setMaximumSize(new java.awt.Dimension(32767, 45));
         editorialOptions.setMinimumSize(new java.awt.Dimension(245, 45));
@@ -478,6 +477,17 @@ public class MainWindow extends javax.swing.JFrame {
     }
     
     /**
+     * Clear all the Inputs of the Window.
+     */
+    private void clearInputs(){
+        bookTitleInput.setText("");
+        bookAuthorInput.setText("");
+        editorialOptions.setSelectedIndex(0);
+        ageSelection.clearSelection();
+        this.clearCheckBoxes();
+    }
+    
+    /**
      * This function corresponds to add a book to the Library and update the Table.
      * @param evt (ActionEvent) When the user press the add button this function turns on.
      */
@@ -487,15 +497,16 @@ public class MainWindow extends javax.swing.JFrame {
         
         new_book.setTitle(bookTitleInput.getText());
         new_book.setAuthor(bookAuthorInput.getText());
-        new_book.setEditorial(editorialOptions.getSelectedItem().toString());
+
+        if(editorialOptions.getSelectedIndex() != 0){
+            new_book.setEditorial(editorialOptions.getSelectedItem().toString());
+        }
+        
         new_book.setAge(getSelectedAge());
         new_book.setGenres(getSelectedGenres());
             
         if(new_book.isValid()){
-            bookTitleInput.setText("");
-            bookAuthorInput.setText("");
-            ageSelection.clearSelection();
-            this.clearCheckBoxes();
+            this.clearInputs();
             
             library.addBook(new_book);
             updateTable();
@@ -520,7 +531,7 @@ public class MainWindow extends javax.swing.JFrame {
             
             selected_option = JOptionPane.showOptionDialog(this, remove_confirmation, "ELIMINAR LIBRO", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "No");
             
-            if(selected_option == 0){
+            if(selected_option == 1){
                 library.removeBook(libraryTable.getSelectedRow());
                 updateTable();   
             }
