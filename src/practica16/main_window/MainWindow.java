@@ -22,6 +22,8 @@ import practica16.library.Library;
 public class MainWindow extends javax.swing.JFrame {
     private final Library library;
     private final DefaultTableModel my_library;
+    private final String DAT_EXTENSION = ".dat";
+    private final int DO_NOT_EXIST = -1;
     
     /**
      * Creates new form MainWindow.
@@ -39,7 +41,7 @@ public class MainWindow extends javax.swing.JFrame {
      * @return (String) The age at which the book is directed.
      */
     private String getSelectedAge(){
-        String selected_age = null;
+        String selected_age = "";
         
         if(ageChild.isSelected()){
             selected_age = "Infantil";
@@ -117,7 +119,7 @@ public class MainWindow extends javax.swing.JFrame {
     public String[] toArray(){
         String[] book_information_selected = new String[5];
         
-        if(libraryTable.getSelectedRow() != -1){
+        if(libraryTable.getSelectedRow() != DO_NOT_EXIST){
             book_information_selected[0] = library.getBooks(libraryTable.getSelectedRow()).getTitle();
             book_information_selected[1] = library.getBooks(libraryTable.getSelectedRow()).getAuthor();
             book_information_selected[2] = library.getBooks(libraryTable.getSelectedRow()).getEditorial();
@@ -142,22 +144,22 @@ public class MainWindow extends javax.swing.JFrame {
          */
         int file_situation;
         
-        if(file_path.lastIndexOf("/") != -1){
+        if(file_path.lastIndexOf("/") != DO_NOT_EXIST){
             file_path = file_path.substring(file_path.lastIndexOf("/") + 1);
-        } else if(file_path.lastIndexOf("\\") != -1){
+        } else if(file_path.lastIndexOf("\\") != DO_NOT_EXIST){
             file_path = file_path.substring(file_path.lastIndexOf("\\") + 1);
         } else{
-            file_situation = -1;
+            file_situation = DO_NOT_EXIST;
         }
         
         // This means it doesn't contains the "."
-        if(file_path.lastIndexOf(".") == -1 && file_path.length() > 0){
+        if(file_path.lastIndexOf(".") == DO_NOT_EXIST && file_path.length() > 0){
             // file_path += ".dat";
             file_situation = 0;
             
             // This means the "." is at the first character of the file.    
         } else if(file_path.lastIndexOf(".") == 0){
-            file_situation = -1;
+            file_situation = DO_NOT_EXIST;
             
             // The "." of the path of the file exist and it is not the first character.
         } else{
@@ -168,7 +170,7 @@ public class MainWindow extends javax.swing.JFrame {
                 
             // The extension of the file is not ".dat".    
             } else{
-                file_situation = -1;
+                file_situation = DO_NOT_EXIST;
             }
         }
         
@@ -526,7 +528,7 @@ public class MainWindow extends javax.swing.JFrame {
         String[] options = {"No", "Si"};
         int selected_option;
         
-        if(libraryTable.getSelectedRow() != -1){
+        if(libraryTable.getSelectedRow() != DO_NOT_EXIST){
             remove_confirmation = "¿Estás seguro que deseas eliminar el libro " + library.getBooks(libraryTable.getSelectedRow()).getTitle() + "?";
             
             selected_option = JOptionPane.showOptionDialog(this, remove_confirmation, "ELIMINAR LIBRO", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "No");
@@ -562,7 +564,7 @@ public class MainWindow extends javax.swing.JFrame {
             
             if(extension_option == 0 || extension_option == 1){
                 if(extension_option == 0){
-                    path += ".dat";
+                    path += DAT_EXTENSION;
                 }
                 
                 try{
@@ -603,7 +605,7 @@ public class MainWindow extends javax.swing.JFrame {
             if(extension_option == 0 || extension_option == 1){
                 
                 if(extension_option == 0){
-                    path += ".dat";
+                    path += DAT_EXTENSION;
                 }
                 
                 try{
@@ -628,7 +630,7 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         BookInformationWindow book_window = new BookInformationWindow(this);
         
-        if(libraryTable.getSelectedRow() != -1){
+        if(libraryTable.getSelectedRow() != DO_NOT_EXIST){
             book_window.setVisible(true);
         } else{
             JOptionPane.showMessageDialog(this, "Ninguna fila ha sido seleccionada", "ERROR: NINGUNA FILA SELECCIONADA", JOptionPane.INFORMATION_MESSAGE);

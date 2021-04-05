@@ -15,7 +15,6 @@ import java.util.ArrayList;
  * @date March 2021.
  */
 public class Book implements Serializable {
-
     private String title, author, editorial, age;
     private ArrayList<String> genres;
 
@@ -32,7 +31,6 @@ public class Book implements Serializable {
 
     /**
      * Assign a new value to the Title of the Book.
-     *
      * @param value (String) new value to assign to the Title of the Book.
      */
     public void setTitle(String value) {
@@ -41,7 +39,6 @@ public class Book implements Serializable {
 
     /**
      * Get the Value of the Title of the Book.
-     *
      * @return (String) Value of the Title of the Book.
      */
     public String getTitle() {
@@ -50,7 +47,6 @@ public class Book implements Serializable {
 
     /**
      * Assign a new value to the Author of the Book.
-     *
      * @param value (String) new value to assign to the Author of the Book.
      */
     public void setAuthor(String value) {
@@ -58,8 +54,8 @@ public class Book implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Return the Author of the Book.
+     * @return (String) Author of the Book.
      */
     public String getAuthor() {
         return this.author;
@@ -67,7 +63,6 @@ public class Book implements Serializable {
 
     /**
      * Assign a new value to the Editorial of the Book.
-     *
      * @param value (String) new value to assign to the Editorial of the Book.
      */
     public void setEditorial(String value) {
@@ -75,16 +70,15 @@ public class Book implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Return the Editorial of the Book.
+     * @return (String) Editorial of the Book.
      */
     public String getEditorial() {
         return this.editorial;
     }
 
     /**
-     * Assign a new value to the Age of the Book.
-     *
+     * Assign a new value to the Age of the Book
      * @param value (String) new value to assign to the Age of the Book.
      */
     public void setAge(String value) {
@@ -92,8 +86,8 @@ public class Book implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Return the age of which is the goal of the Book.
+     * @return (String) Age of the Goal Audience of the Book.
      */
     public String getAge() {
         return this.age;
@@ -101,7 +95,6 @@ public class Book implements Serializable {
 
     /**
      * Assign a new value to the Genres of the Book.
-     *
      * @param value (String) new value to assign to the Genres of the Book.
      */
     public void setGenres(ArrayList<String> value) {
@@ -109,8 +102,8 @@ public class Book implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Return the list of genres on the Book.
+     * @return (ArraList) Genres of the Book.
      */
     public ArrayList<String> getGenres() {
         return this.genres;
@@ -122,18 +115,14 @@ public class Book implements Serializable {
      * Book. array[1] will contain the Author of the Book. array[2] will contain
      * the Editorial of the Book. array[3] will contain the Age of the Book.
      * array[4] will contain the Genres of the Book.
-     *
      * @return (String[]) Array with the Information of the Book in an Array of
      * String.
      */
     public String[] toArray() {
-        String[] information = new String[5];
+        String[] information = new String[2];
 
         information[0] = getTitle();
         information[1] = getAuthor();
-        information[2] = getEditorial();
-        information[3] = getAge();
-        information[4] = String.join("-", getGenres());
 
         return information;
     }
