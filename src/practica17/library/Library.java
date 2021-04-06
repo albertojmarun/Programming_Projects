@@ -7,11 +7,12 @@ package practica17.library;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -24,21 +25,21 @@ import java.util.Calendar;
 public class Library {
     private static Connection connection;
     
-    final static String BD = "people";
-    final static String BD_USER = "root";
-    final static String BD_PASS = "";
+    final static String DATA_BASE = "library";
+    final static String DATA_BASE_USER = "root";
+    final static String DATA_BASE_PASS = "";
     final static String HOST = "localhost";
+    final static String TABLE = "books";
     
     /**
      * Constructor of the Library Class.
      */
-    private Library() throws Exception{
-    }
+    private Library() throws Exception{}
     
     public static void connect() throws Exception{
         connection = DriverManager.getConnection(
-                        "jdbc:mysql://" + HOST + "/" + BD + "?user=" + BD_USER
-                        + "&password=" + BD_PASS + "&useLegacyDatetimeCode=false&serverTimezone="
+                        "jdbc:mysql://" + HOST + "/" + DATA_BASE + "?user=" + DATA_BASE_USER
+                        + "&password=" + DATA_BASE_PASS + "&useLegacyDatetimeCode=false&serverTimezone="
                         + Calendar.getInstance().getTimeZone().getID()
                 );
     }
@@ -49,19 +50,43 @@ public class Library {
     /**
      * This function adds a Book to the List.
      * @param new_book (Book) the new book to add to the books list.
+     * @throws java.lang.Exception
      */
-    public void addBook(Book new_book){
-        this.books.add(new_book);
+    public static void addBook(Book new_book) throws Exception{
+        Statement sql_statement = connection.createStatement();
+        // "INSERT INTO people (name, surname, age) VALUES ('" + user_data[0] + "', '" + user_data[1] + "', " + user_data[2] + ")";
+        String insert_book = "INSERT INTO " + TABLE + " (TITLE, AUTHOR, EDITORIAL, AGE, GENRES) VALUES "
+                + "('" + new_book.getTitle() + "', '" + new_book.getAuthor() + "', '" + new_book.getEditorial() + "', '" + new_book.getAge() + "', '" + new_book.getGenresAsString() +"')";
+        
+        sql_statement.executeUpdate(insert_book);
     }
     
     /**
      * Function to remove a book from the List.
      * @param remove_index (int) Index of the Book inside the List to be removed,
      *                      needs to be between 0 and the size of the List - 1.
+     * @throws java.lang.Exception
      */
-    public void removeBook(int remove_index){
-        if(remove_index >= 0 && remove_index < this.getBooks().size()){
-            this.books.remove(remove_index);
+    public static void deleteBook(int remove_index) throws Exception{
+        ArrayList<Integer> book_index = new ArrayList<>();
+        
+        Statement sql_statement = connection.createStatement();
+        String sql_instructions;
+        ResultSet query_result = null;
+        
+        sql_instructions = "SELECT * FROM " + TABLE;
+        
+        query_result = sql_statement.executeQuery(sql_instructions);
+        
+        while(query_result.next()){
+            book_index.add(query_result.getInt("ID"));
+        }
+        
+        if(remove_index >= 0 && remove_index <= book_index.size() - 1){
+            sql_instructions = "DELETE FROM " + TABLE
+                + " WHERE ID = " + Integer.toString(book_index.get(remove_index));
+            
+            sql_statement.executeUpdate(sql_instructions);
         }
     }
     
@@ -69,8 +94,9 @@ public class Library {
      * Function to select a Book from the List.
      * @param index index of the book inside the list (books) to get the information about it.
      * @return (Book) book from the list.
+     * @throws java.lang.Exception
      */
-    public Book getBooks(int index){
+    public static Book getBook(int index) throws Exception{
         Book index_book = new Book();
         
         if(index >= 0 && index < getBooks().size()){
@@ -82,12 +108,37 @@ public class Library {
     
     /**
      * Function to return all the Books from the List.
-     * @return (ArrayList<Book>) The list of the class Library.
+     * @return (ArrayList<>) The list of the class Library.
+     * @throws java.lang.Exception
      */
-    public ArrayList<Book> getBooks(){
-        return this.books;
+    public static ArrayList<Book> getBooks() throws Exception{
+        ArrayList<Book> books = new ArrayList<>();
+        
+        Statement sql_statement = connection.createStatement();
+        String sql_instructions;
+        ResultSet query_result;
+        
+        sql_instructions = "SELECT * FROM " + TABLE;
+        
+        query_result = sql_statement.executeQuery(sql_instructions);
+        
+        while(query_result.next()){
+            books.add( new Book(query_result) );
+        }
+        
+        return books;
     }
-   
+    
+    /**
+     * 
+     * @throws Exception 
+     */
+    public static void deleteAll() throws Exception{
+        Statement sql_statement = connection.createStatement();
+        
+        sql_statement.executeUpdate("DELETE from " + TABLE);
+    }
+    
     /**
      * Write a Binary File with all the elements inside the books List.
      * @param file_route (String) Absolute Route of the File that will be written.
@@ -95,7 +146,7 @@ public class Library {
      * and the program throw an exception inside the function,
      * the function needs to throw the exception where it is implemented.
      */
-    public void writeFile(String file_route) throws Exception{
+    public static void writeFile(String file_route) throws Exception{
         FileOutputStream file_binary = null;
         ObjectOutputStream write_binary = null;
         
@@ -129,12 +180,16 @@ public class Library {
      * and the program throw an exception inside the function,
      * the function needs to throw the exception where it is implemented.
      */
-    public void readFile(String file_route) throws Exception{
+    public static void readFile(String file_route) throws Exception{
+        Statement sql_statement = connection.createStatement();
+        String sql_execute;
+        
         FileInputStream file_binary = null;
         ObjectInputStream object_binary = null;
         int size;
-        Book item;
+        Book new_book;
         
+        // PREGUNTAR A TOMAS
         try{
             file_binary = new FileInputStream(file_route);
             object_binary = new ObjectInputStream(file_binary);
@@ -142,12 +197,15 @@ public class Library {
             size = object_binary.readInt();
             
             if(size >= 1){
-                this.books.clear();
+                Library.deleteAll();
             }
             
             for (int i = 0; i < size; i++){
-                item = (Book) object_binary.readObject();
-                this.books.add(item);
+                new_book = (Book) object_binary.readObject();
+                sql_execute = "INSERT INTO " + TABLE + " (TITLE, AUTHOR, EDITORIAL, AGE, GENRES) VALUES "
+                + "('" + new_book.getTitle() + "', '" + new_book.getAuthor() + "', '" + new_book.getEditorial() + "', '" + new_book.getAge() + "', '" + new_book.getGenresAsString() +"')";
+                        
+                sql_statement.executeUpdate(sql_execute);
             } 
         }
         

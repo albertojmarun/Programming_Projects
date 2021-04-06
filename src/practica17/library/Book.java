@@ -7,7 +7,6 @@ package practica17.library;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * This class is about a Book.
@@ -16,7 +15,6 @@ import java.util.Arrays;
  * @date March 2021.
  */
 public final class Book implements Serializable {
-
     private String title, author, editorial, age;
     private ArrayList<String> genres;
 
@@ -24,13 +22,18 @@ public final class Book implements Serializable {
      * Constructor of the Book Class.
      */
     public Book() {
-        genres = new ArrayList<String>();
+        genres = new ArrayList<>();
         title = "";
         author = "";
         editorial  = "";
         age = "";
     }
     
+    /**
+     * Book Constructor that assigns a value to each attribute of the Class.
+     * @param result_sql Row from a table (That is connected with MySQL) and have all the Information about a book.
+     * @throws Exception Raise an excepetion if one of the functions raise an error.
+     */
     public Book(ResultSet result_sql) throws Exception{
         setTitle(result_sql.getString("TITLE"));
         setAuthor(result_sql.getString("AUTHOR"));
@@ -41,7 +44,6 @@ public final class Book implements Serializable {
     
     /**
      * Assign a new value to the Title of the Book.
-     *
      * @param value (String) new value to assign to the Title of the Book.
      */
     public void setTitle(String value) {
@@ -50,7 +52,6 @@ public final class Book implements Serializable {
 
     /**
      * Get the Value of the Title of the Book.
-     *
      * @return (String) Value of the Title of the Book.
      */
     public String getTitle() {
@@ -59,7 +60,6 @@ public final class Book implements Serializable {
 
     /**
      * Assign a new value to the Author of the Book.
-     *
      * @param value (String) new value to assign to the Author of the Book.
      */
     public void setAuthor(String value) {
@@ -67,8 +67,8 @@ public final class Book implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Get the Value of the Author of the Book.
+     * @return (String) Value of the Author of the Book.
      */
     public String getAuthor() {
         return this.author;
@@ -120,7 +120,8 @@ public final class Book implements Serializable {
      */
     public void setGenres(String value){
         if(value.split(" - ").length > 0){
-            this.genres.clear();
+            
+            this.genres = new ArrayList<>();
             
             for(String genre : value.split(" - ")){
                 this.genres.add(genre);
@@ -159,9 +160,6 @@ public final class Book implements Serializable {
 
         information[0] = getTitle();
         information[1] = getAuthor();
-        information[2] = getEditorial();
-        information[3] = getAge();
-        information[4] = String.join("-", getGenres());
 
         return information;
     }
