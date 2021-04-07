@@ -83,8 +83,8 @@ public final class Book implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Get the actual value for the Editorial of the Book selected.
+     * @return (String) Name of the editorial.
      */
     public String getEditorial() {
         return this.editorial;
@@ -99,8 +99,8 @@ public final class Book implements Serializable {
     }
 
     /**
-     *
-     * @return
+     * Get the actual value for the Age of the Book selected.
+     * @return (String) Goal Audience of the book.
      */
     public String getAge() {
         return this.age;
@@ -115,8 +115,8 @@ public final class Book implements Serializable {
     }
     
     /**
-     * 
-     * @param value 
+     * From a String assign an ArrayList to the Genres.
+     * @param value String with the Literary Genres of the Book.
      */
     public void setGenres(String value){
         if(value.split(" - ").length > 0){
@@ -130,16 +130,16 @@ public final class Book implements Serializable {
     }
     
     /**
-     * 
-     * @return 
+     * Get all the Genres of the Book with a String format (Genre - Genre...).
+     * @return (String) Genres of the Book selected with String format.
      */
     public String getGenresAsString(){
         return String.join(" - ", this.genres);
     }
     
     /**
-     *
-     * @return
+     * Get the actual value for the Genres of the Book selected.
+     * @return (ArrayList) Literary Genres of the Book.
      */
     public ArrayList<String> getGenres() {
         return this.genres;
@@ -151,7 +151,6 @@ public final class Book implements Serializable {
      * Book. array[1] will contain the Author of the Book. array[2] will contain
      * the Editorial of the Book. array[3] will contain the Age of the Book.
      * array[4] will contain the Genres of the Book.
-     *
      * @return (String[]) Array with the Information of the Book in an Array of
      * String.
      */

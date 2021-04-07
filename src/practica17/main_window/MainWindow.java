@@ -9,13 +9,14 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import practica17.library.*;
+import practica17.library.Book;
+import practica17.library.Library;
 
 /**
  * This class is about a Window for a Library.
  * @version 1.0
  * @author Alberto J. Marun I.
- * @date March 2021.
+ * @date April 2021.
  */
 public class MainWindow extends javax.swing.JFrame {
     private final String FANTASY_GENRE_ES = "Fantasía";
@@ -564,7 +565,7 @@ public class MainWindow extends javax.swing.JFrame {
             
                 remove_confirmation = "¿Estás seguro que deseas eliminar el libro " + Library.getBook(libraryTable.getSelectedRow()).getTitle() + "?";
             
-            selected_option = JOptionPane.showOptionDialog(this, remove_confirmation, "ELIMINAR LIBRO", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "No");
+                selected_option = JOptionPane.showOptionDialog(this, remove_confirmation, "ELIMINAR LIBRO", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "No");
             
             if(selected_option == 1){
                 Library.deleteBook(libraryTable.getSelectedRow());
@@ -673,6 +674,10 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonShowBookActionPerformed
 
+    /**
+     * When the window is closing it, the function disconnect to the Data Base that is connected.
+     * @param evt Event to activate the function.
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         try {
             Library.disconnect();
