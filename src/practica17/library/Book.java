@@ -22,11 +22,11 @@ public final class Book implements Serializable {
      * Constructor of the Book Class.
      */
     public Book() {
-        genres = new ArrayList<>();
-        title = "";
-        author = "";
-        editorial  = "";
-        age = "";
+        this.genres = new ArrayList<>();
+        this.setTitle("");
+        this.setAuthor("");
+        this.setEditorial("");
+        this.setAge("");
     }
     
     /**
@@ -120,7 +120,6 @@ public final class Book implements Serializable {
      */
     public void setGenres(String value){
         if(value.split(" - ").length > 0){
-            
             this.genres = new ArrayList<>();
             
             for(String genre : value.split(" - ")){

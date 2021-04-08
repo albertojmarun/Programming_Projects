@@ -36,6 +36,10 @@ public class Library {
      */
     private Library() throws Exception{}
     
+    /**
+     * Connect the Program to the DataBase
+     * @throws Exception if connecting to the DataBase makes an Error, throws an Exception.
+     */
     public static void connect() throws Exception{
         connection = DriverManager.getConnection(
                         "jdbc:mysql://" + HOST + "/" + DATA_BASE + "?user=" + DATA_BASE_USER
@@ -44,9 +48,16 @@ public class Library {
                 );
     }
     
+    /**
+     * Disconnect the program to the DataBase connected.
+     * @throws Exception 
+     */
     public static void disconnect() throws Exception{
-        
+        if(connection != null){
+            connection.close();
+        }
     }
+    
     /**
      * This function adds a Book to the List.
      * @param new_book (Book) the new book to add to the books list.
@@ -54,7 +65,7 @@ public class Library {
      */
     public static void addBook(Book new_book) throws Exception{
         Statement sql_statement = connection.createStatement();
-        // "INSERT INTO people (name, surname, age) VALUES ('" + user_data[0] + "', '" + user_data[1] + "', " + user_data[2] + ")";
+        
         String insert_book = "INSERT INTO " + TABLE + " (TITLE, AUTHOR, EDITORIAL, AGE, GENRES) VALUES "
                 + "('" + new_book.getTitle() + "', '" + new_book.getAuthor() + "', '" + new_book.getEditorial() + "', '" + new_book.getAge() + "', '" + new_book.getGenresAsString() +"')";
         
@@ -130,8 +141,8 @@ public class Library {
     }
     
     /**
-     * 
-     * @throws Exception 
+     * Remove all the Books from the Databases.
+     * @throws Exception Throws an exception if executing the DELETE gives and ERROR.
      */
     public static void deleteAll() throws Exception{
         Statement sql_statement = connection.createStatement();
@@ -187,6 +198,7 @@ public class Library {
         FileInputStream file_binary = null;
         ObjectInputStream object_binary = null;
         int size;
+        ArrayList<Book> new_library = new ArrayList<>();
         Book new_book;
         
         // PREGUNTAR A TOMAS
@@ -196,17 +208,20 @@ public class Library {
              
             size = object_binary.readInt();
             
-            if(size >= 1){
-                Library.deleteAll();
+            for(int i = 0; i < size; i++){
+                new_book = (Book) object_binary.readObject();
+                new_library.add(new_book);
             }
             
-            for (int i = 0; i < size; i++){
-                new_book = (Book) object_binary.readObject();
+            if(new_library.size() > 0){
+                deleteAll();
+            }
+            
+            for (Book book : new_library){
                 sql_execute = "INSERT INTO " + TABLE + " (TITLE, AUTHOR, EDITORIAL, AGE, GENRES) VALUES "
-                + "('" + new_book.getTitle() + "', '" + new_book.getAuthor() + "', '" + new_book.getEditorial() + "', '" + new_book.getAge() + "', '" + new_book.getGenresAsString() +"')";
-                        
+                + "('" + book.getTitle() + "', '" + book.getAuthor() + "', '" + book.getEditorial() + "', '" + book.getAge() + "', '" + book.getGenresAsString() +"')";                        
                 sql_statement.executeUpdate(sql_execute);
-            } 
+            }
         }
         
         finally{
