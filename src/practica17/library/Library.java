@@ -126,6 +126,7 @@ public class Library {
         ArrayList<Book> books = new ArrayList<>();
         
         Statement sql_statement = connection.createStatement();
+        
         String sql_instructions;
         ResultSet query_result;
         

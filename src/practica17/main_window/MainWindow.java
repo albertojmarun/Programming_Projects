@@ -39,12 +39,11 @@ public class MainWindow extends javax.swing.JFrame {
         
         try {
             Library.connect();
+            this.updateTable();
         } catch (Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage(), "ERROR ABRIENDO LA VENTANA", JOptionPane.WARNING_MESSAGE);
             System.exit(0);
         }
-        
-        this.updateTable();
     }
     /**
      * Return the selected age for the book.
@@ -389,6 +388,7 @@ public class MainWindow extends javax.swing.JFrame {
         centerPanel.add(layoutAgeLiteraryType, java.awt.BorderLayout.CENTER);
 
         layoutButtons.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 80, 10, 80));
+        layoutButtons.setMixingCutoutShape(null);
         layoutButtons.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 50, 5));
 
         addBookButton.setText("Añadir");
@@ -455,7 +455,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         menuFiles.setText("Ficheros");
 
-        menuExportLibrary.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        menuExportLibrary.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuExportLibrary.setText("Exportar Biblioteca");
         menuExportLibrary.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -464,7 +464,7 @@ public class MainWindow extends javax.swing.JFrame {
         });
         menuFiles.add(menuExportLibrary);
 
-        menuImportLibrary.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        menuImportLibrary.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         menuImportLibrary.setText("Importar Biblioteca");
         menuImportLibrary.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -567,10 +567,10 @@ public class MainWindow extends javax.swing.JFrame {
             
                 selected_option = JOptionPane.showOptionDialog(this, remove_confirmation, "ELIMINAR LIBRO", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, "No");
             
-            if(selected_option == 1){
-                Library.deleteBook(libraryTable.getSelectedRow());
-                updateTable();   
-            }
+                if(selected_option == 1){
+                    Library.deleteBook(libraryTable.getSelectedRow());
+                    updateTable();   
+                }
             
             } else{
                 JOptionPane.showMessageDialog(this, "Ninguna fila ha sido seleccionada", "ERROR: NINGUNA FILA SELECCIONADA", JOptionPane.INFORMATION_MESSAGE);

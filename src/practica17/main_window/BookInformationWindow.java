@@ -12,7 +12,6 @@ package practica17.main_window;
  * @date April 2021.
  */
 public class BookInformationWindow extends javax.swing.JFrame {
-    private final MainWindow parent_window;
     
     /**
      * Constructor of the BookInformationWindow to show the selected book
@@ -20,19 +19,19 @@ public class BookInformationWindow extends javax.swing.JFrame {
      */
     public BookInformationWindow(MainWindow parent) {
         initComponents();
-        this.parent_window = parent;
-        setBookInformation();
+        setBookInformation(parent);
     }
     
     /**
      * Set the labels with the information of the selected book.
+     * @param book_info Information of the book selected, that came from the main window.
      */
-    public final void setBookInformation(){
-        book_title.setText(parent_window.toArray()[0]);
-        label_book_author.setText(parent_window.toArray()[1]);
-        label_book_editorial.setText(parent_window.toArray()[2]);
-        label_book_age.setText(parent_window.toArray()[3]);
-        label_book_genres.setText(parent_window.toArray()[4]);
+    public final void setBookInformation(MainWindow book_info){
+        book_title.setText(book_info.toArray()[0]);
+        label_book_author.setText(book_info.toArray()[1]);
+        label_book_editorial.setText(book_info.toArray()[2]);
+        label_book_age.setText(book_info.toArray()[3]);
+        label_book_genres.setText(book_info.toArray()[4]);
     }
     /**
      * This method is called from within the constructor to initialize the form.
