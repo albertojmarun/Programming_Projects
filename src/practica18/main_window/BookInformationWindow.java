@@ -5,35 +5,38 @@
  */
 package practica18.main_window;
 
+import practica18.library.Book;
+
 /**
  * This class is about a Window for a Specified Book.
  * @version 1.0
  * @author Alberto J. Marun I.
  * @date April 2021.
  */
-public class BookInformationWindow extends javax.swing.JFrame {
-    private final MainWindow parent_window;
-    
+public class BookInformationWindow extends javax.swing.JDialog {
     /**
      * Constructor of the BookInformationWindow to show the selected book
-     * @param parent (MainWindow) Parent JFrame where comes this window.
+     * @param parent (MainWindow) Parent JFrame of this JDialog.
+     * @param show_book (Book) Book to show the whole information.
      */
-    public BookInformationWindow(MainWindow parent) {
+    public BookInformationWindow(MainWindow parent, Book show_book) {
+        super(parent, true);
         initComponents();
-        this.parent_window = parent;
-        setBookInformation();
+        setBookInformation(show_book);
     }
     
     /**
      * Set the labels with the information of the selected book.
+     * @param book (Book) Selected book to show the whole information.
      */
-    public final void setBookInformation(){
-        book_title.setText(parent_window.toArray()[0]);
-        label_book_author.setText(parent_window.toArray()[1]);
-        label_book_editorial.setText(parent_window.toArray()[2]);
-        label_book_age.setText(parent_window.toArray()[3]);
-        label_book_genres.setText(parent_window.toArray()[4]);
+    public final void setBookInformation(Book book){
+        book_title.setText(book.getTitle());
+        label_book_author.setText(book.getAuthor());
+        label_book_editorial.setText(book.getEditorial());
+        label_book_age.setText(book.getAge());
+        label_book_genres.setText(book.getGenresAsString());
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

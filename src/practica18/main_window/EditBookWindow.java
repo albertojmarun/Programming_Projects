@@ -8,46 +8,45 @@ package practica18.main_window;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import practica18.library.Book;
-import static practica18.main_window.MainWindow.ADULT_AGE_ES;
-import static practica18.main_window.MainWindow.CHILD_AGE_ES;
-import static practica18.main_window.MainWindow.COMEDY_GENRE_ES;
-import static practica18.main_window.MainWindow.FANTASY_GENRE_ES;
-import static practica18.main_window.MainWindow.HORROR_GENRE_ES;
-import static practica18.main_window.MainWindow.ROMANCE_GENRE_ES;
-import static practica18.main_window.MainWindow.SEVEN_AGE_ES;
-import static practica18.main_window.MainWindow.TWELVE_AGE_ES;
+import static practica18.main_window.MainWindow.*;
 
 /**
- *
- * @author AlbertoMarun
+ * This class is about a Window to Modify the Information of an Specific Book.
+ * @version 1.0
+ * @author Alberto J. Marun I.
+ * @date April 2021.
  */
-public class EditBookWindow extends javax.swing.JFrame {
-    
+public class EditBookWindow extends javax.swing.JDialog {
     private final MainWindow parent_window;
+    private final Book editing_book;
+    
     /**
-     * Creates new form EditBookWindow
+     * Creates new form EditBookWindow.
+     * @param parent (MainWindow) JFrame that is the parent of the EditBookWindow.
+     * @param book (Book) Book to edit the information.
      */
-    public EditBookWindow(MainWindow parent) {
+    public EditBookWindow(MainWindow parent, Book book) {
+        super(parent, true);
         parent_window = parent;
+        editing_book = book; 
         initComponents();
         assignBookInformation();
     }
     
     /**
-     * 
-     * @param book_info 
+     * Assign all the values of the Book to the whole Labels.
      */
     private void assignBookInformation(){
-        this.input_title.setText(parent_window.toArray()[0]);
-        this.input_author.setText(parent_window.toArray()[1]);
-        this.editorialOptions.setSelectedItem(parent_window.toArray()[2]);
-        this.assignAge(parent_window.toArray()[3]);
-        this.assignGenres(parent_window.toArray()[4]);
+        this.input_title.setText(editing_book.getTitle());
+        this.input_author.setText(editing_book.getAuthor());
+        this.editorialOptions.setSelectedItem(editing_book.getEditorial());
+        this.assignAge(editing_book.getAge());
+        this.assignGenres(editing_book.getGenresAsString());
     }
     
     /**
-     * 
-     * @param book_age 
+     * Selected the age who is directed the book.
+     * @param book_age (String) Current value of the Age who is directed the Book.
      */
     private void assignAge(String book_age){
         switch(book_age){
@@ -65,13 +64,13 @@ public class EditBookWindow extends javax.swing.JFrame {
                 
             case MainWindow.ADULT_AGE_ES:
                 ageAdult.setSelected(true);
-                break;       
+                break;
         }
     }
     
     /**
-     * 
-     * @param book_genres 
+     * Assign the Genres to the Window.
+     * @param book_genres (String) Actual genres of the book.
      */
     private void assignGenres(String book_genres) {
         
@@ -143,6 +142,21 @@ public class EditBookWindow extends javax.swing.JFrame {
         }
         
         return selected_genres;
+    }
+    
+    /**
+     * Assign new values to the Book attributes.
+     */
+    private void editBookInformation(){
+        editing_book.setTitle(input_title.getText());
+        editing_book.setAuthor(input_author.getText());
+        
+        if(editorialOptions.getSelectedIndex() != 0){
+            editing_book.setEditorial(editorialOptions.getSelectedItem().toString());
+        }
+        
+        editing_book.setAge(getSelectedAge());
+        editing_book.setGenres(String.join(" - ", getSelectedGenres()));
     }
     
     /**
@@ -279,8 +293,8 @@ public class EditBookWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * 
-     * @param evt 
+     * Close the window without editing the Book.
+     * @param evt (ActionEvent) When the button Cancel is pressed, activate this function.
      */
     private void button_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_cancelActionPerformed
         this.setVisible(false);
@@ -288,24 +302,14 @@ public class EditBookWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_button_cancelActionPerformed
 
     /**
-     * 
-     * @param evt 
+     * Modifiy the inputs of the book (with the new Information) and close the window.
+     * @param evt (ActionEvent) When the button Accept is pressed, activate this function.
      */
     private void button_acceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_acceptActionPerformed
-        String[] book_information = new String[5];
-        
-        book_information[0] = input_title.getText();
-        book_information[1] = input_author.getText();
-        
-        if(editorialOptions.getSelectedIndex() != 0){
-            book_information[2] = editorialOptions.getSelectedItem().toString();
-        }
-        
-        book_information[3] = getSelectedAge();
-        book_information[4] = String.join(" - ", getSelectedGenres());
+        this.editBookInformation();
         
         try{
-            parent_window.editBook(book_information);
+            parent_window.editBook(editing_book);
             this.setVisible(false);
             this.dispose();
         } catch (Exception e) {

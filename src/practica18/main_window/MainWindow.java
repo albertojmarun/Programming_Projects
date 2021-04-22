@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Alberto J. Marun I.
  * @date April 2021.
  */
-public class MainWindow extends javax.swing.JFrame {
+public final class MainWindow extends javax.swing.JFrame {
     private final int NOT_SELECTED_ROW = -1;
     public static final String FANTASY_GENRE_ES = "Fantasía";
     public static final String HORROR_GENRE_ES = "Horror";
@@ -115,34 +115,6 @@ public class MainWindow extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e, "ERROR CARGANDO LOS LIBROS", JOptionPane.WARNING_MESSAGE);
         }
-    }
-    
-    /**
-     * Select all the attributes of a Book and transform it into an String array,
-     * With the following schema:
-     *  [0] Book Title
-     *  [1] Book Author
-     *  [2] Book Editorial
-     *  [3] Book Age Public
-     *  [4] Book Genres
-     * @return (String[]) An array of String with the Information of the selected Book at the moment.
-     */
-    public String[] toArray(){
-        String[] book_information_selected = new String[5];
-        
-        try{
-            if(libraryTable.getSelectedRow() != NOT_SELECTED_ROW){
-                book_information_selected[0] = Library.getBook(libraryTable.getSelectedRow()).getTitle();
-                book_information_selected[1] = Library.getBook(libraryTable.getSelectedRow()).getAuthor();
-                book_information_selected[2] = Library.getBook(libraryTable.getSelectedRow()).getEditorial();
-                book_information_selected[3] = Library.getBook(libraryTable.getSelectedRow()).getAge();
-                book_information_selected[4] = String.join(" - ", Library.getBook(libraryTable.getSelectedRow()).getGenres());
-            }
-        } catch(Exception e){
-            JOptionPane.showMessageDialog(this, e.getMessage(), "ERROR HACIENDO EL TOARRAY()", JOptionPane.WARNING_MESSAGE);
-        }
-        
-        return book_information_selected;
     }
     
     /**
@@ -674,11 +646,15 @@ public class MainWindow extends javax.swing.JFrame {
      */
     private void buttonShowBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonShowBookActionPerformed
         // TODO add your handling code here:
-        if(libraryTable.getSelectedRow() != NOT_SELECTED_ROW){
-            BookInformationWindow book_window = new BookInformationWindow(this);
-            book_window.setVisible(true);
-        } else{
-            JOptionPane.showMessageDialog(this, "Ninguna fila ha sido seleccionada", "ERROR: NINGUNA FILA SELECCIONADA", JOptionPane.INFORMATION_MESSAGE);
+        try{
+            if(libraryTable.getSelectedRow() != NOT_SELECTED_ROW){
+                BookInformationWindow book_window = new BookInformationWindow(this, Library.getBook(libraryTable.getSelectedRow()));
+                book_window.setVisible(true);
+            } else{
+                JOptionPane.showMessageDialog(this, "Ninguna fila ha sido seleccionada", "ERROR: NINGUNA FILA SELECCIONADA", JOptionPane.INFORMATION_MESSAGE);
+            }   
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage(), "ERROR: MOSTRANDO LA INFORMACION DEL LIBRO", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_buttonShowBookActionPerformed
 
@@ -695,35 +671,30 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
     
     /**
-     * 
-     * @param evt 
+     * Button to edit the Information of an specified Book.
+     * @param evt (Action Event) When the Button "Editat Libro" is pressed, activate.
      */
     private void editBookButton(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBookButton
-        if(libraryTable.getSelectedRow() != NOT_SELECTED_ROW){
-            EditBookWindow book_window = new EditBookWindow(this);
-            book_window.setVisible(true);
-        } else{
-            JOptionPane.showMessageDialog(this, "Ninguna fila ha sido seleccionada", "ERROR: NINGUNA FILA SELECCIONADA", JOptionPane.INFORMATION_MESSAGE);
+        try{
+            if(libraryTable.getSelectedRow() != NOT_SELECTED_ROW){
+                EditBookWindow book_window = new EditBookWindow(this, Library.getBook(libraryTable.getSelectedRow()));
+                book_window.setVisible(true);
+            } else{
+                JOptionPane.showMessageDialog(this, "Ninguna fila ha sido seleccionada", "ERROR: NINGUNA FILA SELECCIONADA", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage(), "ERROR EDITANDO EL LIBRO", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_editBookButton
     
     /**
-     * 
-     * @param changed_information
-     * @return
+     * Edit the Information of the Book Selected.
+     * @param new_information Book that is changing
      * @throws Exception 
      */
-    public void editBook(String[] changed_information) throws Exception{
-        Book selected_book = Library.getBook(libraryTable.getSelectedRow());
-        
-        selected_book.setTitle(changed_information[0]);
-        selected_book.setAuthor(changed_information[1]);
-        selected_book.setEditorial(changed_information[2]);
-        selected_book.setAge(changed_information[3]);
-        selected_book.setGenres(changed_information[4]);
-        
-        if(selected_book.isValid()){
-            Library.saveBook(selected_book);
+    protected void editBook(Book new_information) throws Exception{
+        if(new_information.isValid()){
+            Library.saveBook(new_information);
             updateTable();
         } else{
             throw new Exception("Información del Libro No Válida.");

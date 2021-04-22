@@ -5,7 +5,6 @@
  */
 package practica18.library;
 import java.io.Serializable;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 /**
@@ -28,8 +27,6 @@ public final class Book implements Serializable {
         this.setEditorial(null);
         this.setAge(null);
     }
-    
-    
     
     /**
      * Assign a new value to the Title of the Book.

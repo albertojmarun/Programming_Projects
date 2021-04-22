@@ -12,11 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * This class is about a Library of Books.
@@ -26,12 +22,6 @@ import java.util.Calendar;
  */
 public class Library {
     private static ObjectContainer db;
-    
-    final static String DATA_BASE = "library";
-    final static String DATA_BASE_USER = "root";
-    final static String DATA_BASE_PASS = "";
-    final static String HOST = "localhost";
-    final static String TABLE = "books";
     
     /**
      * Constructor of the Library Class.
@@ -71,10 +61,8 @@ public class Library {
      * Function to remove a book from the List.
      * @param remove_index (int) Index of the Book inside the List to be removed,
      *                      needs to be between 0 and the size of the List - 1.
-     * @throws java.lang.Exception
      */
     public static void deleteBook(int remove_index) throws Exception{
-        ArrayList<Integer> book_index = new ArrayList<>();
         ObjectSet objects_set = db.queryByExample(new Book());
         Book book;
         
@@ -195,7 +183,8 @@ public class Library {
                 deleteAll();
             }
             
-            for (Book book : new_library){
+            for(Book book : new_library){
+                Library.saveBook(book);
             }
         }
         
