@@ -50,19 +50,19 @@ public class EditBookWindow extends javax.swing.JDialog {
      */
     private void assignAge(String book_age){
         switch(book_age){
-            case MainWindow.CHILD_AGE_ES:
+            case (MainWindow.CHILD_AGE_ES):
                 ageChild.setSelected(true);
                 break;
                 
-            case MainWindow.SEVEN_AGE_ES:
+            case (MainWindow.SEVEN_AGE_ES):
                 agePlusSeven.setSelected(true);
                 break;
                 
-            case MainWindow.TWELVE_AGE_ES:
+            case (MainWindow.TWELVE_AGE_ES):
                 agePlusTwelve.setSelected(true);
                 break;
                 
-            case MainWindow.ADULT_AGE_ES:
+            case (MainWindow.ADULT_AGE_ES):
                 ageAdult.setSelected(true);
                 break;
         }
@@ -170,10 +170,13 @@ public class EditBookWindow extends javax.swing.JDialog {
 
         button_group_age = new javax.swing.ButtonGroup();
         label_title = new javax.swing.JLabel();
+        panel_input_title = new javax.swing.JPanel();
         input_title = new javax.swing.JTextField();
         label_author = new javax.swing.JLabel();
+        panel_input_author = new javax.swing.JPanel();
         input_author = new javax.swing.JTextField();
         label_editorial = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         editorialOptions = new javax.swing.JComboBox<>();
         label_age = new javax.swing.JLabel();
         panel_age = new javax.swing.JPanel();
@@ -187,39 +190,58 @@ public class EditBookWindow extends javax.swing.JDialog {
         genreHorror = new javax.swing.JCheckBox();
         genreComedy = new javax.swing.JCheckBox();
         genreRomance = new javax.swing.JCheckBox();
+        panel_cancel_button = new javax.swing.JPanel();
         button_cancel = new javax.swing.JButton();
+        panel_accept_button = new javax.swing.JPanel();
         button_accept = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Editar Libro");
-        setMinimumSize(new java.awt.Dimension(380, 650));
+        setTitle("Editar: " + editing_book.getTitle());
+        setMinimumSize(new java.awt.Dimension(532, 900));
         getContentPane().setLayout(new java.awt.GridLayout(6, 2, 10, 40));
 
         label_title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_title.setText("Title:");
         getContentPane().add(label_title);
 
+        panel_input_title.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        panel_input_title.setLayout(new java.awt.BorderLayout());
+
         input_title.setText("Titulo_Actual");
-        getContentPane().add(input_title);
+        panel_input_title.add(input_title, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(panel_input_title);
 
         label_author.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_author.setText("Author:");
         getContentPane().add(label_author);
 
+        panel_input_author.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        panel_input_author.setLayout(new java.awt.BorderLayout());
+
         input_author.setText("Autor_Actual");
-        getContentPane().add(input_author);
+        panel_input_author.add(input_author, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(panel_input_author);
 
         label_editorial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_editorial.setText("Editorial:");
         getContentPane().add(label_editorial);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 50, 30, 50));
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
         editorialOptions.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecciona una Editorial...", "Panini Comics", "NAVONA PERESUR", "MALPASOYCIA", "Astiberri Edici", "MAxEstrellaEdic" }));
-        getContentPane().add(editorialOptions);
+        editorialOptions.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        jPanel1.add(editorialOptions, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(jPanel1);
 
         label_age.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_age.setText("Edad:");
         getContentPane().add(label_age);
 
+        panel_age.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 40, 1, 1));
         panel_age.setLayout(new java.awt.GridLayout(4, 0));
 
         button_group_age.add(ageChild);
@@ -253,6 +275,7 @@ public class EditBookWindow extends javax.swing.JDialog {
         label_literary_gender.setText("Genero Literario:");
         getContentPane().add(label_literary_gender);
 
+        panel_literary_gender.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 40, 1, 1));
         panel_literary_gender.setLayout(new java.awt.GridLayout(4, 0));
 
         genreFantasy.setText("Fantasía");
@@ -273,13 +296,21 @@ public class EditBookWindow extends javax.swing.JDialog {
 
         getContentPane().add(panel_literary_gender);
 
+        panel_cancel_button.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 70, 30, 70));
+        panel_cancel_button.setLayout(new java.awt.BorderLayout());
+
         button_cancel.setText("Cancelar");
         button_cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_cancelActionPerformed(evt);
             }
         });
-        getContentPane().add(button_cancel);
+        panel_cancel_button.add(button_cancel, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(panel_cancel_button);
+
+        panel_accept_button.setBorder(javax.swing.BorderFactory.createEmptyBorder(30, 70, 30, 70));
+        panel_accept_button.setLayout(new java.awt.BorderLayout());
 
         button_accept.setText("Aceptar");
         button_accept.addActionListener(new java.awt.event.ActionListener() {
@@ -287,7 +318,9 @@ public class EditBookWindow extends javax.swing.JDialog {
                 button_acceptActionPerformed(evt);
             }
         });
-        getContentPane().add(button_accept);
+        panel_accept_button.add(button_accept, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(panel_accept_button);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -333,12 +366,17 @@ public class EditBookWindow extends javax.swing.JDialog {
     private javax.swing.JCheckBox genreRomance;
     private javax.swing.JTextField input_author;
     private javax.swing.JTextField input_title;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel label_age;
     private javax.swing.JLabel label_author;
     private javax.swing.JLabel label_editorial;
     private javax.swing.JLabel label_literary_gender;
     private javax.swing.JLabel label_title;
+    private javax.swing.JPanel panel_accept_button;
     private javax.swing.JPanel panel_age;
+    private javax.swing.JPanel panel_cancel_button;
+    private javax.swing.JPanel panel_input_author;
+    private javax.swing.JPanel panel_input_title;
     private javax.swing.JPanel panel_literary_gender;
     // End of variables declaration//GEN-END:variables
 
