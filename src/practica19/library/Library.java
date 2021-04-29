@@ -24,11 +24,16 @@ import java.util.ArrayList;
  */
 public class Library {
     private static ObjectContainer db;
+    private static boolean title_asc;
+    private static String author_filter;
+    private static String genres_filter;
+    private static int current_page;
+    private static int last_page;
     
     /**
      * Constructor of the Library Class.
      */
-    private Library() throws Exception{}
+    private Library(){}
     
     /**
      * Connect the Program to the DataBase
@@ -50,6 +55,98 @@ public class Library {
         }
     }
     
+    public static void setGenresFilter(String value){
+        Library.genres_filter = value;
+    }
+    /**
+     * Assign a value to the title_asc variable.
+     * @param value (boolean) Value to assign to the title_asc variable.
+     */
+    public static void setTitleAsc(boolean value){
+        Library.title_asc = value;
+    }
+    
+    /**
+     * Receive the actual value for title_asc variable.
+     * @return (boolean) Actual value of title_asc.
+     */
+    public static boolean getTitleAsc(){
+        return Library.title_asc;
+    }
+    
+    /**
+     * Assign the new value of the Author to show.
+     * @param value (String) New value to assign.
+     */
+    public static void setAuthorFilter(String value){
+        Library.author_filter = value;
+    }
+    
+    /**
+     * Receive the actual value of the Author to Select.
+     * @return (String) Actual value of the author to filter the results.
+     */
+    public static String getAuthorFilter(){
+        return Library.author_filter;
+    }
+    
+    /**
+     * Assign a new value to the Current Page. 
+     * @param value (int) New Number of the Current Page.
+     */
+    public static void setCurrentPage(int value){
+        Library.current_page = value;
+    }
+    
+    /**
+     * Receive the Value of the Current Page of the Library.
+     * @return (int) Number of the current page.
+     */
+    public static int getCurrentPage(){
+        return Library.current_page;
+    }
+    
+    /**
+     * Reset the atribute of the current page to the first page (0).
+     */
+    public static void resetCurrentPage(){
+        Library.current_page = 0;
+    }
+    
+    /**
+     * If the Library is on a Page greater than zero, decrease that page.
+     */       
+    public static void decreasePage(){
+        if(Library.current_page > 0){
+            Library.current_page--;
+        }
+    }
+    
+    /**
+     * If the Library is on a page smaller than the Last Page, add one to the current Page.
+     */
+    public static void increasePage(){
+        if(Library.current_page < Library.last_page){
+            Library.current_page++;
+        }
+    }
+    
+    /**
+     * Assign the corresponding value to the Last Page.
+     * @param value (int) New value to the LastPage.
+     */
+    private static void setLastPage(int value){
+        Library.last_page = value;
+    }
+    
+    /**
+     * Receive the actual Last Page of the Library.
+     * @return (int) Number of the Last Page of the Library.
+     */
+    public static int getLastPage(){
+        return Library.last_page;
+    }
+    
     /**
      * This function adds a Book to the List.
      * @param new_book (Book) the new book to add to the books list.
@@ -63,29 +160,18 @@ public class Library {
      * Function to remove a book from the List.
      * @param remove_index (int) Index of the Book inside the List to be removed,
      *                      needs to be between 0 and the size of the List - 1.
-     * @throws java.lang.Exception
+     * @throws java.lang.Exception if the 
      */
     public static void deleteBook(int remove_index) throws Exception{
-        ObjectSet objects_set = db.queryByExample(new Book());
-        Book book;
-        
-        for(int i = 0; objects_set.hasNext(); i++){
-            if(i == remove_index){
-                book = (Book) objects_set.next();
-                db.delete(book);
-            } else{
-                objects_set.next();
-            }
-        }
+        db.delete(Library.getBook(remove_index));
     }
     
     /**
      * Function to select a Book from the List.
      * @param index index of the book inside the list (books) to get the information about it.
      * @return (Book) book from the list.
-     * @throws java.lang.Exception
      */
-    public static Book getBook(int index) throws Exception{
+    public static Book getBook(int index){
         Book index_book = new Book();
         
         if(index >= 0 && index < getBooks().size()){
@@ -96,18 +182,47 @@ public class Library {
     }
     
     /**
-     * 
-     * @return
-     * @throws Exception 
+     * Result of a Query with a determained constraints.
+     * @return (ObjectSet) A selection of elements from the Object Oriented Data Base.
      */
-    public static ArrayList<Book> getBooks() throws Exception{
-        ArrayList<Book> books = new ArrayList<>();
+    private static ObjectSet queryApplyGetBookRestrictions(){
         Query query = db.query();
-        query.descend("title").orderAscending();
-        ObjectSet os = query.execute();
         
-        while(os.hasNext()){
-            books.add( (Book) os.next());
+        if(title_asc){
+            query.descend("title").orderAscending();
+        } else{
+            query.descend("title").orderDescending();
+        }
+        
+        query.descend("author").constrain(author_filter).like();
+        
+        return query.execute();
+    }
+    
+    /**
+     * Receive a List of Books that have a certain of parameters.
+     * @return (ArrayList<>) List of Books that fullfil all the constraints.
+     */
+    public static ArrayList<Book> getBooks(){
+        // limit_book[0] = first book to read.
+        // limit_book[1] = last book to read.
+        int[] limit_book = new int[2];
+        ArrayList<Book> books = new ArrayList<>();
+        
+        ObjectSet objects = Library.queryApplyGetBookRestrictions();
+        
+        Library.setLastPage( ( objects.size() - 1 ) / 10 );
+        
+        limit_book[0] = Library.getCurrentPage() * 10;
+        limit_book[1] = (Library.getCurrentPage() + 1) * 10;
+        
+        for(int i = 0; objects.hasNext() && i < limit_book[1] && i < objects.size(); i++){
+            
+            if(i >= limit_book[0] && i < limit_book[1]){
+                books.add( (Book) objects.next() );
+            } else {
+                objects.next();
+            }
         }
         
         return books;
@@ -122,6 +237,7 @@ public class Library {
         ArrayList<Book> books = new ArrayList<>();
         
         Query query = db.query();
+        query.constrain(Book.class);
         ObjectSet objects_set = query.execute();
         
         while(objects_set.hasNext()){
@@ -136,10 +252,8 @@ public class Library {
      * @throws Exception Throws an exception if executing the DELETE gives and ERROR.
      */
     public static void deleteAll() throws Exception{
-        ObjectSet objects_set = db.queryByExample(new Book());
-        
-        while(objects_set.hasNext()){
-            db.delete(objects_set.next());
+        for(Book book : getAllBooks()){
+            db.delete(book);
         }
     }
     
@@ -207,6 +321,7 @@ public class Library {
             }
             
             for (Book book : new_library){
+                Library.saveBook(book);
             }
         }
         

@@ -170,8 +170,10 @@ public class EditBookWindow extends javax.swing.JDialog {
 
         button_group_age = new javax.swing.ButtonGroup();
         label_title = new javax.swing.JLabel();
+        panel_title_input = new javax.swing.JPanel();
         input_title = new javax.swing.JTextField();
         label_author = new javax.swing.JLabel();
+        panel_author_input = new javax.swing.JPanel();
         input_author = new javax.swing.JTextField();
         label_editorial = new javax.swing.JLabel();
         editorialOptions = new javax.swing.JComboBox<>();
@@ -191,7 +193,7 @@ public class EditBookWindow extends javax.swing.JDialog {
         button_accept = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Editar Libro");
+        setTitle("Editar: " + editing_book.getTitle());
         setMinimumSize(new java.awt.Dimension(380, 650));
         getContentPane().setLayout(new java.awt.GridLayout(6, 2, 10, 40));
 
@@ -199,15 +201,25 @@ public class EditBookWindow extends javax.swing.JDialog {
         label_title.setText("Title:");
         getContentPane().add(label_title);
 
+        panel_title_input.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        panel_title_input.setLayout(new java.awt.BorderLayout());
+
         input_title.setText("Titulo_Actual");
-        getContentPane().add(input_title);
+        panel_title_input.add(input_title, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(panel_title_input);
 
         label_author.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        label_author.setText("Author:");
+        label_author.setText("Autor:");
         getContentPane().add(label_author);
 
+        panel_author_input.setBorder(javax.swing.BorderFactory.createEmptyBorder(15, 15, 15, 15));
+        panel_author_input.setLayout(new java.awt.BorderLayout());
+
         input_author.setText("Autor_Actual");
-        getContentPane().add(input_author);
+        panel_author_input.add(input_author, java.awt.BorderLayout.CENTER);
+
+        getContentPane().add(panel_author_input);
 
         label_editorial.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_editorial.setText("Editorial:");
@@ -339,7 +351,9 @@ public class EditBookWindow extends javax.swing.JDialog {
     private javax.swing.JLabel label_literary_gender;
     private javax.swing.JLabel label_title;
     private javax.swing.JPanel panel_age;
+    private javax.swing.JPanel panel_author_input;
     private javax.swing.JPanel panel_literary_gender;
+    private javax.swing.JPanel panel_title_input;
     // End of variables declaration//GEN-END:variables
 
 }
