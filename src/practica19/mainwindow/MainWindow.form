@@ -6,12 +6,8 @@
     </Component>
     <Component class="javax.swing.ButtonGroup" name="author_asc_desc">
     </Component>
-    <Container class="javax.swing.JPopupMenu" name="jPopupMenu1">
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
-        <Property name="useNullLayout" type="boolean" value="true"/>
-      </Layout>
-    </Container>
+    <Component class="javax.swing.ButtonGroup" name="age_filter_buttons">
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="menuFiles">
@@ -44,6 +40,17 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuImportLibraryActionPerformed"/>
               </Events>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menu_empty_library">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Shift+E"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Vaciar Libreria"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_empty_libraryActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menu_order_title">
@@ -51,6 +58,35 @@
             <Property name="text" type="java.lang.String" value="Ordenar Libro"/>
           </Properties>
           <SubComponents>
+            <Menu class="javax.swing.JMenu" name="menu_current_page">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="P&#xe1;gina Actual"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="previous_page_menu">
+                  <Properties>
+                    <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                      <KeyStroke key="Shift+LEFT"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Pagina Anterior"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="previous_page_menuActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="next_page_menu">
+                  <Properties>
+                    <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                      <KeyStroke key="Shift+RIGHT"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Pagina Posterior"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="next_page_menuActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
             <Menu class="javax.swing.JMenu" name="jMenu1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Titulo"/>
@@ -92,44 +128,15 @@
                 <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                   <KeyStroke key="Ctrl+F"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Filtro de Autor"/>
+                <Property name="text" type="java.lang.String" value="Autor"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_author_filterActionPerformed"/>
               </Events>
             </MenuItem>
-            <Menu class="javax.swing.JMenu" name="menu_current_page">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="P&#xe1;gina Actual"/>
-              </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="previous_page_menu">
-                  <Properties>
-                    <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                      <KeyStroke key="Shift+LEFT"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Pagina Anterior"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="previous_page_menuActionPerformed"/>
-                  </Events>
-                </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="next_page_menu">
-                  <Properties>
-                    <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
-                      <KeyStroke key="Shift+RIGHT"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Pagina Posterior"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="next_page_menuActionPerformed"/>
-                  </Events>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
             <Menu class="javax.swing.JMenu" name="menu_genres_filter">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Filtro de Estilo Literario"/>
+                <Property name="text" type="java.lang.String" value="Estilo Literario"/>
               </Properties>
               <SubComponents>
                 <MenuItem class="javax.swing.JCheckBoxMenuItem" name="menu_filter_fantasy">
@@ -137,7 +144,6 @@
                     <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                       <KeyStroke key="Alt+F"/>
                     </Property>
-                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Fantas&#xed;a"/>
                   </Properties>
                   <Events>
@@ -149,30 +155,132 @@
                     <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                       <KeyStroke key="Alt+T"/>
                     </Property>
-                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Terror"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_filter_horrorActionPerformed"/>
+                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JCheckBoxMenuItem" name="menu_filter_comedy">
                   <Properties>
                     <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                       <KeyStroke key="Alt+C"/>
                     </Property>
-                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Comedia"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_filter_comedyActionPerformed"/>
+                  </Events>
                 </MenuItem>
                 <MenuItem class="javax.swing.JCheckBoxMenuItem" name="menu_filter_romance">
                   <Properties>
                     <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
                       <KeyStroke key="Alt+R"/>
                     </Property>
-                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Romance"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_filter_romanceActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="reset_genres_filter">
+                  <Properties>
+                    <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                      <KeyStroke key="Shift+Ctrl+C"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Limpiar Filtro Generos"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reset_genres_filterActionPerformed"/>
+                  </Events>
                 </MenuItem>
               </SubComponents>
             </Menu>
+            <Menu class="javax.swing.JMenu" name="menu_filter_age">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Edad"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="button_age_filter_infantil">
+                  <Properties>
+                    <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                      <KeyStroke key="Ctrl+I"/>
+                    </Property>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="age_filter_buttons"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Infantil"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_age_filter_infantilActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="button_age_filter_seven">
+                  <Properties>
+                    <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                      <KeyStroke key="Ctrl+S"/>
+                    </Property>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="age_filter_buttons"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Mayores de 7 A&#xf1;os"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_age_filter_sevenActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="button_age_filter_twelve">
+                  <Properties>
+                    <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                      <KeyStroke key="Ctrl+T"/>
+                    </Property>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="age_filter_buttons"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Mayores de 12 A&#xf1;os"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_age_filter_twelveActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JRadioButtonMenuItem" name="button_age_filter_adult">
+                  <Properties>
+                    <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                      <KeyStroke key="Ctrl+A"/>
+                    </Property>
+                    <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                      <ComponentRef name="age_filter_buttons"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Adultos"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_age_filter_adultActionPerformed"/>
+                  </Events>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="button_age_filter_reset">
+                  <Properties>
+                    <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                      <KeyStroke key="Ctrl+R"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Reiniciar Edad"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_age_filter_resetActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <MenuItem class="javax.swing.JMenuItem" name="menu_filter_reset">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Shift+Ctrl+R"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Limpiar Filtros"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menu_filter_resetActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
       </SubComponents>

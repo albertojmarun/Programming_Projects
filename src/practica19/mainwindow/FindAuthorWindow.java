@@ -8,15 +8,19 @@ package practica19.mainwindow;
 import practica19.library.Library;
 
 /**
- *
- * @author AlbertoMarun
+ * This class is about a Filter of an Author Window(JDialog) from MainWindow.
+ * @version 1.0
+ * @author Alberto J. Marun I.
+ * @date May 2021.
  */
 public class FindAuthorWindow extends javax.swing.JDialog {
     private MainWindow parent;
+    
     /**
      * Creates new form FindAuthorWindow
      */
     public FindAuthorWindow(MainWindow parent) {
+        super(parent, true);
         initComponents();
         this.parent = parent;
         input_author_filter.setText(Library.getAuthorFilter());
@@ -48,9 +52,13 @@ public class FindAuthorWindow extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Assign the value of the Input Text to the Author Filter.
+     * @param evt (ActionEvent) When the user is typing on the Input Text it activates this function.
+     */
     private void input_author_filterKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_input_author_filterKeyTyped
         Library.setAuthorFilter(input_author_filter.getText());
-        this.parent.updateTable();
+        parent.updateTable();
     }//GEN-LAST:event_input_author_filterKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

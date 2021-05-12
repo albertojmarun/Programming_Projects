@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * This class is about a Book.
  * @version 1.0
  * @author Alberto J. Marun I.
- * @date March 2021.
+ * @date May 2021.
  */
 public final class Book implements Serializable {
     private String title, author, editorial, age;

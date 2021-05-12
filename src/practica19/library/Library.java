@@ -8,7 +8,6 @@ package practica19.library;
 import com.db4o.Db4oEmbedded;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
-import com.db4o.query.Constraint;
 import com.db4o.query.Query;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,13 +19,14 @@ import java.util.ArrayList;
  * This class is about a Library of Books.
  * @version 1.0
  * @author Alberto J. Marun I.
- * @date March 2021.
+ * @date May 2021.
  */
 public class Library {
     private static ObjectContainer db;
     private static boolean title_asc;
     private static String author_filter;
-    private static String genres_filter;
+    private static ArrayList<String> genres_filter;
+    private static String age_filter;
     private static int current_page;
     private static int last_page;
     
@@ -55,9 +55,68 @@ public class Library {
         }
     }
     
-    public static void setGenresFilter(String value){
-        Library.genres_filter = value;
+    /**
+     * Initialize the Genres Filter.
+     */
+    public static void initializeGenresFilter(){
+        Library.genres_filter = new ArrayList<>();
     }
+    
+    /**
+     * Add a new value to the Genres Filter, if it is null, initialize and add that value.
+     * @param value (String) Genre to add to the Genres Filter.
+     */
+    public static void setGenresFilter(String value){
+        if(Library.genres_filter == null){
+            Library.genres_filter = new ArrayList<>();
+        }
+        
+        Library.genres_filter.add(value);
+    }
+    
+    /**
+     * Get the Actual Value of the Genres Filter.
+     * @return (ArrayList<String>) Array List with all the Genres selected to the Filter.
+     */
+    public static ArrayList<String> getGenresFilter(){
+        return Library.genres_filter;
+    }
+    
+    /**
+     * Remove a Genre from the Genres Filter.
+     * @param genre (String) Genre to remove from the filter.
+     */
+    public static void removeGenreFromFilter(String genre){
+        Library.genres_filter.remove(genre);
+    }
+    
+    /**
+     * Clear all the Genres that are on the Genres Filter.
+     */
+    public static void resetGenresFilter(){
+        if(Library.genres_filter == null){
+            Library.genres_filter = new ArrayList<>();
+        }
+        
+        Library.genres_filter.clear();
+    }
+    
+    /**
+     * Assign a new value to the Age Filter.
+     * @param value (String) Age to set the Age Filter.
+     */
+    public static void setAgeFilter(String value){
+        Library.age_filter = value;
+    }
+    
+    /**
+     * Get the actual Value of the Age Filter.
+     * @return (String) Actual Age of the Age Filter.
+     */
+    public static String getAgeFilter(){
+        return Library.age_filter;
+    }
+    
     /**
      * Assign a value to the title_asc variable.
      * @param value (boolean) Value to assign to the title_asc variable.
@@ -195,8 +254,35 @@ public class Library {
         }
         
         query.descend("author").constrain(author_filter).like();
-        
+        query.descend("age").constrain(age_filter).like();
         return query.execute();
+    }
+    
+    /**
+     * Filter the Book by the Genres Filter.
+     * @param book (Book) To determine if the contains one of the genres asked by the user or no.
+     * @return (boolean) True if the Genres Filter is Empty or it contains one or more of the selected genres,
+     *  if the book do not contain any of the genres selected on the filter.
+     */
+    private static boolean filterBookByGenres(Book book){
+        boolean filter = false;
+        
+        if(genres_filter.size() <= 0){
+            filter =  true;
+        }
+        
+        for(int i = 0; i < book.getGenres().size() && !filter; i++){
+            
+            for(int j = 0; j < Library.genres_filter.size() && !filter; j++ ){
+                
+                if(book.getGenres().get(i).equals( Library.genres_filter.get(j) )){
+                    filter = true;
+                }
+            }
+            
+        }
+        
+        return filter;
     }
     
     /**
@@ -206,26 +292,34 @@ public class Library {
     public static ArrayList<Book> getBooks(){
         // limit_book[0] = first book to read.
         // limit_book[1] = last book to read.
-        int[] limit_book = new int[2];
+        int[] limits_book = new int[2];
         ArrayList<Book> books = new ArrayList<>();
+        ArrayList<Book> final_books = new ArrayList<>();
+        Book book;
         
         ObjectSet objects = Library.queryApplyGetBookRestrictions();
         
-        Library.setLastPage( ( objects.size() - 1 ) / 10 );
-        
-        limit_book[0] = Library.getCurrentPage() * 10;
-        limit_book[1] = (Library.getCurrentPage() + 1) * 10;
-        
-        for(int i = 0; objects.hasNext() && i < limit_book[1] && i < objects.size(); i++){
+        while(objects.hasNext()){
+            book = (Book) objects.next();
             
-            if(i >= limit_book[0] && i < limit_book[1]){
-                books.add( (Book) objects.next() );
-            } else {
-                objects.next();
+            if(Library.filterBookByGenres(book)){
+                books.add(book);
             }
         }
         
-        return books;
+        Library.setLastPage( ( books.size() - 1 ) / 10 );
+        
+        limits_book[0] = Library.getCurrentPage() * 10;
+        limits_book[1] = (Library.getCurrentPage() + 1) * 10;
+        
+        
+        for(int i = 0; i < books.size() && i < limits_book[1]; i++){
+            if(i >= limits_book[0] && i < limits_book[1]){
+                final_books.add(books.get(i));
+            }
+        }
+        
+        return final_books;
     }
     
     /**

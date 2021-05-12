@@ -8,10 +8,10 @@ package practica19.mainwindow;
 import practica19.library.Book;
 
 /**
- * This class is about a Window for a Specified Book.
+ * This class is about a Window (JDialog) for a Specified Book.
  * @version 1.0
  * @author Alberto J. Marun I.
- * @date April 2021.
+ * @date May 2021.
  */
 public class BookInformationWindow extends javax.swing.JDialog {
     /**

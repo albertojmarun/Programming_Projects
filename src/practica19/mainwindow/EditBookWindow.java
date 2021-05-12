@@ -8,13 +8,12 @@ package practica19.mainwindow;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import practica19.library.Book;
-import static practica18.main_window.MainWindow.*;
 
 /**
- * This class is about a Window to Modify the Information of an Specific Book.
+ * This class is about a Window (JDialog) to Modify the Information of an Specific Book.
  * @version 1.0
  * @author Alberto J. Marun I.
- * @date April 2021.
+ * @date May 2021.
  */
 public class EditBookWindow extends javax.swing.JDialog {
     private final MainWindow parent_window;
@@ -99,16 +98,16 @@ public class EditBookWindow extends javax.swing.JDialog {
         String selected_age = null;
         
         if(ageChild.isSelected()){
-            selected_age = CHILD_AGE_ES;
+            selected_age = MainWindow.CHILD_AGE_ES;
             
         } else if(agePlusSeven.isSelected()){
-            selected_age = SEVEN_AGE_ES;
+            selected_age = MainWindow.SEVEN_AGE_ES;
             
         } else if(agePlusTwelve.isSelected()){
-            selected_age = TWELVE_AGE_ES;
+            selected_age = MainWindow.TWELVE_AGE_ES;
             
         } else if(ageAdult.isSelected()){
-            selected_age = ADULT_AGE_ES;
+            selected_age = MainWindow.ADULT_AGE_ES;
         }
         
         return selected_age;
@@ -123,22 +122,22 @@ public class EditBookWindow extends javax.swing.JDialog {
         
         // The radio button of the Fantasy genre.
         if(genreFantasy.isSelected()){
-            selected_genres.add(FANTASY_GENRE_ES);
+            selected_genres.add(MainWindow.FANTASY_GENRE_ES);
         } 
         
         // The radio button of the Horror genre.
         if(genreHorror.isSelected()){
-            selected_genres.add(HORROR_GENRE_ES);
+            selected_genres.add(MainWindow.HORROR_GENRE_ES);
         }
         
         // The radio button of the Comedy genre.
         if(genreComedy.isSelected()){
-            selected_genres.add(COMEDY_GENRE_ES);
+            selected_genres.add(MainWindow.COMEDY_GENRE_ES);
         }
         
         // The radio button of the Romance genre.
         if(genreRomance.isSelected()){
-            selected_genres.add(ROMANCE_GENRE_ES);
+            selected_genres.add(MainWindow.ROMANCE_GENRE_ES);
         }
         
         return selected_genres;
